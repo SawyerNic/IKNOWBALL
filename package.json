@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/SawyerNic/IKNOWBALL/issues"
   },
-  "homepage": "https://github.com/SawyerNic/IKNOWBALL#readme"
+  "homepage": "https://github.com/SawyerNic/IKNOWBALL#readme",
+  "dependencies": {
+    "webpack": "^5.97.1"
+  }
 }
