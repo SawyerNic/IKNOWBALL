@@ -1,9 +1,9 @@
 const controllers = require('./controllers');
-const mid = require('./middleware');
+//const mid = require('./middleware');
 
 const router = (app) => {
 
-  app.get('/', controllers.publicSite.landingPage);
+  app.get('/', controllers.home.landingPage);
   app.use('*', (req, res) => {
     res.status(404).render('404');
   });

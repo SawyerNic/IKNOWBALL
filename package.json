@@ -4,7 +4,9 @@
   "description": "a sports trivia game",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "node ./server/app.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +19,18 @@
   },
   "homepage": "https://github.com/SawyerNic/IKNOWBALL#readme",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-loader": "^9.2.1",
+    "body-parser": "^1.20.3",
+    "compression": "^1.7.5",
+    "express": "^4.21.2",
+    "express-handlebars": "^8.0.1",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0",
     "webpack": "^5.97.1"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.26.3",
     "webpack-cli": "^6.0.1"
   }
 }
