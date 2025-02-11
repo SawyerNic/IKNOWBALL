@@ -1,3 +1,6 @@
+import { createRoot } from 'react-dom/client';
+const React = require('react');
+
 const HomePage = () => {
     return (
         <div>
