@@ -16,7 +16,7 @@
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ \"./node_modules/react-dom/client.js\");\n\nconst React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nconst HomePage = () => {\n  return /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"h1\", null, \"Home Page\"), /*#__PURE__*/React.createElement(\"p\", null, \"Welcome to IKNOWBALL!\"));\n};\nconst init = () => {\n  const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(document.getElementById('content'));\n  root.render(/*#__PURE__*/React.createElement(HomePage, null));\n};\nwindow.onload = init;\n\n//# sourceURL=webpack://iknowball/./client/landingPage.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ \"./node_modules/react-dom/client.js\");\n\nconst React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nconst HomePage = () => {\n  return /*#__PURE__*/React.createElement(\"div\", null, /*#__PURE__*/React.createElement(\"h1\", null, \"Landing Page\"), /*#__PURE__*/React.createElement(\"p\", null, \"Welcome to IKNOWBALL!\"));\n};\nconst init = () => {\n  const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(document.getElementById('content'));\n  root.render(/*#__PURE__*/React.createElement(HomePage, null));\n};\nwindow.onload = init;\n\n//# sourceURL=webpack://iknowball/./client/landingPage.jsx?");
 
 /***/ }),
 

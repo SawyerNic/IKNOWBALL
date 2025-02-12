@@ -3,6 +3,7 @@ const controllers = require('./controllers');
 
 const router = (app) => {
 
+  
   app.get('/', controllers.home.landingPage);
   app.use('*', (req, res) => {
     res.status(404).render('404');
