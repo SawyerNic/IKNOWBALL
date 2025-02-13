@@ -5,8 +5,12 @@ const HomePage = () => {
     return (
         <div>
         <h1>Landing Page</h1>
-        <p>Welcome to IKNOWBALL!</p>
+        <p id='welcom'>Welcome to IKNOWBALL!</p>
+        <div>
+            <button type="button"> button </button>
         </div>
+        </div>
+
     );
 }
 

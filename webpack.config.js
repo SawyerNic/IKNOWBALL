@@ -1,38 +1,23 @@
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
-
 const path = require('path');
-const { watch } = require('fs');
 
-const isProduction = process.env.NODE_ENV === 'development';
-
-
-const config = {
-    entry: './client/landingPage.jsx',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name]bundle.js',
-    },
-    devServer: {
-        open: true,
-        host: 'localhost',
+module.exports = {
+    entry: {
+        example1: './client/landingPage.jsx',
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/i,
-                loader: 'babel-loader',
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                },
             },
         ],
     },
-};
-
-module.exports = () => {
-    if (isProduction) {
-        config.mode = 'production';
-        
-        
-    } else {
-        config.mode = 'development';
-    }
-    return config;
+    mode: 'production',
+    output: {
+        path: path.resolve(__dirname, 'client'),
+        filename: 'mainbundle.js',
+    },
 };
