@@ -17,10 +17,6 @@
   bundle. In this case, we are importing the contents of other.scss
   into this file.
 */
-body {
-  background-color: cornflowerblue;
-}
-
 /*With sass we can also define variables like the two below. We can
   then use these variables in place of where we might use their values.
   For example, anywhere that I want to set the color of an element,
@@ -30,6 +26,23 @@ body {
   me to replace the color throughout a massive stylesheet with only one
   change.
 */
+body {
+  background-color: royalblue;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #FFC145;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #0056b3;
+}
+
 /*Sass also lets us define functions. These functions can be helpful for
   precomputing values as we compile our sass to css. Because pure css
   cannot execute functions like javascript can, the functions in sass
@@ -73,6 +86,10 @@ html, body {
   font-size: 1.1em;
 }
 
-#welcome {
-  text-align: center;
+#home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }

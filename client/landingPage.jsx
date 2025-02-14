@@ -1,13 +1,15 @@
 import { createRoot } from 'react-dom/client';
+
+
 const React = require('react');
 
 const HomePage = () => {
     return (
-        <div>
+        <div id='home-content'>
         <h1>Landing Page</h1>
-        <p id='welcom'>Welcome to IKNOWBALL!</p>
+        <p id='welcome'>Welcome to IKNOWBALL!</p>
         <div>
-            <button type="button"> button </button>
+            <button type='button' className='btn btn-primary'> Start Game </button>
         </div>
         </div>
 

@@ -9,7 +9,6 @@ const sassTask = (done) => {
     gulp.src('./scss/main.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./dist'));
-
     done();
 };
 
@@ -28,6 +27,7 @@ const lintTask = (done) => {
     
     done();
 }
+
 
 const build = gulp.parallel(sassTask, jsTask, lintTask);
 const herokuBuild = gulp.parallel(sassTask, jsTask);

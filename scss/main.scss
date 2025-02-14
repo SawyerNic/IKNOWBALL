@@ -1,5 +1,6 @@
 // **THIS IS AN EXAMPLE FILE FROM IGME 430**
 
+
 /*This file is written with "Sass", a superset language of css
   that adds / extends the base css functionality. It will not
   run in the browser, so it will need to be compiled to raw css.
@@ -20,7 +21,8 @@
   bundle. In this case, we are importing the contents of other.scss
   into this file.
 */ 
-@use 'other';
+
+
 
 /*With sass we can also define variables like the two below. We can
   then use these variables in place of where we might use their values.
@@ -33,6 +35,25 @@
 */
 $contrastColor: cornflowerblue;
 $appWidth: 200px;
+
+body {
+  background-color: royalblue
+}
+
+// filepath: /Users/sawyernicastro/IKNOWBALL/scss/main.scss
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #FFC145;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}
 
 /*Sass also lets us define functions. These functions can be helpful for
   precomputing values as we compile our sass to css. Because pure css
@@ -86,7 +107,11 @@ html, body {
   }
 }
 
-#welcome{
-    text-align: center; 
 
+#home-content {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
 }
