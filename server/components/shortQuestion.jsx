@@ -1,15 +1,31 @@
 import { useState, useRef } from 'react'
 
 const shortQuestion = () => {
-    const formRef = useRef();
-    const [form, setForm] = useState({
-        name: '',
-    });
-
-    return (
-        <form id="questionPostForm">
-
-            <textarea id="contentArea" name="content" required="true" placeholder="Write answer here" rows="1"></textarea>
-        </form>
-    );
+    function handleSubmit(e) {
+        e.preventDefault();
+    
+        const inputValue = e.target.elements.formInput.value;
+    
+      
+        console.log(inputValue);
+      }
+      return (
+        <div>
+          <div>
+          <img src='https://a.espncdn.com/combiner/i?img=/i/headshots/mlb/players/full/33192.png'/>
+          </div>
+          <form id='questionPostForm' onSubmit={handleSubmit}>
+              <input name='formInput'></input>
+            <button type='submit'>Enter</button>
+          </form>
+        </div>
+      );
 }
+
+const init = () => {
+  const questionDiv = document.getElementById('questionDiv');
+
+  questionDiv = shortQuestion;
+}
+
+window.onload = init;
