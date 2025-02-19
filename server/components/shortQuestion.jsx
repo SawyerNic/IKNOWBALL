@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import ReactDOM from 'react-dom'
 
 const shortQuestion = () => {
     function handleSubmit(e) {
@@ -23,9 +24,9 @@ const shortQuestion = () => {
 }
 
 const init = () => {
-  const questionDiv = document.getElementById('questionDiv');
+  let questionDiv = document.getElementById('questionDiv');
 
-  questionDiv = shortQuestion;
+  ReactDOM.render(<shortQuestion />, questionDiv);
 }
 
 window.onload = init;

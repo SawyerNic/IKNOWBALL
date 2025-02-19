@@ -29,18 +29,19 @@ const lintTask = (done) => {
 }
 
 
+
 const build = gulp.parallel(sassTask, jsTask, lintTask);
 const herokuBuild = gulp.parallel(sassTask, jsTask);
 
 const watch = (done) => {
     gulp.watch('./scss', sassTask);
     gulp.watch(['./client/*.js', './client/*.jsx'], jsTask);
+    gulp.watch(['./server/**/*.js', './server/**/*.jsx'], lintTask);
     nodemon({ 
         script: './server/app.js',
         tasks: ['lintTask'],
         watch: ['./server'],
-        done: done
-    });
+    }).on('start', done);
 }
 
 module.exports = {
