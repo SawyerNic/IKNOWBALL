@@ -13,11 +13,12 @@ const sassTask = (done) => {
 };
 
 const jsTask = (done) => {
-    webpack(webpackConfig)
+    gulp.src(['./client/**/*.jsx', './server/components/**/*.jsx'])
+        .pipe(webpack(webpackConfig))
         .pipe(gulp.dest('./dist'));
-    
+
     done();
-}
+};
 
 const lintTask = (done) => {
     gulp.src('./server/**/*.js')
@@ -28,15 +29,13 @@ const lintTask = (done) => {
     done();
 }
 
-
-
 const build = gulp.parallel(sassTask, jsTask, lintTask);
 const herokuBuild = gulp.parallel(sassTask, jsTask);
 
 const watch = (done) => {
     gulp.watch('./scss', sassTask);
-    gulp.watch(['./client/*.js', './client/*.jsx'], jsTask);
-    gulp.watch(['./server/**/*.js', './server/**/*.jsx'], lintTask);
+    gulp.watch(['./client/**/*.js', './client/**/*.jsx', './server/components/**/*.jsx'], build);
+    gulp.watch(['./server/**/*.js', './server/**/*.jsx'], build);
     nodemon({ 
         script: './server/app.js',
         tasks: ['lintTask'],

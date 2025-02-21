@@ -1,7 +1,9 @@
-import { useState, useRef } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-const shortQuestion = () => {
+const React = require('react');
+
+const ShortQuestion = () => {
     function handleSubmit(e) {
         e.preventDefault();
     
@@ -24,9 +26,13 @@ const shortQuestion = () => {
 }
 
 const init = () => {
-  let questionDiv = document.getElementById('questionDiv');
 
-  ReactDOM.render(<shortQuestion />, questionDiv);
+      const root = createRoot(document.getElementById('questionDiv'));
+  
+      root.render(
+          <ShortQuestion/>
+      )
+
 }
 
 window.onload = init;

@@ -13,6 +13,9 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                 },
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react'],
+                  },
                 
             },
             {
@@ -30,6 +33,9 @@ module.exports = {
             },
         ],
     },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+      },
     mode: 'production',
     output: {
         path: path.resolve(__dirname, 'dist'),
