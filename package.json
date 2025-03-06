@@ -34,6 +34,7 @@
     "gulp-nodemon": "^2.5.0",
     "gulp-postcss": "^10.0.0",
     "gulp-sass": "^6.0.0",
+    "http": "^0.0.1-security",
     "nodemon": "^3.1.9",
     "path": "^0.12.7",
     "postcss": "^8.5.2",
@@ -41,6 +42,7 @@
     "react-dom": "^19.0.0",
     "sass": "^1.84.0",
     "serve-favicon": "^2.5.0",
+    "socket.io": "^4.8.1",
     "tailwindcss": "^4.0.6",
     "webpack": "^5.97.1",
     "webpack-stream": "^7.0.0"
