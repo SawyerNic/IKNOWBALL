@@ -12,6 +12,11 @@ const socketSetup = (app) => {
 
         console.log('a user connected');
 
+        socket.on('start game', (msg) => {
+            // console.log('message: ' + msg);
+            // io.emit('chat message', msg);
+        });
+
         socket.on('disconnect', () => {
             console.log('user disconnected');
         });

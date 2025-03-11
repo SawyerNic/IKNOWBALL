@@ -36,6 +36,7 @@ const watch = (done) => {
     gulp.watch('./scss', sassTask);
     gulp.watch(['./client/**/*.js', './client/**/*.jsx', './server/components/**/*.jsx'], build);
     gulp.watch(['./server/**/*.js', './server/**/*.jsx'], build);
+    gulp.watch(['./views/**/*.handlebars'], build);
     nodemon({ 
         script: './server/app.js',
         tasks: ['lintTask'],

@@ -3,7 +3,6 @@ const path = require('path');
 module.exports = {
     entry: {
         app: './client/landingPage.jsx',
-        game: './server/components/shortQuestion.jsx',
     },
     module: {
         rules: [
@@ -13,9 +12,6 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                 },
-                options: {
-                    presets: ['@babel/preset-env', '@babel/preset-react'],
-                  },
                 
             },
             {
