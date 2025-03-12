@@ -26,6 +26,4 @@ const socketSetup = (app) => {
     return server;
 };
 
-module.exports = {
-    socketSetup
-};
+module.exports = socketSetup;

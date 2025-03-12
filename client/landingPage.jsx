@@ -1,11 +1,25 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState } from 'react';
 
+const helper = require('./helper');
+
 const HomePage = () => {
     const [isJoining, setIsJoining] = useState(false);
 
     const handleJoinGame = () => {
         setIsJoining(!isJoining);
+    }
+
+    const handleCodeEntry = () => {
+
+        let textBox = document.getElementById('text-box');
+
+         if(textBox.value === '1234'){
+            console.log('true');
+            window.location.href = '/lobby';
+        } else{
+            console.log('false');
+        }
     }
 
     return (
@@ -16,8 +30,8 @@ const HomePage = () => {
                 <div>
                     <button type='button' onClick={handleJoinGame}>back</button>
                     <div>
-                        <input type='text' placeholder='Enter game code' />
-                        <button type='button' className='btn btn-primary'>Submit</button>
+                        <input type='text' id='text-box' placeholder='Enter game code' />
+                        <button type='button' className='btn btn-primary' onClick={handleCodeEntry}>Submit</button>
                     </div>
                 </div>
             ) : (

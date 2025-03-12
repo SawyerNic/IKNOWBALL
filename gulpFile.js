@@ -34,7 +34,7 @@ const herokuBuild = gulp.parallel(sassTask, jsTask);
 
 const watch = (done) => {
     gulp.watch('./scss', sassTask);
-    gulp.watch(['./client/**/*.js', './client/**/*.jsx', './server/components/**/*.jsx'], build);
+    gulp.watch(['./client/**/*.js', './client/**/*.jsx', './server/components/**/*.jsx'], jsTask);
     gulp.watch(['./server/**/*.js', './server/**/*.jsx'], build);
     gulp.watch(['./views/**/*.handlebars'], build);
     nodemon({ 

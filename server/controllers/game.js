@@ -1,10 +1,9 @@
-// imports
+const { Game } = require('../models/game');
 
 const singlePlayer = (req, res) => res.render('singlePlayer');
 
-module.exports = {
+
+
+module.export = {
     singlePlayer
 }
-
-
-

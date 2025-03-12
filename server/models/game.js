@@ -24,3 +24,7 @@ class Game {
         this.rounds.push(new Round(this.players));
     }
 }
+
+module.export = {
+    Game
+}
