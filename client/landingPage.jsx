@@ -10,13 +10,14 @@ const HomePage = () => {
         setIsJoining(!isJoining);
     }
 
-    const handleCodeEntry = () => {
+    const handleJoinAttempt = () => {
 
         let textBox = document.getElementById('text-box');
 
          if(textBox.value === '1234'){
             console.log('true');
             window.location.href = '/lobby';
+            
         } else{
             console.log('false');
         }
@@ -31,7 +32,7 @@ const HomePage = () => {
                     <button type='button' onClick={handleJoinGame}>back</button>
                     <div>
                         <input type='text' id='text-box' placeholder='Enter game code' />
-                        <button type='button' className='btn btn-primary' onClick={handleCodeEntry}>Submit</button>
+                        <button type='button' className='btn btn-primary' onClick={handleJoinAttempt}>Submit</button>
                     </div>
                 </div>
             ) : (

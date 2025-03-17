@@ -12,7 +12,12 @@ const socketSetup = (app) => {
 
         console.log('a user connected');
 
+        socket.on('player joined', (msg) => {
+            console.log('player joined');
+        });
+
         socket.on('start game', (msg) => {
+            console.log('game started');
             // console.log('message: ' + msg);
             // io.emit('chat message', msg);
         });

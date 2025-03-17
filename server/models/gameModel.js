@@ -1,5 +1,5 @@
 
-class Game {
+class gameModel {
     constructor() {
         this.players = [];
         this.rounds = [];
@@ -25,6 +25,6 @@ class Game {
     }
 }
 
-module.export = {
-    Game
-}
+module.exports = {
+    gameModel
+};

@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
     entry: {
         app: './client/landingPage.jsx',
-        hostPage: './client/hostPage.jsx'
+        hostPage: './client/hostPage.jsx',
+        gamePages: './client/gamePages.jsx'
     },
     module: {
         rules: [

@@ -1,5 +1,5 @@
-import Game from "./game.js"
+const { gameModel } = require('./gameModel.js');
 
-module.export = {
-    Game
+module.exports = {
+    gameModel
 }
