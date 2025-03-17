@@ -22,6 +22,8 @@ const socketSetup = (app) => {
             // io.emit('chat message', msg);
         });
 
+        socket.emit('test');
+
         socket.on('disconnect', () => {
             console.log('user disconnected');
         });

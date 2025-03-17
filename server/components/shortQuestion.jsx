@@ -1,4 +1,3 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const React = require('react');
@@ -28,7 +27,8 @@ const ShortQuestion = () => {
 const init = () => {
 
       const root = createRoot(document.getElementById('questionDiv'));
-  
+
+
       root.render(
           <ShortQuestion/>
       )

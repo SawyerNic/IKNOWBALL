@@ -1,6 +1,15 @@
-
+const socket = io();
 
 const showJoinedPlayers = () => {
 
-    document.querySelector()
+    const playerList = document.querySelector('#players-list');
+
 }
+
+const init = () => {
+    socket.on('test', () => {
+        console.log('hello');
+    });
+}
+
+window.onload = init;
