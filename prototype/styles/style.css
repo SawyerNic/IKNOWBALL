@@ -1,6 +1,7 @@
 * {
-    font-family: "Jomhuria", sans-serif;
+    font-family: "Big Shoulders", sans-serif;
     background-color: #4169E1;
+    font-size: 28px;
     color: white;
 }
 
@@ -62,20 +63,16 @@ h3 {
 }
 
 #guessButton {
-    font-size: 20px;
+    font-size: 36px;
     margin: 10px;
 }
 
 .form-container {
     display: flex;
     flex-direction: column;
-    /* Stack p and input vertically */
     align-items: center;
-    /* Horizontally center the input */
     justify-content: center;
-    /* Vertically center the elements */
     gap: 10px;
-    /* Space between the p and input */
 }
 
 p {
@@ -101,7 +98,6 @@ p {
 
     border-radius: 8px;
 
-    /* Inside auto layout */
     flex: none;
     order: 4;
     flex-grow: 0;
@@ -139,13 +135,7 @@ p {
 
 #title {
 
-    position: fixed;
-
-    font-family: 'Jomhuria';
-    font-style: normal;
-    font-weight: 400;
     font-size: 36px;
-    line-height: 36px;
 
     color: #FF8127;
 
@@ -234,6 +224,30 @@ p {
     flex-grow: 0;
     z-index: 5;
 }
+
+#suggestions {
+    position: absolute;
+    font-size: 18px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 2px);
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 16px;
+    z-index: 1000;
+}
+
+#suggestions div {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#suggestions div:hover {
+    background-color: #f0f0f0;
+}
+
 
 @media only screen and (max-width: 550px) {
 
