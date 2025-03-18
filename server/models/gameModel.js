@@ -4,6 +4,8 @@ class gameModel {
         this.players = {};
         this.rounds = [];
         this.currentRound = 0;
+        this.playerToJoin = 1;
+        this.gameStarted = false;
     }
 
     addPlayer(player) {
