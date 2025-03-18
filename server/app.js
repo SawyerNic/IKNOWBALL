@@ -3,7 +3,7 @@ const express = require('express');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const expressHandlebars = require('express-handlebars');
-const socketSetup = require('./io.js');
+const socketSetup = require('./controllers/io.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 

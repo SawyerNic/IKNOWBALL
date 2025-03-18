@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 
 const HostPage = () => {
     return (<div>
-        <h1>Working</h1>
+        <h1>Host Page</h1>
+        <div>
+
+        </div>
     </div>)
 }
 

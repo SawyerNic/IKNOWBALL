@@ -1,15 +1,26 @@
 
 class gameModel {
     constructor() {
-        this.players = [];
+        this.players = {};
         this.rounds = [];
         this.currentRound = 0;
     }
 
     addPlayer(player) {
-        this.players.push(player);
+        this.players[player.id] = player; // Use player ID as the key
     }
 
+    getPlayer(playerId) {
+        return this.players[playerId]; // Method to get a player by ID
+    }
+
+    removePlayer(playerId) {
+        delete this.players[playerId]; // Method to remove a player by ID
+    }
+
+    getPlayerCount() {
+        return Object.values(this.players).length; // Corrected method to get player count
+    }
 
 }
 
