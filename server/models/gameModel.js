@@ -10,19 +10,7 @@ class gameModel {
         this.players.push(player);
     }
 
-    startGame() {
-        this.currentRound = 1;
-        this.rounds.push(new Round(this.players));
-    }
 
-    endGame() {
-        this.currentRound = 0;
-    }
-
-    nextRound() {
-        this.currentRound += 1;
-        this.rounds.push(new Round(this.players));
-    }
 }
 
 module.exports = {

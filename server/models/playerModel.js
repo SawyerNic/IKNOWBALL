@@ -1,7 +1,13 @@
 class Player {
     constructor() {
-        this.name;
+        this.name = 'Player';
         this.totalScore;
         
     }
+
+
 }
+
+module.exports = {
+    Player
+};

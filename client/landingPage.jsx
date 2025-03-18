@@ -18,9 +18,14 @@ const HomePage = () => {
             console.log('true');
             window.location.href = '/lobby';
             
+            
         } else{
             console.log('false');
         }
+    }
+
+    const handleGetHostPage = () => {
+        window.location.href = '/hostPage'
     }
 
     return (
@@ -37,7 +42,7 @@ const HomePage = () => {
                 </div>
             ) : (
                 <div>
-                    <button type='button' className='btn btn-primary'>Host Game</button>
+                    <button type='button' className='btn btn-primary' onClick={handleGetHostPage}>Host Game</button>
                     <button type='button' className='btn btn-primary' onClick={handleJoinGame}>Join Game</button>
                 </div>
             )}
