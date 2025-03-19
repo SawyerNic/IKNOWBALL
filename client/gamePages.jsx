@@ -8,30 +8,30 @@ const GameWindow = () => {
     return (
         <div>
             <h1>Game Window</h1>
+            <div id='question-container'></div>
         </div>
     );
 }
 
 const LobbyWindow = () => {
     const [players, setPlayers] = useState([]);
-    const [name, setName] = useState('');
+    const [name, setName] = useState(() => {
+        const storedPlayer = sessionStorage.getItem('player');
+        return storedPlayer ? JSON.parse(storedPlayer).name : '';
+    });
 
+    console.log(JSON.parse(sessionStorage.getItem('player')).name);
 
-    useEffect(() => {
-        // Register the socket listener when the component mounts
-        socket.on('update player list', (playerList) => {
-            console.log('update player list');
-            setPlayers(playerList);
-        });
+    socket.on('update player list', (playerList) => {
+        console.log('update player list');
+        setPlayers(playerList);
+    });
 
-        // Cleanup the listener when the component unmounts
-        return () => {
-            socket.off('update player list');
-        };
-    }, []);
 
     const handleNameChange = (e) => {
         setName(e.target.value);
+        console.log(sessionStorage.getItem('player').name)
+
     };
 
     const handleNameSubmit = () => {
@@ -42,6 +42,7 @@ const LobbyWindow = () => {
     return (
         <div>
             <h1>Lobby Window</h1>
+            <h3>Welcome {name || '!'}</h3>
             <div id='player-profile'>
                 <input
                     type="text"
@@ -66,8 +67,23 @@ const init = () => {
     const rootElement = document.getElementById('body');
     const root = createRoot(rootElement);
 
-    socket.emit('get player count', (playerID) => {
-        socket.emit('add player', playerID);
+    socket.emit('get player count', () => {
+        const storedPlayer = sessionStorage.getItem('player');
+
+        if (storedPlayer) {
+            try {
+                const userID = JSON.parse(storedPlayer).id;
+                console.log(userID);
+                console.log('TRUE');
+                console.log(JSON.parse(storedPlayer));
+                socket.emit('reconnecting', userID);
+            } catch (error) {
+                console.error('Error parsing sessionStorage player data:', error);
+            }
+        } else {
+            console.log('FALSE!');
+            socket.emit('add player', () => {});
+        }
     });
 
     root.render(
@@ -76,9 +92,15 @@ const init = () => {
 
     socket.on('game started', () => {
         root.render(
-            <GameWindow/>
+            <GameWindow />
         )
-    })
+    });
+
+    socket.on('player created', (player) => {
+        console.log(player); // Logs the player object
+        sessionStorage.setItem('player', JSON.stringify(player)); // Store as a JSON string
+        console.log(JSON.parse(sessionStorage.getItem('player'))); // Retrieve and parse back into an object
+    });
 
     socket.on('test', () => {
         console.log('hello');

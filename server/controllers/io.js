@@ -3,6 +3,13 @@ const { Server } = require('socket.io');
 const { Player, gameModel } = require('../models');
 let io;
 
+const getActivePlayers = (game) => {
+    const activePlayers = Object.values(game.players).filter(player => !player.exited);
+    console.log('Active Players:', activePlayers); // Debugging
+    return activePlayers;
+};
+
+
 const socketSetup = (app) => {
 
     const server = http.createServer(app);
@@ -14,23 +21,31 @@ const socketSetup = (app) => {
 
         console.log('a user connected');
 
-        socket.on('add player', (playerNum) => {
-            console.log(`Player ${playerNum} joined`);
+        socket.on('add player', () => {
+            console.log(`Player joined`);
 
 
             const player = new Player();
             player.id = socket.id;
-            player.name = 'Player ' + playerNum;
+            player.name = 'Player ';
             game.addPlayer(player);
-            io.emit('update player list', game.players);
+            socket.emit('player created', player);
+            io.emit('update player list', getActivePlayers(game));
             game.playerToJoin += 1;
             console.log(game.getPlayerCount());
 
 
         });
 
+        socket.on('reconnecting', (userID) => {
+            console.log(getActivePlayers());
+            game.getPlayer(userID).exited = false;
+        })
+
         socket.on('get player count', (callback) => {
             callback(game.playerToJoin);
+
+            io.emit('update player list', getActivePlayers(game)); // Emit only active players
         });
 
         socket.on('start game', (msg) => {
@@ -49,18 +64,21 @@ const socketSetup = (app) => {
             }
         });
 
-
         socket.on('disconnect', () => {
             console.log('user disconnected');
 
-            // Find and remove the player associated with this socket
-            const playerId = socket.id; // Use socket.id as the player's unique identifier
-            game.removePlayer(playerId);
+            // Find the player associated with this socket
+            const playerId = socket.id;
+            const player = game.getPlayer(playerId);
 
-            // Emit the updated player list to all connected clients
-            io.emit('update player list', game.players);
+            if (player) {
+                player.exited = true; // Mark the player as exited
+                console.log(`Player ${playerId} exited. Current player count: ${game.getPlayerCount()}`);
+            } else {
+                console.log(`Player with ID ${playerId} not found.`);
+            }
 
-            console.log(`Player ${playerId} removed. Current player count: ${game.getPlayerCount()}`);
+            io.emit()
         });
 
     });

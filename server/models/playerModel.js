@@ -3,7 +3,9 @@ class Player {
         this.name = 'Player';
         this.playerNum;
         this.totalScore;
-        
+        this.answered = false;
+        this.exited = false;
+
     }
 }
 
