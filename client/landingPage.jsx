@@ -36,6 +36,7 @@ const HomePage = () => {
                 <div>
                     <button type='button' onClick={handleJoinGame}>back</button>
                     <div>
+                        
                         <input type='text' id='text-box' placeholder='Enter game code' />
                         <button type='button' className='btn btn-primary' onClick={handleJoinAttempt}>Submit</button>
                     </div>

@@ -34,19 +34,11 @@ const socketSetup = (app) => {
             player.name = 'Player ' + game.getPlayerCount();
             game.addPlayer(player);
             socket.emit('player created', player);
-            console.log(game.getPlayerCount());
-            socket.emit('update player list', game.players);
+            io.emit('update player list', game.players);
             
         });
 
-        socket.on('reconnecting', (userID) => {
-            console.log(getActivePlayers(game));
-            game.getPlayer(userID).exited = false;
-        })
-
-        socket.on('get player count', (callback) => {
-            callback(game.playerToJoin);
-
+        socket.on('get player count', () => {
             io.emit('update player list', getActivePlayers(game)); // Emit only active players
         });
 

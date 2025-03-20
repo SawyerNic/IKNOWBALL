@@ -1,4 +1,8 @@
+const pageReqs = require('./pageReqs.js');
 
-module.exports.home = require('./pageReqs.js');
-module.exports.host = require('./pageReqs.js');
-module.exports.lobby = require('./pageReqs.js');
+module.exports = {
+    home: pageReqs,
+    host: pageReqs,
+    lobby: pageReqs,
+    game: pageReqs,
+};

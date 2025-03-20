@@ -26,21 +26,32 @@ const LobbyWindow = () => {
 
     const handleNameChange = (e) => {
         setName(e.target.value);
-        console.log(sessionStorage.getItem('player').name)
-
     };
 
     const handleNameSubmit = () => {
+        const nameBox = document.getElementById('name-input')
+        const newName = nameBox.value;
+
+        if (newName === '') {
+            setName('mysterious');
+            socket.emit('change name', 'mysterious');
+        } else {
+            setName(newName);
+            socket.emit('change name', newName);
+        }
+
         // Emit the 'change name' event to the server
-        socket.emit('change name', name);
+
     };
+
 
     return (
         <div>
             <h1>Lobby Window</h1>
-            <h3>Welcome {name || '!'}</h3>
+            <h3>Welcome {name || 'Player!'}</h3>
             <div id='player-profile'>
                 <input
+                    id='name-input'
                     type="text"
                     placeholder="Enter your name"
                     value={name}
@@ -79,9 +90,7 @@ const init = () => {
     )
 
     socket.on('game started', () => {
-        root.render(
-            <GameWindow />
-        )
+        window.location.href = '/gamePage';
     });
 
 

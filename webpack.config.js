@@ -4,7 +4,8 @@ module.exports = {
     entry: {
         app: './client/landingPage.jsx',
         hostPage: './client/hostPage.jsx',
-        gamePages: './client/gamePages.jsx'
+        gamePage: './client/gamePage.jsx',
+        lobbyPage: './client/lobbyPage.jsx'
     },
     module: {
         rules: [

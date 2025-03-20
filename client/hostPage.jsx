@@ -5,19 +5,18 @@ const socket = io();
 
 const HostPage = () => {
     const [players, setPlayers] = useState([]);
+    let message = <h1>big</h1>;
 
-    useEffect(() => {
-        // Register the socket listener when the component mounts
-        socket.on('update player list', (playerList) => {
-            console.log('update player list');
-            setPlayers(playerList);
-        });
+    socket.on('game started', () => {
+        console.log('big guey');
+        message = <h1>kill john lennon</h1>;
+    })
 
-        // Cleanup the listener when the component unmounts
-        return () => {
-            socket.off('update player list');
-        };
-    }, []);
+    // Register the socket listener when the component mounts
+    socket.on('update player list', (playerList) => {
+        console.log('update player list');
+        setPlayers(playerList);
+    });
 
     const handleStartGame = () => {
         // Emit the 'start game' event to the server
@@ -25,16 +24,16 @@ const HostPage = () => {
     };
 
     return (
+
         <div>
             <h1>Host Page</h1>
-            
+            {message}
             <ul id='player-list'>
                 {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + " " + player.id}</li>
+                    <li key={player.id}>{player.name}</li>
                 ))}
             </ul>
 
-            {/* Add the Start Game button */}
             <button onClick={handleStartGame} className="btn btn-primary">
                 Start Game
             </button>
@@ -43,6 +42,7 @@ const HostPage = () => {
 };
 
 const init = () => {
+    socket.emit('get player count', () => {});
     const root = createRoot(document.getElementById('host-content'));
 
     root.render(
