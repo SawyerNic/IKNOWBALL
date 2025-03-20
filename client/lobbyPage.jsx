@@ -23,6 +23,10 @@ const LobbyWindow = () => {
         setPlayers(playerList);
     });
 
+    socket.on('player created', (player) => {
+        console.log('player name ' + player.name); // Logs the player object
+        sessionStorage.setItem('player', JSON.stringify(player));
+    });
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -48,7 +52,7 @@ const LobbyWindow = () => {
     return (
         <div>
             <h1>Lobby Window</h1>
-            <h3>Welcome {name || 'Player!'}</h3>
+            <h3>Welcome {name || 'Player'}!</h3>
             <div id='player-profile'>
                 <input
                     id='name-input'
@@ -61,7 +65,7 @@ const LobbyWindow = () => {
             </div>
 
             <ul id='player-list'>
-                {Object.values(players).map((player) => (
+                {Object.values(players || {'empty':'empty'}).map((player) => (
                     <li key={player.id}>{player.name}</li>
                 ))}
             </ul>
@@ -70,16 +74,15 @@ const LobbyWindow = () => {
 }
 
 const init = () => {
+    const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
+    socket.emit('add player', savedPlayer);
+
 
     const rootElement = document.getElementById('body');
     const root = createRoot(rootElement);
 
-    socket.emit('add player');
 
-    socket.on('player created', (player) => {
-        console.log('player name' + player.name); // Logs the player object
-        sessionStorage.setItem('player', JSON.stringify(player));
-    });
+
 
     socket.on('test', () => {
         console.log('hello');

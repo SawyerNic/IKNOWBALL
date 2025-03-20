@@ -44,6 +44,18 @@ const watch = (done) => {
     }).on('start', done);
 }
 
+const debugTask = (done) => {
+    nodemon({
+        script: './server/app.js',
+        exec: 'node --inspect', // Enable the Node.js inspector
+        tasks: ['lintTask'], // Run linting before restarting
+        watch: ['./server', './client'], // Watch server and client files
+    }).on('start', done);
+};
+
+const watchWithDebug = gulp.series(build, debugTask);
+
+
 module.exports = {
 	sassTask,
     build,
@@ -51,4 +63,6 @@ module.exports = {
     lintTask,
     watch,
     herokuBuild,
+    debugTask,
+    watchWithDebug,
 };
