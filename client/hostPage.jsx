@@ -5,12 +5,11 @@ const socket = io();
 
 const HostPage = () => {
     const [players, setPlayers] = useState([]);
-    let message = <h1>big</h1>;
+    const [gameStats, updateGame] = useState({});
 
     socket.on('game started', () => {
-        console.log('big guey');
-        message = <h1>kill john lennon</h1>;
-    })
+
+    });
 
     // Register the socket listener when the component mounts
     socket.on('update player list', (playerList) => {
@@ -20,14 +19,13 @@ const HostPage = () => {
 
     const handleStartGame = () => {
         // Emit the 'start game' event to the server
-        socket.emit('start game', { message: 'The game has started!' });
+        socket.emit('start game', 'The game has started!');
     };
 
     return (
 
         <div>
             <h1>Host Page</h1>
-            {message}
             <ul id='player-list'>
                 {Object.values(players).map((player) => (
                     <li key={player.id}>{player.name}</li>

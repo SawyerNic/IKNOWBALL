@@ -77,16 +77,8 @@ const init = () => {
     const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
     socket.emit('add player', savedPlayer);
 
-
     const rootElement = document.getElementById('body');
     const root = createRoot(rootElement);
-
-
-
-
-    socket.on('test', () => {
-        console.log('hello');
-    });
 
     root.render(
         <LobbyWindow />

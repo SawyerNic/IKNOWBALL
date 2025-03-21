@@ -2,7 +2,7 @@ class Player {
     constructor() {
         this.name = 'Player';
         this.playerNum;
-        this.totalScore;
+        this.totalScore = 0;
         this.answered = false;
         this.exited = false;
 

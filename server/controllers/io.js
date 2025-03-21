@@ -30,7 +30,6 @@ const socketSetup = (app) => {
         socket.on('add player', (passedPlayer) => {
             let player = new Player();
 
-            console.log(`Player joined`);
             console.log('passed player ' + passedPlayer);
             if(passedPlayer){
                 player = passedPlayer;
@@ -38,13 +37,9 @@ const socketSetup = (app) => {
             } else{
                 player.id = socket.id;
                 player.name = 'Player ' + game.playerToJoin;
-
-
-
             }
             game.addPlayer(player);
             game.playerToJoin += 1;
-
 
             socket.emit('player created', player);
             io.emit('update player list', game.players);
