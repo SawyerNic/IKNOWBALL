@@ -6,13 +6,9 @@ const socket = io();
 const GameWindow = () => {
     const [myPlayer, updatePlayer] = useState(null);
 
-    useEffect(() => {
-        const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
-        if (savedPlayer) {
-            updatePlayer(savedPlayer); // Update state after the component mounts
-        } 
-        socket.emit('update game');
-    }, []); // Empty dependency array ensures this runs only once
+    socket.on('player created', (player) => {
+        updatePlayer(player)
+    })
 
     if(!myPlayer) {
         return(
@@ -24,7 +20,7 @@ const GameWindow = () => {
 
     return (
         <div>
-            <h3>{myPlayer.name}</h3>
+            <h3>{myPlayer.name + " " + myPlayer.id}</h3>
             <h3>points: {myPlayer.totalScore}</h3>
             <div id='question-container'></div>
         </div>
@@ -33,12 +29,14 @@ const GameWindow = () => {
 
 const init = () => {
     const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
+    savedPlayer.id = socket.id;
     socket.emit('add player', savedPlayer);
-
+    
     const rootElement = document.getElementById('content');
     const root = createRoot(rootElement);
 
-    console.log(JSON.parse(sessionStorage.getItem('player')));
+
+
 
     root.render(
         <GameWindow />

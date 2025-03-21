@@ -31,10 +31,10 @@ const socketSetup = (app) => {
             let player = new Player();
 
             console.log('passed player ' + passedPlayer);
-            if(passedPlayer){
-                player = passedPlayer;
+            if (passedPlayer) {
+                player = { ...player, ...passedPlayer };
                 player.id = socket.id;
-            } else{
+            } else {
                 player.id = socket.id;
                 player.name = 'Player ' + game.playerToJoin;
             }
@@ -43,8 +43,19 @@ const socketSetup = (app) => {
 
             socket.emit('player created', player);
             io.emit('update player list', game.players);
-            
+
         });
+
+        socket.on('get my player', (id) => {
+            const player = game.players[id];
+            if (player) {
+                console.log('player exists');
+                socket.emit('my player', player);
+            } else {
+                console.log('player doesnt exist');
+
+            }
+        })
 
         socket.on('get player count', () => {
             io.emit('update player list', getActivePlayers(game)); // Emit only active players
@@ -54,11 +65,11 @@ const socketSetup = (app) => {
             io.emit('update player list', getActivePlayers(game));
         })
 
-        socket.on('start game', (msg) => {
+        socket.on('start game', (game) => {
             console.log('game started');
             game.gameStarted = true;
             // console.log('message: ' + msg);
-            io.emit('game started', msg);
+            io.emit('game started', game);
         });
 
         socket.on('change name', (newName) => {

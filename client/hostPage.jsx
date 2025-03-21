@@ -6,10 +6,28 @@ const socket = io();
 const HostPage = () => {
     const [players, setPlayers] = useState([]);
     const [gameStats, updateGame] = useState({});
+    const [gameStarted, setGameStarted] = useState(false); // Track if the game has started
 
-    socket.on('game started', () => {
 
-    });
+    useEffect(() => {
+        // Listen for the 'game started' event
+        socket.on('game started', () => {
+            console.log('Game has started');
+            setGameStarted(true); // Update the state to indicate the game has started
+        });
+
+        // Listen for the 'update player list' event
+        socket.on('update player list', (playerList) => {
+            console.log('update player list');
+            setPlayers(playerList);
+        });
+
+        // Cleanup listeners on component unmount
+        return () => {
+            socket.off('game started');
+            socket.off('update player list');
+        };
+    }, []);
 
     // Register the socket listener when the component mounts
     socket.on('update player list', (playerList) => {
@@ -28,12 +46,16 @@ const HostPage = () => {
             <h1>Host Page</h1>
             <ul id='player-list'>
                 {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name}</li>
+                    <li key={player.id}>{player.name + " " + player.totalScore + " " + player.id}</li>
                 ))}
             </ul>
 
-            <button onClick={handleStartGame} className="btn btn-primary">
-                Start Game
+            <button
+                onClick={handleStartGame}
+                className="btn btn-primary"
+                disabled={gameStarted}
+            >
+                {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
         </div>
     );
