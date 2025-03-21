@@ -62,6 +62,7 @@ const HostPage = () => {
 };
 
 const init = () => {
+    
     socket.emit('get player count', () => {});
     const root = createRoot(document.getElementById('host-content'));
 

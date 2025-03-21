@@ -2,7 +2,7 @@
 class gameModel {
     constructor() {
         this.players = {};
-        this.rounds = [];
+        this.rounds = 1;
         this.currentRound = 0;
         this.playerToJoin = 1;
         this.gameStarted = false;

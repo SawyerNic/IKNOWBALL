@@ -55,21 +55,29 @@ const socketSetup = (app) => {
                 console.log('player doesnt exist');
 
             }
+        });
+
+        socket.on('get game', () => {
+            console.log(game.gameStarted);
+            socket.emit('return game', game);
         })
 
         socket.on('get player count', () => {
-            io.emit('update player list', getActivePlayers(game)); // Emit only active players
+            io.emit('update player list', getActivePlayers(game)); 
         });
 
         socket.on('update game', () => {
             io.emit('update player list', getActivePlayers(game));
-        })
+        });
 
-        socket.on('start game', (game) => {
+        socket.on('start game', () => {
             console.log('game started');
             game.gameStarted = true;
             // console.log('message: ' + msg);
             io.emit('game started', game);
+            io.emit('question', (question) => {
+
+            })
         });
 
         socket.on('change name', (newName) => {
@@ -77,7 +85,7 @@ const socketSetup = (app) => {
             const player = game.players[playerId];
             if (player) {
                 player.name = newName;
-                io.emit('update player list', game.players); // Broadcast updated player list
+                io.emit('update player list', game.players); 
                 console.log(`Player ${playerId} changed name to ${newName}`);
             }
         });
