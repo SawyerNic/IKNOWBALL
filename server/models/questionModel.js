@@ -10,8 +10,8 @@ class Question {
     constructor() {
         this.prompt = "blank";
         this.options = [];
-        this.image;
         this.answer;
+        this.imageLink;
     } 
 }
 
