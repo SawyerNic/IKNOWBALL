@@ -12,8 +12,7 @@
     "start": "node ./server/app.js",
     "watch": "gulp watch",
     "debug": "gulp watchWithDebug",
-    "styles": "gulp sassTask",
-    "postinstall": "npm install @babel/preset-env @babel/preset-react"
+    "styles": "gulp sassTask"
   },
   "repository": {
     "type": "git",
@@ -29,9 +28,8 @@
     "@babel/cli": "^7.27.0",
     "@babel/core": "^7.26.10",
     "@babel/register": "^7.25.9",
-    "@popperjs/core": "^2.11.8",
-    "autoprefixer": "^10.4.20",
-    "babel": "^6.23.0",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
     "babel-loader": "^9.2.1",
     "body-parser": "^1.20.3",
     "compression": "^1.7.5",
