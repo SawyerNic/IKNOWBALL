@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "a sports trivia game",
   "main": "index.js",
+  "engines": {
+    "node": "23.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
