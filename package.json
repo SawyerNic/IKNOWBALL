@@ -12,7 +12,8 @@
     "start": "node ./server/app.js",
     "watch": "gulp watch",
     "debug": "gulp watchWithDebug",
-    "styles": "gulp sassTask"
+    "styles": "gulp sassTask",
+    "postinstall": "npm install @babel/preset-env @babel/preset-react"
   },
   "repository": {
     "type": "git",
