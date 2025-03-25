@@ -1,6 +1,8 @@
 require('@babel/register')({
-  presets: ['@babel/preset-env', '@babel/preset-react'],
-  extensions: ['.js', '.jsx'], 
+  presets: [
+    require.resolve('@babel/preset-env'),
+    require.resolve('@babel/preset-react'),
+  ],
 });
 
 
