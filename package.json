@@ -8,7 +8,8 @@
     "build": "webpack",
     "start": "node ./server/app.js",
     "watch": "gulp watch",
-    "debug": "gulp watchWithDebug"
+    "debug": "gulp watchWithDebug",
+    "styles": "gulp sassTask"
   },
   "repository": {
     "type": "git",
