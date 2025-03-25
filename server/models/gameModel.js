@@ -6,6 +6,7 @@ class gameModel {
         this.currentRound = 0;
         this.playerToJoin = 1;
         this.gameStarted = false;
+        this.questions;
     }
 
     addPlayer(player) {

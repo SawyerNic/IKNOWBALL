@@ -9,6 +9,10 @@ const GameWindow = () => {
 
     socket.on('player created', (player) => {
         updatePlayer(player)
+    });
+
+    socket.on('question', (sentQuestion) => {
+        updateQuestion(sentQuestion);
     })
 
     if(!myPlayer) {

@@ -1,6 +1,7 @@
 const http = require('http');
 const { Server } = require('socket.io');
 const { Player, gameModel } = require('../models');
+const { getTestQuestions } = require('../components');
 
 
 let io;
@@ -11,9 +12,6 @@ const getActivePlayers = (game) => {
     return activePlayers;
 };
 
-
-
-
 const socketSetup = (app) => {
 
     const server = http.createServer(app);
@@ -21,7 +19,7 @@ const socketSetup = (app) => {
 
     const game = new gameModel();
 
-
+    game.questions = getTestQuestions();
 
     io.on('connection', (socket) => {
 
@@ -75,9 +73,7 @@ const socketSetup = (app) => {
             game.gameStarted = true;
             // console.log('message: ' + msg);
             io.emit('game started', game);
-            io.emit('question', (question) => {
-
-            })
+            io.emit('question', game.questions[game.currentRound]);
         });
 
         socket.on('change name', (newName) => {
