@@ -44,4 +44,4 @@ const QuestionComponent = ({ question }) => {
     );
 };
 
-export default QuestionComponent;
+module.exports = QuestionComponent;

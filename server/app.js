@@ -1,3 +1,9 @@
+require('@babel/register')({
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  extensions: ['.js', '.jsx'], 
+});
+
+
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -5,11 +11,13 @@ const bodyParser = require('body-parser');
 const expressHandlebars = require('express-handlebars');
 const socketSetup = require('./controllers/io.js');
 
+
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const router = require('./router');
 
 const app = express();
+
 
 app.use('/assets', express.static(path.resolve(`${__dirname}/../dist`)));
 app.use(compression());

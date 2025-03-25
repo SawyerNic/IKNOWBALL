@@ -1,5 +1,5 @@
-const questionTemplate = require('./questionTemplates.jsx');
+const QuestionComponent = require('./questionTemplates.jsx');
 
-module.export = {
-    questionTemplate
-}
+module.exports = {
+    QuestionComponent
+};

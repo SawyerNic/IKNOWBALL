@@ -12,7 +12,8 @@ const GameWindow = () => {
     });
 
     socket.on('question', (sentQuestion) => {
-        updateQuestion(sentQuestion);
+        console.log(sentQuestion);
+        //updateQuestion(sentQuestion);
     })
 
     if(!myPlayer) {

@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/SawyerNic/IKNOWBALL#readme",
   "dependencies": {
-    "@babel/preset-env": "^7.26.9",
+    "@babel/register": "^7.25.9",
     "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.20",
     "babel": "^6.23.0",
@@ -50,7 +50,11 @@
     "webpack-stream": "^7.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.27.0",
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
+    "babel-register": "^6.26.0",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.25.3",
