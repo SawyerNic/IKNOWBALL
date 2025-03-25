@@ -1,0 +1,1 @@
+web: gulp herokuBuild && node ./server/app.js
