@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKNOWBALL DEMO</title>
+    <link rel="stylesheet" href="styles/style-Filter.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders:opsz,wght@10..72,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <h1 id="title">IKNOWBALL</h1>
+        <h3 id="round-display">Round: 5</h3>
+        <img id="players" src="images/grnPlayerIcon.jpg">
+        <p id="player-number">53</p>
+        <img id="eliminated" src="images/redPlayerIcon.jpg">
+        <p id="elim-players">143</p>
+        <h3 id="timer">00:20</h3>
+        <img id="filter-img" src="images/ohtaniFilter.jpg">
+        <h2>What Player Is This?</h2><br>
+    </main>
+    <div id="result"></div>
+
+    <div class="form-container">
+        <input type="text" id="playerInput" placeholder="Type player's name..."><br>
+        <div id="suggestions" class="suggestions"></div>
+        <button id="guessButton">Guess</button>
+    </div>
+    <script src="src/filter.js"></script>
+</body>
+
+</html>
