@@ -22,11 +22,7 @@ const HostPage = () => {
             setPlayers(playerList);
         });
 
-        // Cleanup listeners on component unmount
-        return () => {
-            socket.off('game started');
-            socket.off('update player list');
-        };
+
     }, []);
 
     // Register the socket listener when the component mounts

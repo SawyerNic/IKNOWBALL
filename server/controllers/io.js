@@ -4,8 +4,7 @@ const ReactDOMServer = require('react-dom/server');
 const React = require('react');
 
 const { Player, gameModel } = require('../models');
-const { getTestQuestions } = require('./questionManager')
-const { QuestionComponent } = require('../components');
+const { getTestQuestions } = require('./questionManager');
 
 
 let io;
@@ -40,8 +39,8 @@ const socketSetup = (app) => {
                 player.id = socket.id;
                 player.name = 'Player ' + game.playerToJoin;
             }
-            game.addPlayer(player);
             game.playerToJoin += 1;
+            game.addPlayer(player);
 
             socket.emit('player created', player);
             io.emit('update player list', game.players);
@@ -62,6 +61,8 @@ const socketSetup = (app) => {
         socket.on('get game', () => {
             console.log(game.gameStarted);
             socket.emit('return game', game);
+            io.emit('question', game.questions[game.currentRound] );
+
         })
 
         socket.on('get player count', () => {
@@ -78,7 +79,6 @@ const socketSetup = (app) => {
             // console.log('message: ' + msg);
 
             io.emit('game started', game);
-            io.emit('question', QuestionComponent(game.questions[game.currentRound] ) );
         });
 
         socket.on('change name', (newName) => {

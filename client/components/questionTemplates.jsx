@@ -20,7 +20,7 @@ const QuestionComponent = ({ question }) => {
                 <img
                     src={question.imageLink}
                     alt="Question"
-                    style={{ maxWidth: '100%', height: 'auto', marginBottom: '20px' }}
+                    style={{ maxWidth: '10%', height: 'auto', marginBottom: '20px' }}
                 />
             )}
             <div className="options-container">
@@ -28,13 +28,7 @@ const QuestionComponent = ({ question }) => {
                     <button
                         key={index}
                         onClick={() => handleOptionClick(option)}
-                        style={{
-                            display: 'block',
-                            margin: '10px auto',
-                            padding: '10px 20px',
-                            fontSize: '16px',
-                            cursor: 'pointer',
-                        }}
+
                     >
                         {option.text}
                     </button>

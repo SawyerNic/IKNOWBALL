@@ -30,7 +30,6 @@ const HomePage = () => {
 
     return (
         <div id='home-content'>
-            <h1>Landing Page</h1>
             <p id='welcome'>Welcome to IKNOWBALL player!</p>
             {isJoining ? (
                 <div>
