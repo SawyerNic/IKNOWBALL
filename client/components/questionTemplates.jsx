@@ -1,15 +1,17 @@
 const React = require('react');
 
-const QuestionComponent = ({ question }) => {
+const QuestionComponent = ({ question, answerHandler }) => {
     if (!question) {
         return (<div>No question provided</div>);
     }
 
     const handleOptionClick = (option) => {
+        console.log("Option clicked:", option);
+
         if (option.isAnswer) {
-            alert('Correct!');
+            answerHandler(true);
         } else {
-            alert('Incorrect. Try again!');
+            answerHandler(false);
         }
     };
 

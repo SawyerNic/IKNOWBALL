@@ -4,6 +4,10 @@ import { QuestionComponent } from './components';
 
 const socket = io();
 
+const sendAnswer = (answer) => {
+    socket.emit('player send answer', answer);
+}
+
 const GameWindow = () => {
     const [myPlayer, updatePlayer] = useState(null);
     const [question, updateQuestion] = useState(null);
@@ -12,9 +16,9 @@ const GameWindow = () => {
         updatePlayer(player)
     });
 
-    socket.on('question', (sentQuestion) => {
+    socket.on('server send question', (sentQuestion) => {
         console.log("sentQuestion: " + JSON.stringify(sentQuestion));
-        updateQuestion(<QuestionComponent question={sentQuestion} />);
+        updateQuestion(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} />);
     })
 
     if (!myPlayer) {

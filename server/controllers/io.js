@@ -1,11 +1,8 @@
 const http = require('http');
 const { Server } = require('socket.io');
-const ReactDOMServer = require('react-dom/server');
-const React = require('react');
 
 const { Player, gameModel } = require('../models');
 const { getTestQuestions } = require('./questionManager');
-
 
 let io;
 
@@ -61,7 +58,7 @@ const socketSetup = (app) => {
         socket.on('get game', () => {
             console.log(game.gameStarted);
             socket.emit('return game', game);
-            io.emit('question', game.questions[game.currentRound] );
+            io.emit('server send question', game.questions[game.currentRound] );
 
         })
 
@@ -79,6 +76,10 @@ const socketSetup = (app) => {
             // console.log('message: ' + msg);
 
             io.emit('game started', game);
+        });
+
+        socket.on('player send answer', (answer) => {
+            console.log('player id ' + socket.id + ' answer ' + answer);
         });
 
         socket.on('change name', (newName) => {

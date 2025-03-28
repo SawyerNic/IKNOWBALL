@@ -3,16 +3,6 @@ import React, { useState, useEffect } from 'react';
 
 const socket = io();
 
-
-const GameWindow = () => {
-    return (
-        <div>
-            <h1>Game Window</h1>
-            <div id='question-container'></div>
-        </div>
-    );
-}
-
 const LobbyWindow = () => {
 
     const [players, setPlayers] = useState([]);

@@ -6,6 +6,7 @@ class gameModel {
         this.currentRound = 0;
         this.playerToJoin = 1;
         this.gameStarted = false;
+        this.detailedList;
         this.questions;
     }
 
@@ -25,6 +26,25 @@ class gameModel {
         return Object.values(this.players).length; // Corrected method to get player count
     }
 
+    updateDetailedList() {
+        this.detailedList = Object.values(this.players).sort((a, b) => {
+            if (b.roundsSurvived !== a.roundsSurvived) {
+                return b.roundsSurvived - a.roundsSurvived;
+            }
+            return b.score - a.score;
+        });
+    }
+
+    getSortedPlayers() {
+        this.updateDetailedList();
+        return this.detailedList;
+    }
+
+    handlePlayerAnswer(id, answer) {
+        if(answer){
+            
+        }
+    }
 }
 
 module.exports = {
