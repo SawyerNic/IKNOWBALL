@@ -58,7 +58,7 @@ const HostPage = () => {
 };
 
 const init = () => {
-    
+    socket.emit('restart game', () => {});
     socket.emit('get player count', () => {});
     const root = createRoot(document.getElementById('host-content'));
 

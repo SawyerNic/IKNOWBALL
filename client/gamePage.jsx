@@ -10,7 +10,8 @@ const sendAnswer = (answer) => {
 
 const GameWindow = () => {
     const [myPlayer, updatePlayer] = useState(null);
-    const [question, updateQuestion] = useState(null);
+    const [gameWindow, updateGameWindow] = useState(null);
+    const [timer, updateTimer] = useState(15);
 
     socket.on('player created', (player) => {
         updatePlayer(player)
@@ -18,7 +19,11 @@ const GameWindow = () => {
 
     socket.on('server send question', (sentQuestion) => {
         console.log("sentQuestion: " + JSON.stringify(sentQuestion));
-        updateQuestion(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} />);
+        updateGameWindow(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} />);
+    });
+
+    socket.on('timer update', (timeLeft) => {
+        updateTimer(timeLeft)
     })
 
     if (!myPlayer) {
@@ -33,8 +38,9 @@ const GameWindow = () => {
         <div>
             <h3>{myPlayer.name + " " + myPlayer.id}</h3>
             <h3>points: {myPlayer.totalScore}</h3>
+            <h3>Timer: {timer}</h3>
             <div id='question-container'>
-                {question}
+                {gameWindow}
             </div>
         </div>
     )

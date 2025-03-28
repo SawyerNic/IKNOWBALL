@@ -9,8 +9,10 @@ const QuestionComponent = ({ question, answerHandler }) => {
         console.log("Option clicked:", option);
 
         if (option.isAnswer) {
+            alert('correct!');
             answerHandler(true);
         } else {
+            alert('incorrect!');
             answerHandler(false);
         }
     };
