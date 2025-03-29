@@ -35,7 +35,7 @@ const HomePage = () => {
                     <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
             </div>
-            <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="320px"></img>
+            <img src="assets/img/IKNOWBALL-LOGO-T.png" className="ikb-logo" alt="IKNOWBALL" width="640px" height="320px"></img>
             <p id='welcome'>Welcome to IKNOWBALL player!</p>
             {isJoining ? (
                 <div>

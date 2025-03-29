@@ -13,6 +13,9 @@
 h1 {
   font-size: 3em;
   text-align: center;
+}
+
+img {
   animation: bounce 1s infinite alternate;
 }
 
