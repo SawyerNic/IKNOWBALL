@@ -22,7 +22,11 @@ const HostPage = () => {
             setPlayers(playerList);
         });
 
-
+        // Cleanup listeners on component unmount
+        return () => {
+            socket.off('game started');
+            socket.off('update player list');
+        };
     }, []);
 
     // Register the socket listener when the component mounts
@@ -38,14 +42,14 @@ const HostPage = () => {
 
     return (
 
-        <div>
-            <h1>Host Page</h1>
-            <ul id='player-list'>
-                {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + " " + player.totalScore + " " + player.id}</li>
+        <div id='home-content'>
+            <div className="baseball-banner">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
-            </ul>
-
+            </div>
+            <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
+            <h2>Game Code: 1234</h2>
             <button
                 onClick={handleStartGame}
                 className="btn btn-primary"
@@ -53,12 +57,17 @@ const HostPage = () => {
             >
                 {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
+            <ul id='player-list'>
+                {Object.values(players).map((player) => (
+                    <li key={player.id}>{player.name + " - Score: " + player.totalScore + " " /*+ player.id*/}</li>
+                ))}
+            </ul>
         </div>
     );
 };
 
 const init = () => {
-    socket.emit('restart game', () => {});
+    
     socket.emit('get player count', () => {});
     const root = createRoot(document.getElementById('host-content'));
 
