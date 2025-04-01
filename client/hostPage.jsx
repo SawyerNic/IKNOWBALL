@@ -22,7 +22,9 @@ const HostPage = () => {
             setPlayers(playerList);
         });
 
-
+        socket.on('update Game', (game) => {
+            updateGame(game);
+        })
     }, []);
 
     // Register the socket listener when the component mounts
@@ -40,7 +42,9 @@ const HostPage = () => {
 
         <div>
             <h1>Host Page</h1>
+            <h2>Leaderboard</h2>
             <ul id='player-list'>
+                
                 {Object.values(players).map((player) => (
                     <li key={player.id}>{player.name + " " + player.totalScore + " " + player.id}</li>
                 ))}
@@ -53,6 +57,9 @@ const HostPage = () => {
             >
                 {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
+            <div id='game-stats'>
+                {gameStats}
+            </div>
         </div>
     );
 };

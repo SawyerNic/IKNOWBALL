@@ -14,8 +14,6 @@ const getActivePlayers = (game) => {
     return activePlayers;
 };
 
-
-
 const socketSetup = (app) => {
 
     const server = http.createServer(app);
