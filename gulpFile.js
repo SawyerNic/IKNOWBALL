@@ -14,7 +14,11 @@ const sassTask = (done) => {
 
 const jsTask = (done) => {
     gulp.src(['./client/**/*.jsx'])
-        .pipe(webpack(webpackConfig))
+        .pipe(webpack({
+            ...webpackConfig,
+            mode: 'development', // Ensure development mode for source maps
+            devtool: 'source-map', // Enable source maps
+        }))
         .pipe(gulp.dest('./dist'));
 
     done();
@@ -22,10 +26,10 @@ const jsTask = (done) => {
 
 const lintTask = (done) => {
     gulp.src('./server/**/*.js')
-        .pipe(eslint({fix: true}))
+        .pipe(eslint({ fix: true }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
-    
+
     done();
 }
 
@@ -37,7 +41,7 @@ const watch = (done) => {
     gulp.watch(['./client/**/*.js', './client/**/*.jsx'], jsTask);
     gulp.watch(['./server/**/*.js', './server/**/*.jsx'], build);
     gulp.watch(['./views/**/*.handlebars'], build);
-    nodemon({ 
+    nodemon({
         script: './server/app.js',
         tasks: ['lintTask'],
         watch: ['./server'],
@@ -57,7 +61,7 @@ const watchWithDebug = gulp.series(build, debugTask);
 
 
 module.exports = {
-	sassTask,
+    sassTask,
     build,
     jsTask,
     lintTask,

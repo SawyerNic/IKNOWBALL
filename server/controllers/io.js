@@ -32,15 +32,13 @@ const socketSetup = (app) => {
         const timerInterval = setInterval(() => {
             timeLeft -= 1;
             io.emit('timer update', timeLeft); // Send the remaining time to all clients
-
+            io.emit('update Game', game); // Send the updated game state to all clients
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
 
-                // Handle answer submission when the timer reaches zero
                 console.log('Timer ended. Submitting answers...');
-                io.emit('submit answers'); // Notify clients to submit their answers
+                io.emit('submit answers'); 
 
-                // Move to the next round or end the game
                 game.currentRound += 1;
                 if (game.currentRound < game.questions.length) {
                     sendQuestion(); // Send the next question
@@ -58,6 +56,7 @@ const socketSetup = (app) => {
 
         socket.on('restart game', () => {
             clearInterval(timerInterval);
+            game.gameStarted = false;
             game.currentRound = 0;
         })
 

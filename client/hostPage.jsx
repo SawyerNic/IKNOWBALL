@@ -1,5 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
+import { GameDetails } from './components';
+
 
 const socket = io();
 
@@ -57,9 +59,8 @@ const HostPage = () => {
             >
                 {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
-            <div id='game-stats'>
-                {gameStats}
-            </div>
+            <GameDetails game={gameStats} />
+
         </div>
     );
 };
