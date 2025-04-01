@@ -28,7 +28,7 @@ var GameDetails = function GameDetails(_ref) {
   if (!game) {
     return /*#__PURE__*/React.createElement("div", null, "No game data available");
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Rounds:"), " ", game.rounds), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Game Started:"), " ", game.gameStarted ? 'Yes' : 'No'), /*#__PURE__*/React.createElement("h3", null, "Questions:"), /*#__PURE__*/React.createElement("ul", null, game.questions && game.questions.length > 0 ? game.questions.map(function (question, index) {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Rounds:"), " ", game.currentRound), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Game Started:"), " ", game.gameStarted ? 'Yes' : 'No'), /*#__PURE__*/React.createElement("h3", null, "Questions:"), /*#__PURE__*/React.createElement("ul", null, game.questions && game.questions.length > 0 ? game.questions.map(function (question, index) {
     return /*#__PURE__*/React.createElement("li", {
       key: index
     }, /*#__PURE__*/React.createElement("strong", null, "Question ", index + 1, ":"), " ", question.prompt);

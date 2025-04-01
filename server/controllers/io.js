@@ -14,6 +14,35 @@ const getActivePlayers = (game) => {
     return activePlayers;
 };
 
+const sendQuestion = (game) => {
+    console.log(game.currentRound);
+    const currentQuestion = game.questions[game.currentRound];
+    io.emit('server send question', currentQuestion);
+
+    let timeLeft = 15; // 15-second timer
+
+    const timerInterval = setInterval(() => {
+        timeLeft -= 1;
+        io.emit('timer update', timeLeft); // Send the remaining time to all clients
+        io.emit('update Game', game); // Send the updated game state to all clients
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+
+            console.log('Timer ended. Submitting answers...');
+            io.emit('submit answers'); 
+
+            game.currentRound += 1;
+            console.log('game: ' + game);
+            if (game.currentRound < game.questions.length) {
+                sendQuestion(game); // Send the next question
+            } else {
+                console.log('Game over');
+                io.emit('game over', game.getSortedPlayers());
+            }
+        }
+    }, 1000); // Update every second
+};
+
 const socketSetup = (app) => {
 
     const server = http.createServer(app);
@@ -23,32 +52,7 @@ const socketSetup = (app) => {
 
     game.questions = getTestQuestions();
 
-    const sendQuestion = () => {
-        const currentQuestion = game.questions[game.currentRound];
-        io.emit('server send question', currentQuestion);
 
-        let timeLeft = 15; // 15-second timer
-
-        const timerInterval = setInterval(() => {
-            timeLeft -= 1;
-            io.emit('timer update', timeLeft); // Send the remaining time to all clients
-            io.emit('update Game', game); // Send the updated game state to all clients
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-
-                console.log('Timer ended. Submitting answers...');
-                io.emit('submit answers'); 
-
-                game.currentRound += 1;
-                if (game.currentRound < game.questions.length) {
-                    sendQuestion(); // Send the next question
-                } else {
-                    console.log('Game over');
-                    io.emit('game over', game.getSortedPlayers());
-                }
-            }
-        }, 1000); // Update every second
-    };
 
     io.on('connection', (socket) => {
 
@@ -94,7 +98,6 @@ const socketSetup = (app) => {
             console.log(game.gameStarted);
             socket.emit('return game', game);
             
-            sendQuestion();
         })
 
         socket.on('get player count', () => {
@@ -108,7 +111,8 @@ const socketSetup = (app) => {
         socket.on('start game', () => {
             console.log('game started');
             game.gameStarted = true;
-            // console.log('message: ' + msg);
+
+            sendQuestion(game);
 
             io.emit('game started', game);
         });

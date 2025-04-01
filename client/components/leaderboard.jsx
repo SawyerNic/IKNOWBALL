@@ -8,7 +8,7 @@ const GameDetails = ({ game }) => {
     return (
         <div>
             <h2>Game Details</h2>
-            <p><strong>Rounds:</strong> {game.rounds}</p>
+            <p><strong>Rounds:</strong> {game.currentRound}</p>
             <p><strong>Game Started:</strong> {game.gameStarted ? 'Yes' : 'No'}</p>
             <h3>Questions:</h3>
             <ul>

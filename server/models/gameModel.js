@@ -8,6 +8,7 @@ class gameModel {
         this.gameStarted = false;
         this.detailedList;
         this.questions;
+        this.timer;
     }
 
     addPlayer(player) {
