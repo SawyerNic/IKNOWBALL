@@ -6,42 +6,69 @@ const { getTestQuestions } = require('./questionManager');
 
 let io;
 
-let timerInterval = null;
-
 const getActivePlayers = (game) => {
     console.log(game.players);
     const activePlayers = Object.values(game.players).filter(player => !player.exited);
     return activePlayers;
 };
 
+const sanitizeGame = (game) => {
+    return {
+        players: game.players,
+        rounds: game.rounds,
+        currentRound: game.currentRound,
+        playerToJoin: game.playerToJoin,
+        gameStarted: game.gameStarted,
+        leaderBoard: game.leaderBoard,
+        questions: game.questions.map((q) => ({
+            prompt: q.prompt,
+            options: q.options,
+            imageLink: q.imageLink,
+        })), // Exclude circular references or unnecessary data
+    };
+};
+
 const sendQuestion = (game) => {
-    console.log(game.currentRound);
+    console.log('Sending question for round:', game.currentRound);
+
     const currentQuestion = game.questions[game.currentRound];
     io.emit('server send question', currentQuestion);
 
-    let timeLeft = 15; // 15-second timer
-
-    const timerInterval = setInterval(() => {
-        timeLeft -= 1;
-        io.emit('timer update', timeLeft); // Send the remaining time to all clients
-        io.emit('update Game', game); // Send the updated game state to all clients
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-
+    // Start the timer using the gameModel's timer
+    game.startTimer(
+        15, // 15-second duration
+        (timeLeft) => {
+            io.emit('timer update', timeLeft); 
+            io.emit('update game', sanitizeGame(game)); // Update the game state for all players
+        },
+        () => {
             console.log('Timer ended. Submitting answers...');
-            io.emit('submit answers'); 
+            io.emit('submit answers');
 
+            // Move to the next round or end the game
             game.currentRound += 1;
-            console.log('game: ' + game);
             if (game.currentRound < game.questions.length) {
                 sendQuestion(game); // Send the next question
             } else {
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
+                io.emit('stop game');
             }
         }
-    }, 1000); // Update every second
+    );
 };
+
+const stopGame = (game) => {
+    console.log('Game stopped');
+    game.stopTimer(); // Stop the timer when the game is stopped
+}
+
+const restartGame = (game) => {
+    game.stopTimer(); // Stop the timer when restarting the game
+    game.gameStarted = false;
+    game.currentRound = 0;
+    game.leaderBoard = null;
+}
 
 const socketSetup = (app) => {
 
@@ -59,10 +86,14 @@ const socketSetup = (app) => {
         console.log('a user connected');
 
         socket.on('restart game', () => {
-            clearInterval(timerInterval);
-            game.gameStarted = false;
-            game.currentRound = 0;
-        })
+            restartGame(game);
+            io.emit('update game', sanitizeGame(game)); 
+        });
+
+        socket.on('stop game', () => {
+            stopGame(game);
+            io.emit('update game', sanitizeGame(game)); 
+        });
 
         socket.on('add player', (passedPlayer) => {
             let player = new Player();
@@ -74,8 +105,8 @@ const socketSetup = (app) => {
             } else {
                 player.id = socket.id;
                 player.name = 'Player ' + game.playerToJoin;
+                game.playerToJoin += 1;
             }
-            game.playerToJoin += 1;
             game.addPlayer(player);
 
             socket.emit('player created', player);
@@ -83,22 +114,6 @@ const socketSetup = (app) => {
 
         });
 
-        socket.on('get my player', (id) => {
-            const player = game.players[id];
-            if (player) {
-                console.log('player exists');
-                socket.emit('my player', player);
-            } else {
-                console.log('player doesnt exist');
-
-            }
-        });
-
-        socket.on('get game', () => {
-            console.log(game.gameStarted);
-            socket.emit('return game', game);
-            
-        })
 
         socket.on('get player count', () => {
             io.emit('update player list', getActivePlayers(game));
@@ -112,13 +127,17 @@ const socketSetup = (app) => {
             console.log('game started');
             game.gameStarted = true;
 
-            sendQuestion(game);
-
-            io.emit('game started', game);
+            // Wait a short time to ensure clients are ready before sending the first question
+            setTimeout(() => {
+                sendQuestion(game);
+            }, 1000); // 1-second delay
+            io.emit('update game', sanitizeGame(game)); 
         });
 
         socket.on('player send answer', (answer) => {
+            game.handlePlayerAnswer(socket.id, answer);
             console.log('player id ' + socket.id + ' answer ' + answer);
+            io.emit('update player list', game.players);
         });
 
         socket.on('change name', (newName) => {

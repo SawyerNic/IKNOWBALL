@@ -4,6 +4,7 @@ const webpack = require('webpack-stream');
 const nodemon = require('gulp-nodemon');
 const eslint = require('gulp-eslint-new');
 const webpackConfig = require('./webpack.config.js');
+require('dotenv').config();
 
 const sassTask = (done) => {
     gulp.src('./scss/**/*.scss') // Match all .scss files in the scss directory and subdirectories

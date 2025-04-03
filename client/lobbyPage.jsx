@@ -18,6 +18,14 @@ const LobbyWindow = () => {
         sessionStorage.setItem('player', JSON.stringify(player));
     });
 
+    socket.on('update game', (game) => {
+        if(!game.gameStarted) {
+            window.location.href = '/lobby';
+        } else {
+            window.location.href = '/gamePage';
+        }
+    });
+
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
@@ -74,9 +82,7 @@ const init = () => {
         <LobbyWindow />
     )
 
-    socket.on('game started', () => {
-        window.location.href = '/gamePage';
-    });
+
 
 
 }

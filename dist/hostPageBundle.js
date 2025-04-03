@@ -8,7 +8,9 @@
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var QuestionComponent = __webpack_require__(/*! ./questionTemplates.jsx */ "./client/components/questionTemplates.jsx");
-var GameDetails = __webpack_require__(/*! ./leaderboard.jsx */ "./client/components/leaderboard.jsx");
+var _require = __webpack_require__(/*! ./leaderboard.jsx */ "./client/components/leaderboard.jsx"),
+  GameDetails = _require.GameDetails,
+  Leaderboard = _require.Leaderboard;
 module.exports = {
   QuestionComponent: QuestionComponent,
   GameDetails: GameDetails
@@ -22,19 +24,58 @@ module.exports = {
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
+  useState = _require.useState,
+  useEffect = _require.useEffect;
+var socket = io();
 var GameDetails = function GameDetails(_ref) {
   var game = _ref.game;
+  var _useState = useState(game),
+    _useState2 = _slicedToArray(_useState, 2),
+    gameData = _useState2[0],
+    setGameData = _useState2[1];
+  socket.on('update game', function (game) {
+    console.log('game started ? ' + game.gameStarted);
+    setGameData(game);
+  });
   if (!game) {
     return /*#__PURE__*/React.createElement("div", null, "No game data available");
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Rounds:"), " ", game.currentRound), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Game Started:"), " ", game.gameStarted ? 'Yes' : 'No'), /*#__PURE__*/React.createElement("h3", null, "Questions:"), /*#__PURE__*/React.createElement("ul", null, game.questions && game.questions.length > 0 ? game.questions.map(function (question, index) {
-    return /*#__PURE__*/React.createElement("li", {
-      key: index
-    }, /*#__PURE__*/React.createElement("strong", null, "Question ", index + 1, ":"), " ", question.prompt);
-  }) : /*#__PURE__*/React.createElement("li", null, "No questions available")));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Round:"), " ", gameData.currentRound), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Game Started:"), " ", gameData.gameStarted ? 'Yes' : 'No'));
 };
-module.exports = GameDetails;
+var Leaderboard = function Leaderboard() {
+  var _useState3 = useState([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    players = _useState4[0],
+    setPlayers = _useState4[1];
+  if (!players || players.length === 0) {
+    return /*#__PURE__*/React.createElement("div", null, "No players available");
+  }
+
+  // Listen for the 'update player list' event
+  socket.on('update player list', function (playerList) {
+    console.log('update player list');
+    setPlayers(playerList);
+  });
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Leaderboard"), /*#__PURE__*/React.createElement("ul", {
+    id: "player-list"
+  }, Object.values(players).map(function (player) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: player.id
+    }, player.name + " " + player.totalScore + " " + player.id);
+  })));
+};
+module.exports = {
+  GameDetails: GameDetails,
+  Leaderboard: Leaderboard
+};
 
 /***/ }),
 
@@ -71,7 +112,7 @@ var QuestionComponent = function QuestionComponent(_ref) {
     src: question.imageLink,
     alt: "Question",
     style: {
-      maxWidth: '10%',
+      maxWidth: '50%',
       height: 'auto',
       marginBottom: '20px'
     }
@@ -27398,47 +27439,51 @@ var HostPage = function HostPage() {
     setGameStarted = _useState6[1]; // Track if the game has started
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    // Listen for the 'game started' event
-    socket.on('game started', function () {
-      console.log('Game has started');
-      setGameStarted(true); // Update the state to indicate the game has started
-    });
-
-    // Listen for the 'update player list' event
     socket.on('update player list', function (playerList) {
       console.log('update player list');
       setPlayers(playerList);
     });
-    socket.on('update Game', function (game) {
+    socket.on('update game', function (game) {
       updateGame(game);
+      setGameStarted(game.gameStarted);
     });
   }, []);
-
-  // Register the socket listener when the component mounts
-  socket.on('update player list', function (playerList) {
-    console.log('update player list');
-    setPlayers(playerList);
-  });
   var handleStartGame = function handleStartGame() {
     // Emit the 'start game' event to the server
     socket.emit('start game', 'The game has started!');
+  };
+  var handleStopGame = function handleStopGame() {
+    setGameStarted(false);
+    socket.emit('stop game', function () {
+      console.log('Game stopped');
+    });
+  };
+  var handleRestartGame = function handleRestartGame() {
+    socket.emit('restart game');
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Host Page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h2", null, "Leaderboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
     id: "player-list"
   }, Object.values(players).map(function (player) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("li", {
       key: player.id
-    }, player.name + " " + player.totalScore + " " + player.id);
+    }, player.name + "   Score: " + player.totalScore + " " + player.id);
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
     onClick: handleStartGame,
     className: "btn btn-primary",
     disabled: gameStarted
-  }, gameStarted ? 'Game Started' : 'Start Game'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.GameDetails, {
+  }, gameStarted ? 'Game Started' : 'Start Game'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
+    onClick: handleStopGame,
+    className: "btn btn-danger",
+    disabled: !gameStarted
+  }, "Stop Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
+    onClick: handleRestartGame,
+    className: "btn btn-danger"
+  }, "Restart Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.GameDetails, {
     game: gameStats
   }));
 };
 var init = function init() {
-  socket.emit('restart game', function () {});
+  socket.emit('stop game', function () {});
   socket.emit('get player count', function () {});
   var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(document.getElementById('host-content'));
   root.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(HostPage, null));

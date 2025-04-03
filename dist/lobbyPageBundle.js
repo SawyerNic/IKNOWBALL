@@ -27300,6 +27300,13 @@ var LobbyWindow = function LobbyWindow() {
     console.log('player name ' + player.name); // Logs the player object
     sessionStorage.setItem('player', JSON.stringify(player));
   });
+  socket.on('update game', function (game) {
+    if (!game.gameStarted) {
+      window.location.href = '/lobby';
+    } else {
+      window.location.href = '/gamePage';
+    }
+  });
   var handleNameChange = function handleNameChange(e) {
     setName(e.target.value);
   };
@@ -27342,9 +27349,6 @@ var init = function init() {
   var rootElement = document.getElementById('body');
   var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement);
   root.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(LobbyWindow, null));
-  socket.on('game started', function () {
-    window.location.href = '/gamePage';
-  });
 };
 window.onload = init;
 })();
