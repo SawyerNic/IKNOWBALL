@@ -44,13 +44,10 @@ const HostPage = () => {
 
     return (
 
-        <div>
-            <h1>Host Page</h1>
-            <h2>Leaderboard</h2>
-            <ul id='player-list'>
-
-                {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + "   Score: " + player.totalScore + " " + player.id}</li>
+        <div id='home-content'>
+            <div className="baseball-banner">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
             </div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>

@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
+import { QuestionComponent } from './components';
 
 const socket = io();
 
