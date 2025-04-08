@@ -16,6 +16,19 @@ const socketSetup = require('./controllers/io.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
+const originalLog = console.log;
+
+console.log = (...args) => {
+    const stack = new Error().stack.split('\n')[2]; 
+    const match = stack.match(/\((.*):(\d+):(\d+)\)/);
+    if (match) {
+        const [, file, line, column] = match;
+        originalLog(`[${file}:${line}:${column}]`, ...args);
+    } else {
+        originalLog(...args); 
+    }
+};
+
 const router = require('./router');
 
 const app = express();

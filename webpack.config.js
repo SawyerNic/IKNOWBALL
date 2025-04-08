@@ -38,7 +38,8 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx'],
       },
-    mode: 'production',
+      mode: 'development', // Use development mode for easier debugging
+      devtool: 'source-map', // Enable source maps
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name]Bundle.js',

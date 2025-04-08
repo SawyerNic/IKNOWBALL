@@ -1,5 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
+import { GameDetails } from './components';
+
 
 const socket = io();
 
@@ -10,42 +12,45 @@ const HostPage = () => {
 
 
     useEffect(() => {
-        // Listen for the 'game started' event
-        socket.on('game started', () => {
-            console.log('Game has started');
-            setGameStarted(true); // Update the state to indicate the game has started
-        });
 
-        // Listen for the 'update player list' event
+
         socket.on('update player list', (playerList) => {
             console.log('update player list');
             setPlayers(playerList);
         });
 
-        // Cleanup listeners on component unmount
-        return () => {
-            socket.off('game started');
-            socket.off('update player list');
-        };
+        socket.on('update game', (game) => {
+            updateGame(game);
+            setGameStarted(game.gameStarted);
+        })
     }, []);
-
-    // Register the socket listener when the component mounts
-    socket.on('update player list', (playerList) => {
-        console.log('update player list');
-        setPlayers(playerList);
-    });
 
     const handleStartGame = () => {
         // Emit the 'start game' event to the server
         socket.emit('start game', 'The game has started!');
     };
 
+    const handleStopGame = () => {
+        setGameStarted(false);
+        socket.emit('stop game', () => {
+            console.log('Game stopped');
+        });
+    };
+
+    const handleRestartGame = () => {
+        socket.emit('restart game');
+    }
+
+
     return (
 
-        <div id='home-content'>
-            <div className="baseball-banner">
-                {Array.from({ length: 10 }).map((_, index) => (
-                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
+        <div>
+            <h1>Host Page</h1>
+            <h2>Leaderboard</h2>
+            <ul id='player-list'>
+
+                {Object.values(players).map((player) => (
+                    <li key={player.id}>{player.name + "   Score: " + player.totalScore + " " + player.id}</li>
                 ))}
             </div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
@@ -57,18 +62,28 @@ const HostPage = () => {
             >
                 {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
-            <ul id='player-list'>
-                {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + " - Score: " + player.totalScore + " " /*+ player.id*/}</li>
-                ))}
-            </ul>
+            <button
+                onClick={handleStopGame}
+                className="btn btn-danger"
+                disabled={!gameStarted}
+            >
+                Stop Game
+            </button>
+            <button
+                onClick={handleRestartGame}
+                className="btn btn-danger"
+            >
+                Restart Game
+            </button>
+            <GameDetails game={gameStats} />
+
         </div>
     );
 };
 
 const init = () => {
-    
-    socket.emit('get player count', () => {});
+    socket.emit('stop game', () => { });
+    socket.emit('get player count', () => { });
     const root = createRoot(document.getElementById('host-content'));
 
     root.render(

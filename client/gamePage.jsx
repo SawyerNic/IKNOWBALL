@@ -5,16 +5,17 @@ const socket = io();
 
 const GameWindow = () => {
     const [myPlayer, updatePlayer] = useState(null);
-    const [question, updateQuestion] = useState({});
+    const [gameWindow, updateGameWindow] = useState(null);
+    const [timer, updateTimer] = useState(15);
 
     socket.on('player created', (player) => {
         updatePlayer(player)
     });
 
-    socket.on('question', (sentQuestion) => {
-        console.log(sentQuestion);
-        //updateQuestion(sentQuestion);
-    })
+    socket.on('server send question', (sentQuestion) => {
+        console.log("sentQuestion: " + JSON.stringify(sentQuestion));
+        updateGameWindow(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} />);
+    });
 
     if(!myPlayer) {
         return(
@@ -36,11 +37,10 @@ const GameWindow = () => {
 }
 
 const init = () => {
-    socket.emit('get game');
     socket.on('return game', (game) => {
         console.log(game);
         console.log(game.gameStarted);
-        if(!game.gameStarted){
+        if (!game.gameStarted) {
             window.location.href = '/lobby';
         }
     })
@@ -54,7 +54,10 @@ const init = () => {
 
     root.render(
         <GameWindow />
-    )
+    );
+
+    socket.emit('get game');
+
 
 }
 
