@@ -48,8 +48,13 @@ const LobbyWindow = () => {
 
 
     return (
-        <div>
-            <h1>Lobby Window</h1>
+        <div id="home-content">
+            <div className="baseball-banner">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
+                ))}
+            </div>
+            <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
             <h3>Welcome {name || 'Player'}!</h3>
             <div id='player-profile'>
                 <input
@@ -59,7 +64,7 @@ const LobbyWindow = () => {
                     value={name}
                     onChange={handleNameChange}
                 />
-                <button onClick={handleNameSubmit}>Change Name</button>
+                <button type="button" className="btn btn-primary" onClick={handleNameSubmit}>Change Name</button>
             </div>
 
             <ul id='player-list'>
@@ -69,22 +74,6 @@ const LobbyWindow = () => {
             </ul>
         </div>
     )
-}
-
-const init = () => {
-    const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
-    socket.emit('add player', savedPlayer);
-
-    const rootElement = document.getElementById('body');
-    const root = createRoot(rootElement);
-
-    root.render(
-        <LobbyWindow />
-    )
-
-
-
-
 }
 
 window.onload = init;

@@ -27323,7 +27323,28 @@ var LobbyWindow = function LobbyWindow() {
 
     // Emit the 'change name' event to the server
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Lobby Window"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    id: "home-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    className: "baseball-banner"
+  }, Array.from({
+    length: 10
+  }).map(function (_, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
+      key: index,
+      src: "assets/img/baseball.png",
+      className: "baseball",
+      style: {
+        animationDelay: "".concat(index * 0.5, "s")
+      },
+      alt: "Baseball"
+    });
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
+    src: "assets/img/IKNOWBALL-LOGO-T.png",
+    alt: "IKNOWBALL",
+    width: "640px",
+    height: "480px"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     id: "player-profile"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("input", {
     id: "name-input",
@@ -27332,6 +27353,8 @@ var LobbyWindow = function LobbyWindow() {
     value: name,
     onChange: handleNameChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
+    type: "button",
+    className: "btn btn-primary",
     onClick: handleNameSubmit
   }, "Change Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
     id: "player-list"
@@ -27342,13 +27365,6 @@ var LobbyWindow = function LobbyWindow() {
       key: player.id
     }, player.name);
   })));
-};
-var init = function init() {
-  var savedPlayer = JSON.parse(sessionStorage.getItem('player'));
-  socket.emit('add player', savedPlayer);
-  var rootElement = document.getElementById('body');
-  var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement);
-  root.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(LobbyWindow, null));
 };
 window.onload = init;
 })();
