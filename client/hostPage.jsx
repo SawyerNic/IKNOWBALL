@@ -52,6 +52,14 @@ const HostPage = () => {
             </div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
             <h2>Game Code: 1234</h2>
+            <h2>Leaderboard</h2>
+            <ul id='player-list'>
+
+                {Object.values(players).map((player) => (
+                    <li key={player.id}>{player.name + "   Score: " + player.totalScore + " " + player.id}</li>
+                ))}
+            </ul>
+
             <button
                 onClick={handleStartGame}
                 className="btn btn-primary"
