@@ -30,12 +30,19 @@ const HomePage = () => {
 
     return (
         <div id='home-content'>
+            <div className="baseball-banner">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
+                ))}
+            </div>
+            <img src="assets/img/IKNOWBALL-LOGO-T.png" className="ikb-logo" alt="IKNOWBALL" width="640px" height="320px"></img>
             <p id='welcome'>Welcome to IKNOWBALL player!</p>
             {isJoining ? (
                 <div>
-                    <button type='button' onClick={handleJoinGame}>back</button>
+                    <button type='button' id='home-btn' onClick={handleJoinGame}>
+                        <img src="assets/img/home-btn.png" alt="Home" />
+                    </button>
                     <div>
-                        
                         <input type='text' id='text-box' placeholder='Enter game code' />
                         <button type='button' className='btn btn-primary' onClick={handleJoinAttempt}>Submit</button>
                     </div>

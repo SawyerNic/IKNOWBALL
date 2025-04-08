@@ -1,0 +1,138 @@
+* {
+  font-family: "Big Shoulders", sans-serif;
+}
+
+#home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  padding-top: 20px;
+}
+h1 {
+  font-size: 3em;
+  text-align: center;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+p {
+  font-size: 48px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 4s steps(30) 1s forwards;
+  text-align: center;
+}
+
+#player-list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  padding-left: 0;
+  width: 150px;
+}
+
+#player-list li {
+  margin: 10px 0;
+  font-size: 1.2em;
+  color: black;
+  text-align: center;
+}
+
+#player-profile {
+  margin-bottom: 20px;
+}
+
+input {
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #9C0032;
+}
+
+h3 {
+  font-size: 1.5em;
+  color: black;
+}
+
+.btn {
+  display: inline-block;
+  font-size: 36px;
+  margin: 10px;
+  background: linear-gradient(135deg, #002D72, rgba(255, 255, 255, 0.1), #D50032);
+  color: #fff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  font-size: 36px;
+  border-radius: 50px;
+  border: none;
+  padding: 16px 36px;
+  margin: 10px;
+}
+
+.baseball-banner {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.baseball {
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  animation: flyBaseball 5s linear infinite;
+}
+
+@keyframes flyBaseball {
+  0% {
+    left: -50px;
+    transform: rotate(0deg);
+  }
+  100% {
+    left: 100vw;
+    transform: rotate(720deg);
+  }
+}
+@media only screen and (max-width: 520px) {
+  h1 {
+    margin-bottom: 200px;
+  }
+  p {
+    margin: 25px;
+    text-align: center;
+    font-size: 28px;
+  }
+  .btn {
+    margin-bottom: 50px;
+    display: inline-block;
+    font-size: 24px;
+    margin: 10px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .btn {
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px;
+  }
+  #text-box {
+    height: 75%;
+  }
+}
