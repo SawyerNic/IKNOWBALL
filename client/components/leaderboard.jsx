@@ -27,23 +27,30 @@ const GameDetails = ({ game }) => {
 const Leaderboard = () => {
     const [players, setPlayers] = useState([]);
 
+    useEffect(() => {
+        // Register the 'update game' event listener
+        const handleUpdateGame = (game) => {
+            setPlayers(game.players);
+        };
+
+        socket.on('update game', handleUpdateGame);
+
+        // Cleanup the listener when the component unmounts
+        return () => {
+            socket.off('update game', handleUpdateGame);
+        };
+    }, []);
+
     if (!players || players.length === 0) {
         return <div>No players available</div>;
     }
 
-    // Listen for the 'update player list' event
-    socket.on('update player list', (playerList) => {
-        console.log('update player list');
-        setPlayers(playerList);
-    });
-
     return (
         <div>
-            <h2>Leaderboard</h2>
             <ul id='player-list'>
 
                 {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + " " + player.totalScore + " " + player.id}</li>
+                    <li key={player.id}>{player.name + " " + player.totalScore + " | answered: " + player.answered + " | id: "  + player.id }</li>
                 ))}
             </ul>
         </div>

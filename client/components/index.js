@@ -3,5 +3,6 @@ const {GameDetails, Leaderboard} = require('./leaderboard.jsx');
 
 module.exports = {
     QuestionComponent,
-    GameDetails
+    GameDetails,
+    Leaderboard
 };

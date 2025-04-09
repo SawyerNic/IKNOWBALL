@@ -13,7 +13,8 @@ var _require = __webpack_require__(/*! ./leaderboard.jsx */ "./client/components
   Leaderboard = _require.Leaderboard;
 module.exports = {
   QuestionComponent: QuestionComponent,
-  GameDetails: GameDetails
+  GameDetails: GameDetails,
+  Leaderboard: Leaderboard
 };
 
 /***/ }),
@@ -55,21 +56,27 @@ var Leaderboard = function Leaderboard() {
     _useState4 = _slicedToArray(_useState3, 2),
     players = _useState4[0],
     setPlayers = _useState4[1];
+  useEffect(function () {
+    // Register the 'update game' event listener
+    var handleUpdateGame = function handleUpdateGame(game) {
+      setPlayers(game.players);
+    };
+    socket.on('update game', handleUpdateGame);
+
+    // Cleanup the listener when the component unmounts
+    return function () {
+      socket.off('update game', handleUpdateGame);
+    };
+  }, []);
   if (!players || players.length === 0) {
     return /*#__PURE__*/React.createElement("div", null, "No players available");
   }
-
-  // Listen for the 'update player list' event
-  socket.on('update player list', function (playerList) {
-    console.log('update player list');
-    setPlayers(playerList);
-  });
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Leaderboard"), /*#__PURE__*/React.createElement("ul", {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
   }, Object.values(players).map(function (player) {
     return /*#__PURE__*/React.createElement("li", {
       key: player.id
-    }, player.name + " " + player.totalScore + " " + player.id);
+    }, player.name + " " + player.totalScore + " | answered: " + player.answered + " | id: " + player.id);
   })));
 };
 module.exports = {
@@ -27439,13 +27446,10 @@ var HostPage = function HostPage() {
     setGameStarted = _useState6[1]; // Track if the game has started
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    socket.on('update player list', function (playerList) {
-      console.log('update player list');
-      setPlayers(playerList);
-    });
     socket.on('update game', function (game) {
       updateGame(game);
-      setGameStarted(game.gameStarted);
+      setPlayers(game.players);
+      //setGameStarted(game.gameStarted);
     });
   }, []);
   var handleStartGame = function handleStartGame() {
@@ -27461,13 +27465,7 @@ var HostPage = function HostPage() {
   var handleRestartGame = function handleRestartGame() {
     socket.emit('restart game');
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Host Page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h2", null, "Leaderboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
-    id: "player-list"
-  }, Object.values(players).map(function (player) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("li", {
-      key: player.id
-    }, player.name + "   Score: " + player.totalScore + " " + player.id);
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Host Page"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h2", null, "Leaderboard"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.Leaderboard, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
     onClick: handleStartGame,
     className: "btn btn-primary",
     disabled: gameStarted

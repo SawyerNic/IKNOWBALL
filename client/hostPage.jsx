@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
-import { GameDetails } from './components';
+import { GameDetails, Leaderboard } from './components';
 
 
 const socket = io();
@@ -13,15 +13,10 @@ const HostPage = () => {
 
     useEffect(() => {
 
-
-        socket.on('update player list', (playerList) => {
-            console.log('update player list');
-            setPlayers(playerList);
-        });
-
         socket.on('update game', (game) => {
             updateGame(game);
-            setGameStarted(game.gameStarted);
+            setPlayers(game.players);
+            //setGameStarted(game.gameStarted);
         })
     }, []);
 
@@ -47,12 +42,7 @@ const HostPage = () => {
         <div>
             <h1>Host Page</h1>
             <h2>Leaderboard</h2>
-            <ul id='player-list'>
-
-                {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + "   Score: " + player.totalScore + " " + player.id}</li>
-                ))}
-            </ul>
+            <Leaderboard/>
 
             <button
                 onClick={handleStartGame}

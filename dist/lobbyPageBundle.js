@@ -27292,25 +27292,27 @@ var LobbyWindow = function LobbyWindow() {
     _useState4 = _slicedToArray(_useState3, 2),
     name = _useState4[0],
     setName = _useState4[1];
-  socket.on('update player list', function (playerList) {
-    console.log('update player list');
-    setPlayers(playerList);
-  });
-  socket.on('player created', function (player) {
-    console.log('player name ' + player.name); // Logs the player object
-    sessionStorage.setItem('player', JSON.stringify(player));
-  });
-  socket.on('update game', function (game) {
-    if (!game.gameStarted) {
-      window.location.href = '/lobby';
-    } else {
-      window.location.href = '/gamePage';
-    }
-  });
-  var handleNameChange = function handleNameChange(e) {
-    setName(e.target.value);
-  };
-  var handleNameSubmit = function handleNameSubmit() {
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    // Register socket event listeners
+    socket.on('player created', function (player) {
+      console.log('player name ' + player.name); // Logs the player object
+      sessionStorage.setItem('player', JSON.stringify(player));
+    });
+    socket.on('update game', function (game) {
+      setPlayers(game.players);
+      if (game.gameStarted) {
+        window.location.href = '/gamePage';
+      }
+    });
+
+    // Cleanup listeners on unmount
+    return function () {
+      socket.off('player created');
+      socket.off('update game');
+    };
+  }, []); // Empty dependency array ensures this runs only once
+
+  var handleNameChange = function handleNameChange() {
     var nameBox = document.getElementById('name-input');
     var newName = nameBox.value;
     if (newName === '') {
@@ -27320,8 +27322,6 @@ var LobbyWindow = function LobbyWindow() {
       setName(newName);
       socket.emit('change name', newName);
     }
-
-    // Emit the 'change name' event to the server
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Lobby Window"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     id: "player-profile"
@@ -27329,11 +27329,8 @@ var LobbyWindow = function LobbyWindow() {
     id: "name-input",
     type: "text",
     placeholder: "Enter your name",
-    value: name,
     onChange: handleNameChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
-    onClick: handleNameSubmit
-  }, "Change Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
     id: "player-list"
   }, Object.values(players || {
     'empty': 'empty'

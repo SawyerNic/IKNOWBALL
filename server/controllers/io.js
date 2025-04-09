@@ -110,17 +110,8 @@ const socketSetup = (app) => {
             game.addPlayer(player);
 
             socket.emit('player created', player);
-            io.emit('update player list', game.players);
+            io.emit('update game', sanitizeGame(game)); 
 
-        });
-
-
-        socket.on('get player count', () => {
-            io.emit('update player list', getActivePlayers(game));
-        });
-
-        socket.on('update game', () => {
-            io.emit('update player list', getActivePlayers(game));
         });
 
         socket.on('start game', () => {
@@ -137,7 +128,7 @@ const socketSetup = (app) => {
         socket.on('player send answer', (answer) => {
             game.handlePlayerAnswer(socket.id, answer);
             console.log('player id ' + socket.id + ' answer ' + answer);
-            io.emit('update player list', game.players);
+            io.emit('update game', sanitizeGame(game));
         });
 
         socket.on('change name', (newName) => {
@@ -145,16 +136,16 @@ const socketSetup = (app) => {
             const player = game.players[playerId];
             if (player) {
                 player.name = newName;
-                io.emit('update player list', game.players);
-                console.log(`Player ${playerId} changed name to ${newName}`);
+                io.emit('update game', sanitizeGame(game)); 
             }
+            io.emit('update game', sanitizeGame(game)); 
         });
 
         socket.on('disconnect', () => {
             console.log('user disconnected');
             game.removePlayer(socket.id);
             console.log(game.players);
-            io.emit('update player list', game.players);
+            io.emit('update game', sanitizeGame(game)); 
         });
 
     });

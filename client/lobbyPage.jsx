@@ -8,29 +8,30 @@ const LobbyWindow = () => {
     const [players, setPlayers] = useState([]);
     const [name, setName] = useState('');
 
-    socket.on('update player list', (playerList) => {
-        console.log('update player list');
-        setPlayers(playerList);
-    });
+    useEffect(() => {
+        // Register socket event listeners
+        socket.on('player created', (player) => {
+            console.log('player name ' + player.name); // Logs the player object
+            sessionStorage.setItem('player', JSON.stringify(player));
+        });
 
-    socket.on('player created', (player) => {
-        console.log('player name ' + player.name); // Logs the player object
-        sessionStorage.setItem('player', JSON.stringify(player));
-    });
+        socket.on('update game', (game) => {
+            setPlayers(game.players);
 
-    socket.on('update game', (game) => {
-        if(!game.gameStarted) {
-            window.location.href = '/lobby';
-        } else {
-            window.location.href = '/gamePage';
-        }
-    });
+            if(game.gameStarted){
+                window.location.href = '/gamePage';
+            }
+        });
 
-    const handleNameChange = (e) => {
-        setName(e.target.value);
-    };
+        // Cleanup listeners on unmount
+        return () => {
+            socket.off('player created');
+            socket.off('update game');
+        };
+    }, []); // Empty dependency array ensures this runs only once
 
-    const handleNameSubmit = () => {
+
+    const handleNameChange = () => {
         const nameBox = document.getElementById('name-input')
         const newName = nameBox.value;
 
@@ -41,9 +42,6 @@ const LobbyWindow = () => {
             setName(newName);
             socket.emit('change name', newName);
         }
-
-        // Emit the 'change name' event to the server
-
     };
 
 
@@ -56,10 +54,8 @@ const LobbyWindow = () => {
                     id='name-input'
                     type="text"
                     placeholder="Enter your name"
-                    value={name}
                     onChange={handleNameChange}
                 />
-                <button onClick={handleNameSubmit}>Change Name</button>
             </div>
 
             <ul id='player-list'>
@@ -81,10 +77,6 @@ const init = () => {
     root.render(
         <LobbyWindow />
     )
-
-
-
-
 }
 
 window.onload = init;

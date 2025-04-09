@@ -5,8 +5,8 @@ class Player {
         this.totalScore = 0;
         this.answered = false;
         this.exited = false;
-        this.out = false;
         this.roundsSurvived = 0;
+        this.perfect = true;
     }
 }
 

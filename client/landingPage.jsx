@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const helper = require('./helper');
 
+
 const HomePage = () => {
     const [isJoining, setIsJoining] = useState(false);
 
@@ -17,8 +18,6 @@ const HomePage = () => {
          if(textBox.value === '1234'){
             console.log('true');
             window.location.href = '/lobby';
-            
-            
         } else{
             console.log('false');
         }
