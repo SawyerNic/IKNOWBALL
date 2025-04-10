@@ -6,12 +6,6 @@ const { getTestQuestions } = require('./questionManager');
 
 let io;
 
-const getActivePlayers = (game) => {
-    console.log(game.players);
-    const activePlayers = Object.values(game.players).filter(player => !player.exited);
-    return activePlayers;
-};
-
 const sanitizeGame = (game) => {
     return {
         players: game.players,
@@ -50,6 +44,7 @@ const sendQuestion = (game) => {
             if (game.currentRound < game.questions.length) {
                 sendQuestion(game); // Send the next question
             } else {
+                game.gameStarted = false;
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
                 io.emit('stop game');
@@ -57,6 +52,10 @@ const sendQuestion = (game) => {
         }
     );
 };
+
+const sendResults = (game) => {
+    
+}
 
 const stopGame = (game) => {
     console.log('Game stopped');

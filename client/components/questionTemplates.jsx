@@ -1,21 +1,31 @@
 const React = require('react');
+const { useState } = require('react');
+
+const socket = io();
 
 const QuestionComponent = ({ question, answerHandler }) => {
+    const [answered, setAnswered] = useState(false);
     if (!question) {
         return (<div>No question provided</div>);
     }
 
+    socket.on('server send question', () => {
+        setAnswered(false);
+    })
+
     const handleOptionClick = (option) => {
         console.log("Option clicked:", option);
 
-        if (option.isAnswer) {
-            alert('correct!');
-            answerHandler(true);
-        } else {
-            alert('incorrect!');
-            answerHandler(false);
-        }
+        setAnswered(true);
+
+        // TODO: show the component after the player answers
+        answerHandler(option.isAnswer);
     };
+
+    // TODO 
+    if (answered) {
+        return <h2>Answered</h2>; // Show "answered" header if the question has been answered
+    }
 
     return (
         <div className="question-container" style={{ textAlign: 'center', margin: '20px' }}>
