@@ -52,17 +52,10 @@ const HostPage = () => {
                 {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
             <button
-                onClick={handleStopGame}
-                className="btn btn-danger"
-                disabled={!gameStarted}
-            >
-                Stop Game
-            </button>
-            <button
                 onClick={handleRestartGame}
                 className="btn btn-danger"
             >
-                Restart Game
+                Cancel Game
             </button>
             <GameDetails game={gameStats} />
 

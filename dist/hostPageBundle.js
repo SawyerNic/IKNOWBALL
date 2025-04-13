@@ -109,6 +109,7 @@ var QuestionComponent = function QuestionComponent(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     answered = _useState2[0],
     setAnswered = _useState2[1];
+  console.log(sessionStorage.getItem('player'));
   if (!question) {
     return /*#__PURE__*/React.createElement("div", null, "No question provided");
   }
@@ -121,6 +122,7 @@ var QuestionComponent = function QuestionComponent(_ref) {
 
     // TODO: show the component after the player answers
     answerHandler(option.isAnswer);
+    sessionStorage.getItem('player').answered = true;
   };
 
   // TODO 
@@ -27488,13 +27490,9 @@ var HostPage = function HostPage() {
     className: "btn btn-primary",
     disabled: gameStarted
   }, gameStarted ? 'Game Started' : 'Start Game'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
-    onClick: handleStopGame,
-    className: "btn btn-danger",
-    disabled: !gameStarted
-  }, "Stop Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
     onClick: handleRestartGame,
     className: "btn btn-danger"
-  }, "Restart Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.GameDetails, {
+  }, "Cancel Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.GameDetails, {
     game: gameStats
   }));
 };

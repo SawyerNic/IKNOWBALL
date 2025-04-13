@@ -5,6 +5,8 @@ const socket = io();
 
 const QuestionComponent = ({ question, answerHandler }) => {
     const [answered, setAnswered] = useState(false);
+
+    console.log(sessionStorage.getItem('player'));
     if (!question) {
         return (<div>No question provided</div>);
     }
@@ -20,6 +22,7 @@ const QuestionComponent = ({ question, answerHandler }) => {
 
         // TODO: show the component after the player answers
         answerHandler(option.isAnswer);
+        sessionStorage.getItem('player').answered = true;
     };
 
     // TODO 

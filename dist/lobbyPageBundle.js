@@ -27283,6 +27283,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var socket = io();
+var player;
 var LobbyWindow = function LobbyWindow() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
@@ -27315,12 +27316,16 @@ var LobbyWindow = function LobbyWindow() {
   var handleNameChange = function handleNameChange() {
     var nameBox = document.getElementById('name-input');
     var newName = nameBox.value;
+    player.name = newName;
     if (newName === '') {
       setName('mysterious');
       socket.emit('change name', 'mysterious');
+      player.name = 'mysterious';
+      sessionStorage.setItem('player', JSON.stringify(player));
     } else {
       setName(newName);
       socket.emit('change name', newName);
+      sessionStorage.setItem('player', JSON.stringify(player));
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Lobby Window"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
@@ -27343,6 +27348,7 @@ var LobbyWindow = function LobbyWindow() {
 var init = function init() {
   var savedPlayer = JSON.parse(sessionStorage.getItem('player'));
   socket.emit('add player', savedPlayer);
+  player = savedPlayer;
   var rootElement = document.getElementById('body');
   var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(rootElement);
   root.render(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(LobbyWindow, null));

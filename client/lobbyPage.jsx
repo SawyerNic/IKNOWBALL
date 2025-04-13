@@ -2,11 +2,13 @@ import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 
 const socket = io();
+let player;
 
 const LobbyWindow = () => {
 
     const [players, setPlayers] = useState([]);
     const [name, setName] = useState('');
+
 
     useEffect(() => {
         // Register socket event listeners
@@ -34,13 +36,17 @@ const LobbyWindow = () => {
     const handleNameChange = () => {
         const nameBox = document.getElementById('name-input')
         const newName = nameBox.value;
+        player.name = newName;
 
         if (newName === '') {
             setName('mysterious');
             socket.emit('change name', 'mysterious');
+            player.name = 'mysterious';
+            sessionStorage.setItem('player', JSON.stringify(player));
         } else {
             setName(newName);
             socket.emit('change name', newName);
+            sessionStorage.setItem('player', JSON.stringify(player));
         }
     };
 
@@ -70,6 +76,7 @@ const LobbyWindow = () => {
 const init = () => {
     const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
     socket.emit('add player', savedPlayer);
+    player = savedPlayer;
 
     const rootElement = document.getElementById('body');
     const root = createRoot(rootElement);

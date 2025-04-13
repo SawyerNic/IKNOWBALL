@@ -10,6 +10,7 @@ class gameModel {
         this.questions;
         this.timer = null; 
         this.timeLeft = 0; 
+        this.playersAnswered = {};
     }
 
     addPlayer(player) {
@@ -43,6 +44,8 @@ class gameModel {
     }
 
     handlePlayerAnswer(id, answer) {
+        this.playersAnswered[id] = this.players[id];
+
         if(answer){
             let roundScore = Math.round(((this.timeLeft + 1) / 15) * 1000); 
             this.players[id].totalScore += roundScore;

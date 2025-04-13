@@ -47,7 +47,6 @@ const sendQuestion = (game) => {
                 game.gameStarted = false;
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
-                io.emit('stop game');
             }
         }
     );
@@ -59,6 +58,7 @@ const sendResults = (game) => {
 
 const stopGame = (game) => {
     console.log('Game stopped');
+    game.currentRound = 0;
     game.stopTimer(); // Stop the timer when the game is stopped
 }
 
