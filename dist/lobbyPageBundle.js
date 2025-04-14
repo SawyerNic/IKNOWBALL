@@ -27294,6 +27294,11 @@ var LobbyWindow = function LobbyWindow() {
     name = _useState4[0],
     setName = _useState4[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var _player;
+    if ((_player = player) !== null && _player !== void 0 && _player.name) {
+      setName(player.name);
+    }
+
     // Register socket event listeners
     socket.on('player created', function (player) {
       console.log('player name ' + player.name); // Logs the player object

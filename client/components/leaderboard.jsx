@@ -50,7 +50,7 @@ const Leaderboard = () => {
             <ul id='player-list'>
 
                 {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + " " + player.totalScore + " | answered: " + player.answered + " | id: "  + player.id }</li>
+                    <li key={player.id}>{player.name + " | Points: " + player.totalScore + " | answered: " + player.answered}</li>
                 ))}
             </ul>
         </div>

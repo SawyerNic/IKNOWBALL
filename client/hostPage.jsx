@@ -25,13 +25,6 @@ const HostPage = () => {
         socket.emit('start game', 'The game has started!');
     };
 
-    const handleStopGame = () => {
-        setGameStarted(false);
-        socket.emit('stop game', () => {
-            console.log('Game stopped');
-        });
-    };
-
     const handleRestartGame = () => {
         socket.emit('restart game');
     }

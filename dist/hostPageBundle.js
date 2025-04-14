@@ -76,7 +76,7 @@ var Leaderboard = function Leaderboard() {
   }, Object.values(players).map(function (player) {
     return /*#__PURE__*/React.createElement("li", {
       key: player.id
-    }, player.name + " " + player.totalScore + " | answered: " + player.answered + " | id: " + player.id);
+    }, player.name + " | Points: " + player.totalScore + " | answered: " + player.answered);
   })));
 };
 module.exports = {
@@ -27475,12 +27475,6 @@ var HostPage = function HostPage() {
   var handleStartGame = function handleStartGame() {
     // Emit the 'start game' event to the server
     socket.emit('start game', 'The game has started!');
-  };
-  var handleStopGame = function handleStopGame() {
-    setGameStarted(false);
-    socket.emit('stop game', function () {
-      console.log('Game stopped');
-    });
   };
   var handleRestartGame = function handleRestartGame() {
     socket.emit('restart game');

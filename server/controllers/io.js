@@ -44,7 +44,7 @@ const sendQuestion = (game) => {
             if (game.currentRound < game.questions.length) {
                 sendQuestion(game); // Send the next question
             } else {
-                game.gameStarted = false;
+                restartGame();
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
             }
@@ -53,13 +53,10 @@ const sendQuestion = (game) => {
 };
 
 const sendResults = (game) => {
-    
-}
+    // start the game timer for 5 seconds
+        /*
 
-const stopGame = (game) => {
-    console.log('Game stopped');
-    game.currentRound = 0;
-    game.stopTimer(); // Stop the timer when the game is stopped
+        */
 }
 
 const restartGame = (game) => {
@@ -78,19 +75,12 @@ const socketSetup = (app) => {
 
     game.questions = getTestQuestions();
 
-
-
     io.on('connection', (socket) => {
 
         console.log('a user connected');
 
         socket.on('restart game', () => {
             restartGame(game);
-            io.emit('update game', sanitizeGame(game)); 
-        });
-
-        socket.on('stop game', () => {
-            stopGame(game);
             io.emit('update game', sanitizeGame(game)); 
         });
 

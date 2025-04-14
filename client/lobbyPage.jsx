@@ -9,8 +9,12 @@ const LobbyWindow = () => {
     const [players, setPlayers] = useState([]);
     const [name, setName] = useState('');
 
-
     useEffect(() => {
+
+        if (player?.name) {
+            setName(player.name);
+        }
+
         // Register socket event listeners
         socket.on('player created', (player) => {
             console.log('player name ' + player.name); // Logs the player object
@@ -20,7 +24,7 @@ const LobbyWindow = () => {
         socket.on('update game', (game) => {
             setPlayers(game.players);
 
-            if(game.gameStarted){
+            if (game.gameStarted) {
                 window.location.href = '/gamePage';
             }
         });
@@ -65,7 +69,7 @@ const LobbyWindow = () => {
             </div>
 
             <ul id='player-list'>
-                {Object.values(players || {'empty':'empty'}).map((player) => (
+                {Object.values(players || { 'empty': 'empty' }).map((player) => (
                     <li key={player.id}>{player.name}</li>
                 ))}
             </ul>
