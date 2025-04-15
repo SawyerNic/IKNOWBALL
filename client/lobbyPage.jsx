@@ -56,25 +56,33 @@ const LobbyWindow = () => {
 
 
     return (
-        <div>
-            <h1>Lobby Window</h1>
+        <div id="home-content">
+            <div className="baseball-banner">
+                {Array.from({ length: 10 }).map((_, index) => (
+                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
+                ))}
+            </div>
+            <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
             <h3>Welcome {name || 'Player'}!</h3>
             <div id='player-profile'>
                 <input
                     id='name-input'
                     type="text"
                     placeholder="Enter your name"
+                    value={name}
                     onChange={handleNameChange}
                 />
+                <button type="button" className="btn btn-primary" onClick={handleNameSubmit}>Change Name</button>
             </div>
 
             <ul id='player-list'>
-                {Object.values(players || { 'empty': 'empty' }).map((player) => (
+                {Object.values(players || {'empty':'empty'}).map((player) => (
                     <li key={player.id}>{player.name}</li>
                 ))}
             </ul>
         </div>
     )
+
 }
 
 const init = () => {
