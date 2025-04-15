@@ -27333,14 +27333,40 @@ var LobbyWindow = function LobbyWindow() {
       sessionStorage.setItem('player', JSON.stringify(player));
     }
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Lobby Window"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    id: "home-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    className: "baseball-banner"
+  }, Array.from({
+    length: 10
+  }).map(function (_, index) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
+      key: index,
+      src: "assets/img/baseball.png",
+      className: "baseball",
+      style: {
+        animationDelay: "".concat(index * 0.5, "s")
+      },
+      alt: "Baseball"
+    });
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
+    src: "assets/img/IKNOWBALL-LOGO-T.png",
+    alt: "IKNOWBALL",
+    width: "640px",
+    height: "480px"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     id: "player-profile"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("input", {
     id: "name-input",
     type: "text",
     placeholder: "Enter your name",
+    value: name,
     onChange: handleNameChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
+    type: "button",
+    className: "btn btn-primary",
+    onClick: handleNameSubmit
+  }, "Change Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
     id: "player-list"
   }, Object.values(players || {
     'empty': 'empty'
