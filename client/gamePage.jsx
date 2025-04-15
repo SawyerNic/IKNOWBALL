@@ -79,7 +79,7 @@ const GameWindow = () => {
 
     return (
         <div>
-            <h3>{myPlayer.name + " " + myPlayer.id}</h3>
+            <h1>{myPlayer.name + " " + myPlayer.id}</h1>
             <h3>points: {myPlayer.totalScore}</h3>
             <h3>Timer: {timer}</h3>
             <div id='question-container'>

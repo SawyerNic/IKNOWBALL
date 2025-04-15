@@ -27362,11 +27362,7 @@ var LobbyWindow = function LobbyWindow() {
     placeholder: "Enter your name",
     value: name,
     onChange: handleNameChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
-    type: "button",
-    className: "btn btn-primary",
-    onClick: handleNameSubmit
-  }, "Change Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
     id: "player-list"
   }, Object.values(players || {
     'empty': 'empty'

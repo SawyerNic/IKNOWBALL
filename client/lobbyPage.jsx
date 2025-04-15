@@ -72,7 +72,6 @@ const LobbyWindow = () => {
                     value={name}
                     onChange={handleNameChange}
                 />
-                <button type="button" className="btn btn-primary" onClick={handleNameSubmit}>Change Name</button>
             </div>
 
             <ul id='player-list'>
