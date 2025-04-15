@@ -118,9 +118,19 @@ var sendPost = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
+var getMyPlayer = function getMyPlayer(game, id) {
+  if (game) {
+    var myPlayer = game.players[id];
+    return myPlayer;
+  } else {
+    console.log('Error, game is:' + game);
+    return null;
+  }
+};
 module.exports = {
   sendGet: sendGet,
-  sendPost: sendPost
+  sendPost: sendPost,
+  getMyPlayer: getMyPlayer
 };
 
 /***/ }),

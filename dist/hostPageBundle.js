@@ -1,6 +1,26 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./client/components/answeredView.jsx":
+/*!********************************************!*\
+  !*** ./client/components/answeredView.jsx ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
+  useState = _require.useState,
+  useEffect = _require.useEffect;
+var socket = io();
+var AnsweredView = function AnsweredView() {
+  return /*#__PURE__*/React.createElement("h1", null);
+};
+module.exports = {
+  AnsweredView: AnsweredView
+};
+
+/***/ }),
+
 /***/ "./client/components/index.js":
 /*!************************************!*\
   !*** ./client/components/index.js ***!
@@ -11,10 +31,12 @@ var QuestionComponent = __webpack_require__(/*! ./questionTemplates.jsx */ "./cl
 var _require = __webpack_require__(/*! ./leaderboard.jsx */ "./client/components/leaderboard.jsx"),
   GameDetails = _require.GameDetails,
   Leaderboard = _require.Leaderboard;
+var AnsweredView = __webpack_require__(/*! ./answeredView.jsx */ "./client/components/answeredView.jsx");
 module.exports = {
   QuestionComponent: QuestionComponent,
   GameDetails: GameDetails,
-  Leaderboard: Leaderboard
+  Leaderboard: Leaderboard,
+  AnsweredView: AnsweredView
 };
 
 /***/ }),
@@ -43,7 +65,6 @@ var GameDetails = function GameDetails(_ref) {
     gameData = _useState2[0],
     setGameData = _useState2[1];
   socket.on('update game', function (game) {
-    console.log('game started ? ' + game.gameStarted);
     setGameData(game);
   });
   if (!game) {

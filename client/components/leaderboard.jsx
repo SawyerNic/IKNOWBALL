@@ -7,7 +7,6 @@ const GameDetails = ({ game }) => {
     const [gameData, setGameData] = useState(game);
 
     socket.on('update game', (game) => {
-        console.log('game started ? ' + game.gameStarted);
         setGameData(game);
     });
 

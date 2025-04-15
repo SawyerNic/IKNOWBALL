@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState, useEffect } from 'react';
 import { QuestionComponent } from './components';
+import { getMyPlayer } from './helper';
 
 const socket = io();
 
@@ -41,12 +42,14 @@ const sendAnswer = (answer) => {
          loads it recognizes what page the player should be
          seeing
 */
+
 const GameWindow = () => {
     const [myPlayer, updatePlayer] = useState(null);
     const [gameWindow, updateGameWindow] = useState(null);
     const [timer, updateTimer] = useState(15);
 
     socket.on('update game', (game) => {
+        console.log(getMyPlayer(game, socket.id))
         if (!game.gameStarted) {
             window.location.href = '/lobby';
         }
@@ -63,8 +66,6 @@ const GameWindow = () => {
         updateGameWindow(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} />);
     });
 
-
-
     socket.on('timer update', (timeLeft) => {
         updateTimer(timeLeft)
     })
@@ -79,7 +80,7 @@ const GameWindow = () => {
 
     return (
         <div>
-            <h3>{myPlayer.name + " " + myPlayer.id}</h3>
+            <h3>{myPlayer.name + " " + myPlayer.answered}</h3>
             <h3>points: {myPlayer.totalScore}</h3>
             <h3>Timer: {timer}</h3>
             <div id='question-container'>

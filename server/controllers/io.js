@@ -36,17 +36,19 @@ const sendQuestion = (game) => {
             io.emit('update game', sanitizeGame(game)); // Update the game state for all players
         },
         () => {
-            console.log('Timer ended. Submitting answers...');
-            io.emit('submit answers');
+            // Server sends the results
+            // sendResults
 
             // Move to the next round or end the game
             game.currentRound += 1;
+            console.log(`Current round: ${game.currentRound} + game.questions.length: ${game.questions.length}`);
             if (game.currentRound < game.questions.length) {
                 sendQuestion(game); // Send the next question
             } else {
-                restartGame();
+                restartGame(game);
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
+                io.emit('update game', sanitizeGame(game)); 
             }
         }
     );
@@ -78,6 +80,8 @@ const socketSetup = (app) => {
     io.on('connection', (socket) => {
 
         console.log('a user connected');
+
+        io.emit('update game', sanitizeGame(game));
 
         socket.on('restart game', () => {
             restartGame(game);

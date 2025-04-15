@@ -73,9 +73,18 @@ const sendPost = async (url, data, handler) => {
     }
 };
 
-
+const getMyPlayer = (game, id) => {
+    if(game) {
+        let myPlayer = game.players[id];
+        return myPlayer;
+    } else{
+        console.log('Error, game is:' + game);
+        return null;
+    }
+}
 
 module.exports = {
     sendGet,
-    sendPost
+    sendPost,
+    getMyPlayer
 };
