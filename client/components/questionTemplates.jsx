@@ -42,7 +42,7 @@ const QuestionComponent = ({ question, answerHandler }) => {
             )}
             <div className="options-container">
                 {question.options.map((option, index) => (
-                    <button
+                    <button className="btn"
                         key={index}
                         onClick={() => handleOptionClick(option)}
                         
