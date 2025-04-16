@@ -29,6 +29,10 @@ const LobbyWindow = () => {
             }
         });
 
+        socket.on('game started', () => {
+            window.location.href = '/gamePage';
+        })
+
         // Cleanup listeners on unmount
         return () => {
             socket.off('player created');

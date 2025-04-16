@@ -27617,17 +27617,21 @@ var sendAnswer = function sendAnswer(answer) {
     
     - Every action by the client will be
     immediately written into session storage
-     - Immediately after that the session storage
+
+    - Immediately after that the session storage
     information will used and passed by an to
     the server via a socket event
-     - This is so that if connection is 
+
+    - This is so that if connection is 
     interrupted or if the user reloads 
     or changes pages they will still have
     their progress in the game and can 
     continue playing
-     - We can make functions that do this
+
+    - We can make functions that do this
     such as this example:
-         handleAnswer() {
+
+        handleAnswer() {
             //update global player variable
             player.answered = true
             //write to local storage
@@ -27657,14 +27661,10 @@ var GameWindow = function GameWindow() {
     timer = _useState6[0],
     updateTimer = _useState6[1];
   socket.on('update game', function (game) {
-    console.log((0,_helper__WEBPACK_IMPORTED_MODULE_3__.getMyPlayer)(game, socket.id));
+    // console.log(getMyPlayer(game, socket.id))
     if (!game.gameStarted) {
       window.location.href = '/lobby';
     }
-    updateGameWindow(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.QuestionComponent, {
-      question: game.questions[game.currentRound],
-      answerHandler: sendAnswer
-    }));
   });
   socket.on('player created', function (player) {
     updatePlayer(player);

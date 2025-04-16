@@ -27310,6 +27310,9 @@ var LobbyWindow = function LobbyWindow() {
         window.location.href = '/gamePage';
       }
     });
+    socket.on('game started', function () {
+      window.location.href = '/gamePage';
+    });
 
     // Cleanup listeners on unmount
     return function () {

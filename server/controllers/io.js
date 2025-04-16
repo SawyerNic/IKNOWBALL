@@ -33,12 +33,9 @@ const sendQuestion = (game) => {
         15, // 15-second duration
         (timeLeft) => {
             io.emit('timer update', timeLeft); 
-            io.emit('update game', sanitizeGame(game)); // Update the game state for all players
         },
         () => {
-            // Server sends the results
-            // sendResults
-
+            
             // Move to the next round or end the game
             game.currentRound += 1;
             console.log(`Current round: ${game.currentRound} + game.questions.length: ${game.questions.length}`);
@@ -81,7 +78,7 @@ const socketSetup = (app) => {
 
         console.log('a user connected');
 
-        io.emit('update game', sanitizeGame(game));
+        
 
         socket.on('restart game', () => {
             restartGame(game);
@@ -108,6 +105,8 @@ const socketSetup = (app) => {
         });
 
         socket.on('start game', () => {
+
+            io.emit('game started', () => {});
             console.log('game started');
             game.gameStarted = true;
 
@@ -115,7 +114,7 @@ const socketSetup = (app) => {
             setTimeout(() => {
                 sendQuestion(game);
             }, 1000); // 1-second delay
-            io.emit('update game', sanitizeGame(game)); 
+
         });
 
         socket.on('player send answer', (answer) => {
@@ -137,7 +136,6 @@ const socketSetup = (app) => {
             console.log('user disconnected');
             game.removePlayer(socket.id);
             console.log(game.players);
-            io.emit('update game', sanitizeGame(game)); 
         });
 
     });

@@ -8,34 +8,34 @@ const socket = io();
 const sendAnswer = (answer) => {
     socket.emit('player send answer', answer);
 }
-    /*
-        Changes to be made for storing players:
-        
-        - Every action by the client will be
-        immediately written into session storage
+/*
+    Changes to be made for storing players:
+    
+    - Every action by the client will be
+    immediately written into session storage
 
-        - Immediately after that the session storage
-        information will used and passed by an to
-        the server via a socket event
+    - Immediately after that the session storage
+    information will used and passed by an to
+    the server via a socket event
 
-        - This is so that if connection is 
-        interrupted or if the user reloads 
-        or changes pages they will still have
-        their progress in the game and can 
-        continue playing
+    - This is so that if connection is 
+    interrupted or if the user reloads 
+    or changes pages they will still have
+    their progress in the game and can 
+    continue playing
 
-        - We can make functions that do this
-        such as this example:
+    - We can make functions that do this
+    such as this example:
 
-            handleAnswer() {
-                //update global player variable
-                player.answered = true
-                //write to local storage
-                sessionStorage.setItem('player', JSON.stringify(player));
-                
-                sendAnswer(options.answer);
-            }
-    */
+        handleAnswer() {
+            //update global player variable
+            player.answered = true
+            //write to local storage
+            sessionStorage.setItem('player', JSON.stringify(player));
+            
+            sendAnswer(options.answer);
+        }
+*/
 
 /* TODO: the question component reloads every timer update,
          this needs to be changed so that when this page
@@ -49,12 +49,10 @@ const GameWindow = () => {
     const [timer, updateTimer] = useState(15);
 
     socket.on('update game', (game) => {
-        console.log(getMyPlayer(game, socket.id))
+        // console.log(getMyPlayer(game, socket.id))
         if (!game.gameStarted) {
             window.location.href = '/lobby';
         }
-        updateGameWindow(<QuestionComponent question={game.questions[game.currentRound]} answerHandler={sendAnswer} />);
-
     });
 
     socket.on('player created', (player) => {
