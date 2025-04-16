@@ -27528,7 +27528,7 @@ var HostPage = function HostPage() {
   }, gameStarted ? 'Game Started' : 'Start Game'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
     onClick: handleRestartGame,
     className: "btn btn-danger"
-  }, "Cancel Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.GameDetails, {
+  }, "Cancel Game"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.Leaderboard, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.GameDetails, {
     game: gameStats
   }));
 };

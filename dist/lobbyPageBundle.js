@@ -27323,14 +27323,15 @@ var LobbyWindow = function LobbyWindow() {
     var newName = nameBox.value;
     player.name = newName;
     if (newName === '') {
-      setName('mysterious');
+      setName(newName);
       socket.emit('change name', 'mysterious');
       player.name = 'mysterious';
       sessionStorage.setItem('player', JSON.stringify(player));
     } else {
-      setName(newName);
       socket.emit('change name', newName);
+      player.name = newName;
       sessionStorage.setItem('player', JSON.stringify(player));
+      setName(player.name);
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
@@ -27354,7 +27355,7 @@ var LobbyWindow = function LobbyWindow() {
     alt: "IKNOWBALL",
     width: "640px",
     height: "480px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Player', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Welcome ", name || 'Mysterious', "!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     id: "player-profile"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("input", {
     id: "name-input",
@@ -27362,11 +27363,7 @@ var LobbyWindow = function LobbyWindow() {
     placeholder: "Enter your name",
     value: name,
     onChange: handleNameChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {
-    type: "button",
-    className: "btn btn-primary",
-    onClick: handleNameSubmit
-  }, "Change Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("ul", {
     id: "player-list"
   }, Object.values(players || {
     'empty': 'empty'

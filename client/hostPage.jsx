@@ -53,6 +53,7 @@ const HostPage = () => {
             >
                 Cancel Game
             </button>
+            <Leaderboard/>
             <GameDetails game={gameStats} />
 
         </div>

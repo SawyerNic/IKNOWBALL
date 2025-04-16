@@ -131,7 +131,6 @@ const socketSetup = (app) => {
                 player.name = newName;
                 io.emit('update game', sanitizeGame(game)); 
             }
-            io.emit('update game', sanitizeGame(game)); 
         });
 
         socket.on('disconnect', () => {

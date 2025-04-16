@@ -36,24 +36,26 @@ const LobbyWindow = () => {
         };
     }, []); // Empty dependency array ensures this runs only once
 
-
     const handleNameChange = () => {
         const nameBox = document.getElementById('name-input')
         const newName = nameBox.value;
         player.name = newName;
 
+        
         if (newName === '') {
-            setName('mysterious');
+            setName(newName);
             socket.emit('change name', 'mysterious');
             player.name = 'mysterious';
             sessionStorage.setItem('player', JSON.stringify(player));
         } else {
-            setName(newName);
             socket.emit('change name', newName);
+            player.name = newName;
             sessionStorage.setItem('player', JSON.stringify(player));
+            setName(player.name);
         }
-    };
 
+        
+    };
 
     return (
         <div id="home-content">
@@ -63,7 +65,7 @@ const LobbyWindow = () => {
                 ))}
             </div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
-            <h3>Welcome {name || 'Player'}!</h3>
+            <h3>Welcome {name || 'Mysterious'}!</h3>
             <div id='player-profile'>
                 <input
                     id='name-input'
@@ -72,7 +74,6 @@ const LobbyWindow = () => {
                     value={name}
                     onChange={handleNameChange}
                 />
-                <button type="button" className="btn btn-primary" onClick={handleNameSubmit}>Change Name</button>
             </div>
 
             <ul id='player-list'>
@@ -86,6 +87,7 @@ const LobbyWindow = () => {
 }
 
 const init = () => {
+
     const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
     socket.emit('add player', savedPlayer);
     player = savedPlayer;
