@@ -2,11 +2,9 @@ const React = require('react');
 const { useState } = require('react');
 const socket = require('../socket'); // Use CommonJS syntax for socket import
 const { useDispatch } = require('react-redux'); // Import useDispatch
-const { Provider } = require('react-redux');
 const { playerActions } = require('../reducers/playerReducer');
 
 const QuestionComponent = ({ question, answerHandler, myPlayer }) => {
-    const [answered, setAnswered] = useState(false);
     const [timer, updateTimer] = useState(15);
     const dispatch = useDispatch();
 
@@ -20,11 +18,8 @@ const QuestionComponent = ({ question, answerHandler, myPlayer }) => {
         updateTimer(timeLeft);
     });
 
-
     const handleOptionClick = (option) => {
         console.log("Option clicked:", option);
-
-        setAnswered(true);
 
         dispatch(playerActions.setPlayer({ ...myPlayer, answered: true }));
 
@@ -33,14 +28,10 @@ const QuestionComponent = ({ question, answerHandler, myPlayer }) => {
         console.log(sessionStorage.getItem('player'));
     };
 
-    // TODO 
-    if (answered) {
-        return <h2>Answered</h2>; // Show "answered" header if the question has been answered
-    }
-
     return (
         <div className="question-container" style={{ textAlign: 'center', margin: '20px' }}>
             <div>
+                <h1></h1>
                 <h3>Timer: {timer}</h3>
                 <h3>points: {myPlayer.totalScore}</h3>
             </div>

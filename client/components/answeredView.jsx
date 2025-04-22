@@ -12,7 +12,10 @@ const socket = require('../socket'); // Use CommonJS syntax for socket import
 const AnsweredView = () => {
 
     return (
-        <h1></h1>
+        <div>
+            <h1>Answered</h1>
+            <p>...other people</p>
+        </div>
     )
 }
 

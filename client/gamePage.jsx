@@ -1,16 +1,15 @@
 const { createRoot } = require('react-dom/client');
 const React = require('react');
 const { useState, useEffect } = require('react');
-const { QuestionComponent, AnsweredView, LoadingScreen, LobbyWindow } = require('./components');
+const { QuestionComponent, AnsweredView, LoadingScreen, LobbyWindow, ResultView } = require('./components');
 const { Provider } = require('react-redux');
 const store = require('./store');
 const { useSelector, useDispatch } = require('react-redux');
 const { playerActions } = require('./reducers/playerReducer');
 const socket = require('./socket'); // Use CommonJS syntax for socket import
 
-const sendAnswer = (answer) => {
-    socket.emit('player send answer', answer);
-}
+
+
 
 const GameWindow = () => {
     const dispatch = useDispatch(); // Use dispatch to update Redux state
@@ -18,6 +17,10 @@ const GameWindow = () => {
     const [gameWindow, updateGameWindow] = useState(<LoadingScreen />);
     const [timer, updateTimer] = useState(15);
 
+    const sendAnswer = (answer) => {
+        socket.emit('player send answer', answer);
+        updateGameWindow(AnsweredView);
+    }
 
     useEffect(() => {
         socket.on('send game state', (started) => {
@@ -37,8 +40,13 @@ const GameWindow = () => {
 
     useEffect(() => {
 
+        socket.on('send results', (results) => {
+            console.log(results);
+        })
+
         const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
         socket.emit('add player', savedPlayer);
+
 
         // Handle 'player created' event
         socket.on('player created', (player) => {
@@ -57,8 +65,8 @@ const GameWindow = () => {
             updateGameWindow(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} myPlayer={myPlayer} />);
         });
 
-        socket.on('server send results', () => {
-
+        socket.on('server send results', (results) => {
+            updateGameWindow(<ResultView/>);
         })
 
         socket.on('game cancelled', () => {

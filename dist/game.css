@@ -13,7 +13,7 @@
 }
 
 img {
-  width: 340px;
+  width: 125px;
   height: auto;
 }
 
@@ -50,27 +50,6 @@ p {
   text-align: center;
   margin-top: 10px;
 }
-
-.options-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  max-width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.options-container button {
-  width: 45%;               /* 2 per row with space */
-  min-width: 120px;         /* optional */
-  padding: 10px;
-  text-align: center;
-  white-space: normal;
-  word-wrap: break-word;
-  height: auto;
-}
-
 
 .btn {
   font-family: "Open Sans", sans-serif;
@@ -209,15 +188,5 @@ p {
   }
   #text-box {
     height: 75%;
-  }
-}
-
-@media (max-width: 400px) {
-  img{
-    width: 200px;
-  }
-
-  .options-container button {
-    width: 100%;
   }
 }

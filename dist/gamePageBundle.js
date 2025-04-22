@@ -35,7 +35,7 @@ var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use 
 */
 
 var AnsweredView = function AnsweredView() {
-  return /*#__PURE__*/React.createElement("h1", null);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Answered"), /*#__PURE__*/React.createElement("p", null, "...other people"));
 };
 module.exports = AnsweredView;
 
@@ -54,13 +54,15 @@ var _require = __webpack_require__(/*! ./leaderboard.jsx */ "./client/components
 var AnsweredView = __webpack_require__(/*! ./answeredView.jsx */ "./client/components/answeredView.jsx");
 var LoadingScreen = __webpack_require__(/*! ./loading.jsx */ "./client/components/loading.jsx");
 var LobbyWindow = __webpack_require__(/*! ./lobbyPage.jsx */ "./client/components/lobbyPage.jsx");
+var ResultView = __webpack_require__(/*! ./resultView.jsx */ "./client/components/resultView.jsx");
 module.exports = {
   QuestionComponent: QuestionComponent,
   GameDetails: GameDetails,
   Leaderboard: Leaderboard,
   AnsweredView: AnsweredView,
   LoadingScreen: LoadingScreen,
-  LobbyWindow: LobbyWindow
+  LobbyWindow: LobbyWindow,
+  ResultView: ResultView
 };
 
 /***/ }),
@@ -207,6 +209,7 @@ var LobbyWindow = function LobbyWindow() {
     players = _useState2[0],
     setPlayers = _useState2[1];
   useEffect(function () {
+    socket.emit('game request');
     socket.on('update game', function (game) {
       setPlayers(game.players);
     });
@@ -232,7 +235,7 @@ var LobbyWindow = function LobbyWindow() {
     id: "name-input",
     type: "text",
     placeholder: "Enter your name",
-    value: player.name,
+    value: player.name === 'mysterious' ? '' : player.name,
     onChange: handleNameChange
   })), /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
@@ -272,22 +275,16 @@ var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js")
 var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
 var _require2 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/cjs/index.js"),
   useDispatch = _require2.useDispatch; // Import useDispatch
-var _require3 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/cjs/index.js"),
-  Provider = _require3.Provider;
-var _require4 = __webpack_require__(/*! ../reducers/playerReducer */ "./client/reducers/playerReducer.js"),
-  playerActions = _require4.playerActions;
+var _require3 = __webpack_require__(/*! ../reducers/playerReducer */ "./client/reducers/playerReducer.js"),
+  playerActions = _require3.playerActions;
 var QuestionComponent = function QuestionComponent(_ref) {
   var question = _ref.question,
     answerHandler = _ref.answerHandler,
     myPlayer = _ref.myPlayer;
-  var _useState = useState(false),
+  var _useState = useState(15),
     _useState2 = _slicedToArray(_useState, 2),
-    answered = _useState2[0],
-    setAnswered = _useState2[1];
-  var _useState3 = useState(15),
-    _useState4 = _slicedToArray(_useState3, 2),
-    timer = _useState4[0],
-    updateTimer = _useState4[1];
+    timer = _useState2[0],
+    updateTimer = _useState2[1];
   var dispatch = useDispatch();
   console.log(sessionStorage.getItem('player'));
   if (!question) {
@@ -300,7 +297,6 @@ var QuestionComponent = function QuestionComponent(_ref) {
   });
   var handleOptionClick = function handleOptionClick(option) {
     console.log("Option clicked:", option);
-    setAnswered(true);
     dispatch(playerActions.setPlayer(_objectSpread(_objectSpread({}, myPlayer), {}, {
       answered: true
     })));
@@ -309,18 +305,13 @@ var QuestionComponent = function QuestionComponent(_ref) {
     answerHandler(option.isAnswer);
     console.log(sessionStorage.getItem('player'));
   };
-
-  // TODO 
-  if (answered) {
-    return /*#__PURE__*/React.createElement("h2", null, "Answered"); // Show "answered" header if the question has been answered
-  }
   return /*#__PURE__*/React.createElement("div", {
     className: "question-container",
     style: {
       textAlign: 'center',
       margin: '20px'
     }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Timer: ", timer), /*#__PURE__*/React.createElement("h3", null, "points: ", myPlayer.totalScore)), /*#__PURE__*/React.createElement("h2", null, question.prompt), question.imageLink && /*#__PURE__*/React.createElement("img", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null), /*#__PURE__*/React.createElement("h3", null, "Timer: ", timer), /*#__PURE__*/React.createElement("h3", null, "points: ", myPlayer.totalScore)), /*#__PURE__*/React.createElement("h2", null, question.prompt), question.imageLink && /*#__PURE__*/React.createElement("img", {
     src: question.imageLink,
     alt: "Question",
     style: {
@@ -341,6 +332,32 @@ var QuestionComponent = function QuestionComponent(_ref) {
   })));
 };
 module.exports = QuestionComponent;
+
+/***/ }),
+
+/***/ "./client/components/resultView.jsx":
+/*!******************************************!*\
+  !*** ./client/components/resultView.jsx ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
+  useState = _require.useState,
+  useEffect = _require.useEffect;
+var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
+
+/*
+    what should be on this page: 
+    1.) Your answer was correct or incorrect
+    2.) Leaderboard
+    3.)
+*/
+
+var ResultView = function ResultView() {
+  return /*#__PURE__*/React.createElement("h1", null, "you were right or wrong idk and i dont give a fuck");
+};
+module.exports = ResultView;
 
 /***/ }),
 
@@ -40804,7 +40821,8 @@ var _require3 = __webpack_require__(/*! ./components */ "./client/components/ind
   QuestionComponent = _require3.QuestionComponent,
   AnsweredView = _require3.AnsweredView,
   LoadingScreen = _require3.LoadingScreen,
-  LobbyWindow = _require3.LobbyWindow;
+  LobbyWindow = _require3.LobbyWindow,
+  ResultView = _require3.ResultView;
 var _require4 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/cjs/index.js"),
   Provider = _require4.Provider;
 var store = __webpack_require__(/*! ./store */ "./client/store.js");
@@ -40815,9 +40833,6 @@ var _require6 = __webpack_require__(/*! ./reducers/playerReducer */ "./client/re
   playerActions = _require6.playerActions;
 var socket = __webpack_require__(/*! ./socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
 
-var sendAnswer = function sendAnswer(answer) {
-  socket.emit('player send answer', answer);
-};
 var GameWindow = function GameWindow() {
   var dispatch = useDispatch(); // Use dispatch to update Redux state
   var myPlayer = useSelector(function (state) {
@@ -40831,6 +40846,10 @@ var GameWindow = function GameWindow() {
     _useState4 = _slicedToArray(_useState3, 2),
     timer = _useState4[0],
     updateTimer = _useState4[1];
+  var sendAnswer = function sendAnswer(answer) {
+    socket.emit('player send answer', answer);
+    updateGameWindow(AnsweredView);
+  };
   useEffect(function () {
     socket.on('send game state', function (started) {
       console.log(started);
@@ -40846,6 +40865,9 @@ var GameWindow = function GameWindow() {
     });
   }, [myPlayer]);
   useEffect(function () {
+    socket.on('send results', function (results) {
+      console.log(results);
+    });
     var savedPlayer = JSON.parse(sessionStorage.getItem('player'));
     socket.emit('add player', savedPlayer);
 
@@ -40867,7 +40889,9 @@ var GameWindow = function GameWindow() {
         myPlayer: myPlayer
       }));
     });
-    socket.on('server send results', function () {});
+    socket.on('server send results', function (results) {
+      updateGameWindow(/*#__PURE__*/React.createElement(ResultView, null));
+    });
     socket.on('game cancelled', function () {
       console.log('game cancelled');
       updateGameWindow(/*#__PURE__*/React.createElement(LobbyWindow, {

@@ -11,9 +11,11 @@ const LobbyWindow = () => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
+        socket.emit('game request');
+        
         socket.on('update game', (game) => {
             setPlayers(game.players);
-        })
+        });
 
         return () => {
             socket.off('update game');
@@ -36,7 +38,7 @@ const LobbyWindow = () => {
                     id='name-input'
                     type="text"
                     placeholder="Enter your name"
-                    value={player.name}
+                    value={player.name === 'mysterious' ? '' : player.name}
                     onChange={handleNameChange}
                 />
             </div>

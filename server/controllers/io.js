@@ -32,23 +32,17 @@ const sendQuestion = (game) => {
     game.startTimer(
         15, // 15-second duration
         (timeLeft) => {
-            io.emit('timer update', timeLeft); 
+            io.emit('timer update', timeLeft);
             io.emit('update game', sanitizeGame(game));
         },
         () => {
-            
+
+            sendResults(game); // Send the next question
+
             // Move to the next round or end the game
             game.currentRound += 1;
             console.log(`Current round: ${game.currentRound} + game.questions.length: ${game.questions.length}`);
-            if (game.currentRound < game.questions.length) {
-                sendResults(game); // Send the next question
-            } else {
-                game.cancelGame();
-                console.log('Game over');
-                io.emit('game over', game.getSortedPlayers());
-                io.emit('game cancelled');
-                io.emit('update game', sanitizeGame(game)); 
-            }
+
         }
     );
 };
@@ -63,7 +57,15 @@ const sendResults = (game) => {
             io.emit('timer update', timeLeft);
         },
         () => {
-            sendQuestion(game);
+            if (game.currentRound < game.questions.length) {
+                sendQuestion(game);
+            } else {
+                game.cancelGame();
+                console.log('Game over');
+                io.emit('game over', game.getSortedPlayers());
+                io.emit('game cancelled');
+                io.emit('update game', sanitizeGame(game));
+            }
         }
     )
 }
@@ -88,7 +90,7 @@ const socketSetup = (app) => {
         });
 
         socket.on('game request', () => {
-            io.emit('update game', sanitizeGame);
+            io.emit('update game', sanitizeGame(game));
         })
 
         socket.on('get game state', () => {
@@ -111,7 +113,7 @@ const socketSetup = (app) => {
             game.addPlayer(player);
 
             socket.emit('player created', player);
-            io.emit('update game', sanitizeGame(game)); 
+            io.emit('update game', sanitizeGame(game));
 
         });
 
