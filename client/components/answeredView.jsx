@@ -1,6 +1,13 @@
 const React = require('react');
 const { useState, useEffect } = require('react');
-const socket = io();
+const socket = require('../socket'); // Use CommonJS syntax for socket import
+
+/*
+    what should be on this page: 
+    1.) Youn answered in *blank* seconds!
+    2.) List of other people that answered popping in
+    3.)
+*/
 
 const AnsweredView = () => {
 
@@ -9,6 +16,4 @@ const AnsweredView = () => {
     )
 }
 
-module.exports = {
-    AnsweredView
-};
+module.exports = AnsweredView;

@@ -27437,7 +27437,7 @@ var HomePage = function HomePage() {
     var textBox = document.getElementById('text-box');
     if (textBox.value === '1234') {
       console.log('true');
-      window.location.href = '/lobby';
+      window.location.href = '/gamePage';
     } else {
       console.log('false');
     }

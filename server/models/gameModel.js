@@ -8,8 +8,8 @@ class gameModel {
         this.gameStarted = false;
         this.leaderBoard;
         this.questions;
-        this.timer = null; 
-        this.timeLeft = 0; 
+        this.timer = null;
+        this.timeLeft = 0;
         this.playersAnswered = {};
     }
 
@@ -29,6 +29,16 @@ class gameModel {
         return Object.values(this.players).length; // Corrected method to get player count
     }
 
+    changePlayerName(playerId, newName) {
+        const player = this.getPlayer(playerId);
+        if (!player) {
+            console.error(`Error: Player with ID ${playerId} does not exist.`);
+            return;
+        }
+        player.name = newName;
+        console.log(`Player ID ${playerId} name changed to ${newName}`);
+    }
+
     updateDetailedList() {
         this.leaderBoard = Object.values(this.players).sort((a, b) => {
             if (b.roundsSurvived !== a.roundsSurvived) {
@@ -44,10 +54,19 @@ class gameModel {
     }
 
     handlePlayerAnswer(id, answer) {
+        console.log('Player ID:', id);
+        console.log('Players:', this.players);
+
+        if (!this.players[id]) {
+            console.error(`Player with ID ${id} does not exist.`);
+            return;
+        }
+
+        this.players[id].answered = true;
         this.playersAnswered[id] = this.players[id];
 
-        if(answer){
-            let roundScore = Math.round(((this.timeLeft + 1) / 15) * 1000); 
+        if (answer) {
+            let roundScore = Math.round(((this.timeLeft + 1) / 15) * 1000);
             this.players[id].totalScore += roundScore;
         } else {
             this.players[id].perfect = false;
@@ -79,6 +98,13 @@ class gameModel {
             clearInterval(this.timer);
             this.timer = null;
         }
+    }
+
+    cancelGame() {
+        this.stopTimer(); // Stop the timer when restarting the game
+        this.gameStarted = false;
+        this.currentRound = 0;
+        this.leaderBoard = null;
     }
 }
 

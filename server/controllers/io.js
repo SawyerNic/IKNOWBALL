@@ -33,6 +33,7 @@ const sendQuestion = (game) => {
         15, // 15-second duration
         (timeLeft) => {
             io.emit('timer update', timeLeft); 
+            io.emit('update game', sanitizeGame(game));
         },
         () => {
             
@@ -40,11 +41,12 @@ const sendQuestion = (game) => {
             game.currentRound += 1;
             console.log(`Current round: ${game.currentRound} + game.questions.length: ${game.questions.length}`);
             if (game.currentRound < game.questions.length) {
-                sendQuestion(game); // Send the next question
+                sendResults(game); // Send the next question
             } else {
-                restartGame(game);
+                game.cancelGame();
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
+                io.emit('game cancelled');
                 io.emit('update game', sanitizeGame(game)); 
             }
         }
@@ -52,17 +54,18 @@ const sendQuestion = (game) => {
 };
 
 const sendResults = (game) => {
-    // start the game timer for 5 seconds
-        /*
 
-        */
-}
+    io.emit('server send results', game);
 
-const restartGame = (game) => {
-    game.stopTimer(); // Stop the timer when restarting the game
-    game.gameStarted = false;
-    game.currentRound = 0;
-    game.leaderBoard = null;
+    game.startTimer(
+        5,
+        (timeLeft) => {
+            io.emit('timer update', timeLeft);
+        },
+        () => {
+            sendQuestion(game);
+        }
+    )
 }
 
 const socketSetup = (app) => {
@@ -76,27 +79,35 @@ const socketSetup = (app) => {
 
     io.on('connection', (socket) => {
 
-        console.log('a user connected');
+        console.log(`A user connected with socket ID: ${socket.id}. Total connections: ${io.engine.clientsCount}`);
 
-        
-
-        socket.on('restart game', () => {
-            restartGame(game);
-            io.emit('update game', sanitizeGame(game)); 
+        socket.on('cancel game', () => {
+            game.cancelGame();
+            io.emit('update game', sanitizeGame(game));
+            io.emit('game cancelled');
         });
+
+        socket.on('game request', () => {
+            io.emit('update game', sanitizeGame);
+        })
+
+        socket.on('get game state', () => {
+            socket.emit('send game state', sanitizeGame(game))
+        })
 
         socket.on('add player', (passedPlayer) => {
             let player = new Player();
 
-            console.log('passed player ' + passedPlayer);
-            if (passedPlayer) {
+            if (passedPlayer && Object.keys(passedPlayer).length > 0) {
                 player = { ...player, ...passedPlayer };
-                player.id = socket.id;
+                console.log('adding existing player');
+
             } else {
-                player.id = socket.id;
                 player.name = 'Player ' + game.playerToJoin;
                 game.playerToJoin += 1;
+                console.log('adding new player');
             }
+            player.id = socket.id;
             game.addPlayer(player);
 
             socket.emit('player created', player);
@@ -106,9 +117,9 @@ const socketSetup = (app) => {
 
         socket.on('start game', () => {
 
-            io.emit('game started', () => {});
-            console.log('game started');
             game.gameStarted = true;
+            io.emit('game started');
+            console.log('game started');
 
             // Wait a short time to ensure clients are ready before sending the first question
             setTimeout(() => {
@@ -124,12 +135,10 @@ const socketSetup = (app) => {
         });
 
         socket.on('change name', (newName) => {
-            const playerId = socket.id;
-            const player = game.players[playerId];
-            if (player) {
-                player.name = newName;
-                io.emit('update game', sanitizeGame(game)); 
-            }
+
+            game.changePlayerName(socket.id, newName);
+            socket.emit('name change confirm', game.getPlayer(socket.id));
+            io.emit('update game', sanitizeGame(game));
         });
 
         socket.on('disconnect', () => {

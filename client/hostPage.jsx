@@ -1,34 +1,32 @@
-import { createRoot } from 'react-dom/client';
-import React, { useState, useEffect } from 'react';
-import { GameDetails, Leaderboard } from './components';
+const { createRoot } = require('react-dom/client');
+const React = require('react');
+const { useState, useEffect } = require('react');
+const { GameDetails, Leaderboard } = require('./components');
+const socket = require('./socket'); // Use CommonJS syntax for socket import
 
-
-const socket = io();
 
 const HostPage = () => {
-    const [players, setPlayers] = useState([]);
     const [gameStats, updateGame] = useState({});
     const [gameStarted, setGameStarted] = useState(false); // Track if the game has started
-
 
     useEffect(() => {
 
         socket.on('update game', (game) => {
             updateGame(game);
-            setPlayers(game.players);
-            //setGameStarted(game.gameStarted);
+            setGameStarted(game.gameStarted);
         })
     }, []);
 
     const handleStartGame = () => {
         // Emit the 'start game' event to the server
         socket.emit('start game', 'The game has started!');
+        setGameStarted(true);
     };
 
-    const handleRestartGame = () => {
-        socket.emit('restart game');
+    const handleCancelGame = () => {
+        socket.emit('cancel game');
+        setGameStarted(false);
     }
-
 
     return (
 
@@ -48,7 +46,7 @@ const HostPage = () => {
                 {gameStarted ? 'Game Started' : 'Start Game'}
             </button>
             <button
-                onClick={handleRestartGame}
+                onClick={handleCancelGame}
                 className="btn btn-danger"
             >
                 Cancel Game
@@ -62,8 +60,6 @@ const HostPage = () => {
 };
 
 const init = () => {
-    socket.emit('stop game', () => { });
-    socket.emit('get player count', () => { });
     const root = createRoot(document.getElementById('host-content'));
 
     root.render(

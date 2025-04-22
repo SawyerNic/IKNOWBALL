@@ -5,7 +5,6 @@ module.exports = {
         app: './client/landingPage.jsx',
         hostPage: './client/hostPage.jsx',
         gamePage: './client/gamePage.jsx',
-        lobbyPage: './client/lobbyPage.jsx'
     },
     module: {
         rules: [

@@ -1,6 +1,6 @@
 const React = require('react');
 const { useState, useEffect } = require('react');
-const socket = io();
+const socket = require('../socket'); // Use CommonJS syntax for socket import
 
 const GameDetails = ({ game }) => {
 
@@ -49,7 +49,7 @@ const Leaderboard = () => {
             <ul id='player-list'>
 
                 {Object.values(players).map((player) => (
-                    <li key={player.id}>{player.name + " | Points: " + player.totalScore + " | answered: " + player.answered}</li>
+                    <li key={player.id}>{player.name + " | In: " + player.perfect + " | Points: " + player.totalScore + " | answered: " + player.answered}</li>
                 ))}
             </ul>
         </div>
