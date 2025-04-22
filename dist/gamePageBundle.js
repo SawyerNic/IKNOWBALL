@@ -332,6 +332,7 @@ var QuestionComponent = function QuestionComponent(_ref) {
     className: "options-container"
   }, question.options.map(function (option, index) {
     return /*#__PURE__*/React.createElement("button", {
+      className: "btn",
       key: index,
       onClick: function onClick() {
         return handleOptionClick(option);
@@ -40824,6 +40825,7 @@ var GameWindow = function GameWindow() {
   }); // Access player state from Redux
   var _useState = useState(/*#__PURE__*/React.createElement(LoadingScreen, null)),
     _useState2 = _slicedToArray(_useState, 2),
+<<<<<<< HEAD
     gameWindow = _useState2[0],
     updateGameWindow = _useState2[1];
   useEffect(function () {
@@ -40898,6 +40900,46 @@ var GameWindow = function GameWindow() {
       alt: "Baseball"
     });
   })), /*#__PURE__*/React.createElement("div", null, gameWindow));
+=======
+    myPlayer = _useState2[0],
+    updatePlayer = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    gameWindow = _useState4[0],
+    updateGameWindow = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(15),
+    _useState6 = _slicedToArray(_useState5, 2),
+    timer = _useState6[0],
+    updateTimer = _useState6[1];
+  socket.on('update game', function (game) {
+    if (!game.gameStarted) {
+      window.location.href = '/lobby';
+    }
+    updateGameWindow(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.QuestionComponent, {
+      question: game.questions[game.currentRound],
+      answerHandler: sendAnswer
+    }));
+  });
+  socket.on('player created', function (player) {
+    updatePlayer(player);
+  });
+  socket.on('server send question', function (sentQuestion) {
+    console.log("sentQuestion: " + JSON.stringify(sentQuestion));
+    updateGameWindow(/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components__WEBPACK_IMPORTED_MODULE_2__.QuestionComponent, {
+      question: sentQuestion,
+      answerHandler: sendAnswer
+    }));
+  });
+  socket.on('timer update', function (timeLeft) {
+    updateTimer(timeLeft);
+  });
+  if (!myPlayer) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, "Game already started! Please wait for next game."));
+  }
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h1", null, myPlayer.name + " " + myPlayer.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "points: ", myPlayer.totalScore), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("h3", null, "Timer: ", timer), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    id: "question-container"
+  }, gameWindow));
+>>>>>>> 4d0b2ab1232316f937d1c65bf0284fcb7be34446
 };
 var init = function init() {
   var rootElement = document.getElementById('content');

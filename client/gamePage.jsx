@@ -86,7 +86,10 @@ const GameWindow = () => {
                     <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
             </div>
-            <div>
+            <h1>{myPlayer.name + " " + myPlayer.id}</h1>
+            <h3>points: {myPlayer.totalScore}</h3>
+            <h3>Timer: {timer}</h3>
+            <div id='question-container'>
                 {gameWindow}
             </div>
         </div>

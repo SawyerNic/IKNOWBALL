@@ -332,6 +332,7 @@ var QuestionComponent = function QuestionComponent(_ref) {
     className: "options-container"
   }, question.options.map(function (option, index) {
     return /*#__PURE__*/React.createElement("button", {
+      className: "btn",
       key: index,
       onClick: function onClick() {
         return handleOptionClick(option);
