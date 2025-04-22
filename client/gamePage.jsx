@@ -16,6 +16,8 @@ const GameWindow = () => {
     const dispatch = useDispatch(); // Use dispatch to update Redux state
     const myPlayer = useSelector((state) => state.player); // Access player state from Redux
     const [gameWindow, updateGameWindow] = useState(<LoadingScreen />);
+    const [timer, updateTimer] = useState(15);
+
 
     useEffect(() => {
         socket.on('send game state', (started) => {
@@ -86,9 +88,6 @@ const GameWindow = () => {
                     <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
             </div>
-            <h1>{myPlayer.name + " " + myPlayer.id}</h1>
-            <h3>points: {myPlayer.totalScore}</h3>
-            <h3>Timer: {timer}</h3>
             <div id='question-container'>
                 {gameWindow}
             </div>
