@@ -40,7 +40,7 @@ const QuestionComponent = ({ question, answerHandler }) => {
                     style={{ maxWidth: '50%', height: 'auto', marginBottom: '20px' }}
                 />
             )}
-            <div className="options-container">
+            <div>
                 {question.options.map((option, index) => (
                     <button className="btn"
                         key={index}
