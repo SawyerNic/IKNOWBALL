@@ -6,7 +6,7 @@ class gameModel {
         this.currentRound = 0;
         this.playerToJoin = 1;
         this.gameStarted = false;
-        this.leaderBoard;
+        this.leaderBoard = {};
         this.questions;
         this.timer = null;
         this.timeLeft = 0;
@@ -71,6 +71,9 @@ class gameModel {
         } else {
             this.players[id].perfect = false;
         }
+
+        // Update the leaderboard after processing the player's answer
+        this.updateDetailedList();
     }
 
     startTimer(duration, onTick, onComplete) {

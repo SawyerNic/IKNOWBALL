@@ -1,5 +1,5 @@
 const QuestionComponent = require('./questionTemplates.jsx');
-const { GameDetails, Leaderboard } = require('./leaderboard.jsx');
+const { GameDetails, PlayerList } = require('./leaderboard.jsx');
 const AnsweredView = require('./answeredView.jsx');
 const LoadingScreen = require('./loading.jsx');
 const LobbyWindow = require('./lobbyPage.jsx');
@@ -8,7 +8,7 @@ const ResultView = require('./resultView.jsx');
 module.exports = {
     QuestionComponent,
     GameDetails,
-    Leaderboard,
+    PlayerList,
     AnsweredView,
     LoadingScreen, 
     LobbyWindow,

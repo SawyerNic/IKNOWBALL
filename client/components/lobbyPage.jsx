@@ -1,6 +1,7 @@
 const React = require('react');
 const { useState, useEffect } = require('react');
 const socket = require('../socket'); // Use CommonJS syntax for socket import
+const store = require('../store');
 const { useDispatch, useSelector } = require('react-redux');
 const { playerActions } = require('../reducers/playerReducer');
 
@@ -11,6 +12,10 @@ const LobbyWindow = () => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
+        if(!player.name){
+            player.name = 'Stranger';
+        }
+
         socket.emit('game request');
         
         socket.on('update game', (game) => {
@@ -24,21 +29,21 @@ const LobbyWindow = () => {
 
     const handleNameChange = (event) => {
         const newName = event.target.value;
-        dispatch(playerActions.setName(newName));
-        socket.emit('change name', newName || 'mysterious');
+        store.dispatch(playerActions.setName(newName));
+        socket.emit('change name', newName || 'Stranger');
     };
 
     return (
         <div id="home-content">
 
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
-            <h3>Welcome {player.name || 'Mysterious'}!</h3>
+            <h3>Welcome {player.name || 'Stranger'}!</h3>
             <div id='player-profile'>
                 <input
                     id='name-input'
                     type="text"
                     placeholder="Enter your name"
-                    value={player.name === 'mysterious' ? '' : player.name}
+                    value={player.name === 'Mysterious' ? '' : player.name}
                     onChange={handleNameChange}
                 />
             </div>

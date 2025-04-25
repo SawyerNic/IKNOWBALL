@@ -1,14 +1,15 @@
 const React = require('react');
 const { useState } = require('react');
 const socket = require('../socket'); // Use CommonJS syntax for socket import
-const { useDispatch } = require('react-redux'); // Import useDispatch
+const store = require('../store');
+const { useDispatch, useSelector } = require('react-redux'); // Import useDispatch
 const { playerActions } = require('../reducers/playerReducer');
 
-const QuestionComponent = ({ question, answerHandler, myPlayer }) => {
+const QuestionComponent = ({ question, answerHandler }) => {
     const [timer, updateTimer] = useState(15);
     const dispatch = useDispatch();
+    const myPlayer = useSelector((state) => state.player); // Get the player state directly from Redux
 
-    console.log(sessionStorage.getItem('player'));
     if (!question) {
         return (<div>No question provided</div>);
     }
@@ -21,8 +22,10 @@ const QuestionComponent = ({ question, answerHandler, myPlayer }) => {
     const handleOptionClick = (option) => {
         console.log("Option clicked:", option);
 
-        dispatch(playerActions.setPlayer({ ...myPlayer, answered: true }));
 
+        console.log(myPlayer);
+
+        
         // TODO: show the component after the player answers
         answerHandler(option.isAnswer);
         console.log(sessionStorage.getItem('player'));

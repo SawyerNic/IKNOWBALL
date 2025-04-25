@@ -21,6 +21,12 @@ if (false) {} else {
   \********************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
   useState = _require.useState,
@@ -35,7 +41,22 @@ var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use 
 */
 
 var AnsweredView = function AnsweredView() {
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Answered"), /*#__PURE__*/React.createElement("p", null, "...other people"));
+  var _useState = useState([]),
+    _useState2 = _slicedToArray(_useState, 2),
+    answeredList = _useState2[0],
+    updateAnsweredList = _useState2[1];
+  useEffect(function () {
+    socket.on('send answered list', function (sentList) {
+      updateAnsweredList(sentList);
+    });
+  }, []);
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Answer Locked In"), /*#__PURE__*/React.createElement("ul", {
+    id: "player-list"
+  }, Object.values(answeredList).map(function (player) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: player.id
+    }, player.name + " answered");
+  })));
 };
 module.exports = AnsweredView;
 
@@ -50,7 +71,7 @@ module.exports = AnsweredView;
 var QuestionComponent = __webpack_require__(/*! ./questionTemplates.jsx */ "./client/components/questionTemplates.jsx");
 var _require = __webpack_require__(/*! ./leaderboard.jsx */ "./client/components/leaderboard.jsx"),
   GameDetails = _require.GameDetails,
-  Leaderboard = _require.Leaderboard;
+  PlayerList = _require.PlayerList;
 var AnsweredView = __webpack_require__(/*! ./answeredView.jsx */ "./client/components/answeredView.jsx");
 var LoadingScreen = __webpack_require__(/*! ./loading.jsx */ "./client/components/loading.jsx");
 var LobbyWindow = __webpack_require__(/*! ./lobbyPage.jsx */ "./client/components/lobbyPage.jsx");
@@ -58,7 +79,7 @@ var ResultView = __webpack_require__(/*! ./resultView.jsx */ "./client/component
 module.exports = {
   QuestionComponent: QuestionComponent,
   GameDetails: GameDetails,
-  Leaderboard: Leaderboard,
+  PlayerList: PlayerList,
   AnsweredView: AnsweredView,
   LoadingScreen: LoadingScreen,
   LobbyWindow: LobbyWindow,
@@ -97,13 +118,41 @@ var GameDetails = function GameDetails(_ref) {
   if (!game) {
     return /*#__PURE__*/React.createElement("div", null, "No game data available");
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Round:"), " ", gameData.currentRound), /*#__PURE__*/React.createElement("p", null, /*#__PURE__*/React.createElement("strong", null, "Game Started:"), " ", gameData.gameStarted ? 'Yes' : 'No'));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, "Round: ", gameData.currentRound + 1), /*#__PURE__*/React.createElement("p", null, "Game Started: ", gameData.gameStarted ? 'Yes' : 'No'));
 };
 var Leaderboard = function Leaderboard() {
   var _useState3 = useState([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    players = _useState4[0],
-    setPlayers = _useState4[1];
+    leaderboard = _useState4[0],
+    setLeaderboard = _useState4[1];
+  useEffect(function () {
+    // Listen for updates to the leaderboard
+    var handleUpdateGame = function handleUpdateGame(game) {
+      setLeaderboard(game.leaderBoard || []);
+    };
+    socket.on('update game', handleUpdateGame);
+
+    // Cleanup the listener when the component unmounts
+    return function () {
+      socket.off('update game', handleUpdateGame);
+    };
+  }, []);
+  if (!leaderboard || leaderboard.length === 0) {
+    return /*#__PURE__*/React.createElement("div", null, "No leaderboard data available.");
+  }
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Leaderboard"), /*#__PURE__*/React.createElement("ul", {
+    id: "leaderboard-list"
+  }, leaderboard.map(function (player, index) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: player.id
+    }, index + 1, ". ", player.name, " - Points: ", player.totalScore, ", Rounds Survived: ", player.roundsSurvived);
+  })));
+};
+var PlayerList = function PlayerList() {
+  var _useState5 = useState([]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    players = _useState6[0],
+    setPlayers = _useState6[1];
   useEffect(function () {
     // Register the 'update game' event listener
     var handleUpdateGame = function handleUpdateGame(game) {
@@ -117,7 +166,7 @@ var Leaderboard = function Leaderboard() {
     };
   }, []);
   if (!players || players.length === 0) {
-    return /*#__PURE__*/React.createElement("div", null, "No players available");
+    return /*#__PURE__*/React.createElement("div", null, "No players yet.");
   }
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
@@ -129,6 +178,7 @@ var Leaderboard = function Leaderboard() {
 };
 module.exports = {
   GameDetails: GameDetails,
+  PlayerList: PlayerList,
   Leaderboard: Leaderboard
 };
 
@@ -194,6 +244,7 @@ var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js")
   useState = _require.useState,
   useEffect = _require.useEffect;
 var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
+var store = __webpack_require__(/*! ../store */ "./client/store.js");
 var _require2 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/cjs/index.js"),
   useDispatch = _require2.useDispatch,
   useSelector = _require2.useSelector;
@@ -209,6 +260,9 @@ var LobbyWindow = function LobbyWindow() {
     players = _useState2[0],
     setPlayers = _useState2[1];
   useEffect(function () {
+    if (!player.name) {
+      player.name = 'Stranger';
+    }
     socket.emit('game request');
     socket.on('update game', function (game) {
       setPlayers(game.players);
@@ -219,8 +273,8 @@ var LobbyWindow = function LobbyWindow() {
   }, []);
   var handleNameChange = function handleNameChange(event) {
     var newName = event.target.value;
-    dispatch(playerActions.setName(newName));
-    socket.emit('change name', newName || 'mysterious');
+    store.dispatch(playerActions.setName(newName));
+    socket.emit('change name', newName || 'Stranger');
   };
   return /*#__PURE__*/React.createElement("div", {
     id: "home-content"
@@ -229,13 +283,13 @@ var LobbyWindow = function LobbyWindow() {
     alt: "IKNOWBALL",
     width: "640px",
     height: "480px"
-  }), /*#__PURE__*/React.createElement("h3", null, "Welcome ", player.name || 'Mysterious', "!"), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("h3", null, "Welcome ", player.name || 'Stranger', "!"), /*#__PURE__*/React.createElement("div", {
     id: "player-profile"
   }, /*#__PURE__*/React.createElement("input", {
     id: "name-input",
     type: "text",
     placeholder: "Enter your name",
-    value: player.name === 'mysterious' ? '' : player.name,
+    value: player.name === 'Mysterious' ? '' : player.name,
     onChange: handleNameChange
   })), /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
@@ -257,12 +311,6 @@ module.exports = LobbyWindow;
   \*************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -273,20 +321,24 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
   useState = _require.useState;
 var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
+var store = __webpack_require__(/*! ../store */ "./client/store.js");
 var _require2 = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/dist/cjs/index.js"),
-  useDispatch = _require2.useDispatch; // Import useDispatch
+  useDispatch = _require2.useDispatch,
+  useSelector = _require2.useSelector; // Import useDispatch
 var _require3 = __webpack_require__(/*! ../reducers/playerReducer */ "./client/reducers/playerReducer.js"),
   playerActions = _require3.playerActions;
 var QuestionComponent = function QuestionComponent(_ref) {
   var question = _ref.question,
-    answerHandler = _ref.answerHandler,
-    myPlayer = _ref.myPlayer;
+    answerHandler = _ref.answerHandler;
   var _useState = useState(15),
     _useState2 = _slicedToArray(_useState, 2),
     timer = _useState2[0],
     updateTimer = _useState2[1];
   var dispatch = useDispatch();
-  console.log(sessionStorage.getItem('player'));
+  var myPlayer = useSelector(function (state) {
+    return state.player;
+  }); // Get the player state directly from Redux
+
   if (!question) {
     return /*#__PURE__*/React.createElement("div", null, "No question provided");
   }
@@ -297,9 +349,7 @@ var QuestionComponent = function QuestionComponent(_ref) {
   });
   var handleOptionClick = function handleOptionClick(option) {
     console.log("Option clicked:", option);
-    dispatch(playerActions.setPlayer(_objectSpread(_objectSpread({}, myPlayer), {}, {
-      answered: true
-    })));
+    console.log(myPlayer);
 
     // TODO: show the component after the player answers
     answerHandler(option.isAnswer);
@@ -346,6 +396,8 @@ var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js")
   useState = _require.useState,
   useEffect = _require.useEffect;
 var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
+var _require2 = __webpack_require__(/*! ./leaderboard */ "./client/components/leaderboard.jsx"),
+  Leaderboard = _require2.Leaderboard;
 
 /*
     what should be on this page: 
@@ -355,7 +407,7 @@ var socket = __webpack_require__(/*! ../socket */ "./client/socket.js"); // Use 
 */
 
 var ResultView = function ResultView() {
-  return /*#__PURE__*/React.createElement("h1", null, "you were right or wrong idk and i dont give a fuck");
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "PlayerList:"), /*#__PURE__*/React.createElement(Leaderboard, null));
 };
 module.exports = ResultView;
 
@@ -377,15 +429,7 @@ var _require = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@redu
   createSlice = _require.createSlice;
 var playerSlice = createSlice({
   name: 'player',
-  initialState: {
-    name: 'nullPlayer',
-    id: null,
-    totalScore: 0,
-    answered: false,
-    exited: false,
-    roundsSurvived: 0,
-    perfect: true
-  },
+  initialState: {},
   reducers: {
     setPlayer: function setPlayer(state, action) {
       return _objectSpread(_objectSpread({}, state), action.payload); // Update the entire player object
@@ -398,9 +442,16 @@ var playerSlice = createSlice({
       state.exited = false;
       state.roundsSurvived = 0;
       state.perfect = true;
+      state.place = 0;
     },
     setName: function setName(state, action) {
       state.name = action.payload; // Update only the name property
+    },
+    setAnswered: function setAnswered(state, action) {
+      state.answered = action.payload;
+    },
+    setPerfect: function setPerfect(state, action) {
+      state.perfect = action.payload;
     }
   }
 });
@@ -419,6 +470,24 @@ var _require = __webpack_require__(/*! socket.io-client */ "./node_modules/socke
   io = _require.io; // Use CommonJS syntax
 var socket = io(); // Initialize the socket connection once
 module.exports = socket;
+
+/***/ }),
+
+/***/ "./client/store.js":
+/*!*************************!*\
+  !*** ./client/store.js ***!
+  \*************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _require = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/cjs/index.js"),
+  configureStore = _require.configureStore;
+var playerReducer = __webpack_require__(/*! ./reducers/playerReducer */ "./client/reducers/playerReducer.js");
+var store = configureStore({
+  reducer: {
+    player: playerReducer
+  }
+});
+module.exports = store;
 
 /***/ }),
 
@@ -40801,7 +40870,7 @@ var _require2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
   useEffect = _require2.useEffect;
 var _require3 = __webpack_require__(/*! ./components */ "./client/components/index.js"),
   GameDetails = _require3.GameDetails,
-  Leaderboard = _require3.Leaderboard;
+  PlayerList = _require3.PlayerList;
 var socket = __webpack_require__(/*! ./socket */ "./client/socket.js"); // Use CommonJS syntax for socket import
 
 var HostPage = function HostPage() {
@@ -40813,7 +40882,14 @@ var HostPage = function HostPage() {
     _useState4 = _slicedToArray(_useState3, 2),
     gameStarted = _useState4[0],
     setGameStarted = _useState4[1]; // Track if the game has started
-
+  var _useState5 = useState(15),
+    _useState6 = _slicedToArray(_useState5, 2),
+    timer = _useState6[0],
+    updateTimer = _useState6[1];
+  socket.on('timer update', function (timeLeft) {
+    updateTimer(timeLeft);
+  });
+  socket.emit('game request');
   useEffect(function () {
     socket.on('update game', function (game) {
       updateGame(game);
@@ -40857,9 +40933,9 @@ var HostPage = function HostPage() {
   }, gameStarted ? 'Game Started' : 'Start Game'), /*#__PURE__*/React.createElement("button", {
     onClick: handleCancelGame,
     className: "btn btn-danger"
-  }, "Cancel Game"), /*#__PURE__*/React.createElement(Leaderboard, null), /*#__PURE__*/React.createElement(GameDetails, {
+  }, "Cancel Game"), /*#__PURE__*/React.createElement(PlayerList, null), /*#__PURE__*/React.createElement(GameDetails, {
     game: gameStats
-  }));
+  }), /*#__PURE__*/React.createElement("h3", null, timer));
 };
 var init = function init() {
   var root = createRoot(document.getElementById('host-content'));

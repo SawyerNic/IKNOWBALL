@@ -17,13 +17,48 @@ const GameDetails = ({ game }) => {
     return (
         <div>
             <h2>Game Details</h2>
-            <p><strong>Round:</strong> {gameData.currentRound}</p>
-            <p><strong>Game Started:</strong> {gameData.gameStarted ? 'Yes' : 'No'}</p>
+            <p>Round: {gameData.currentRound + 1}</p>
+            <p>Game Started: {gameData.gameStarted ? 'Yes' : 'No'}</p>
         </div>
     );
 };
 
 const Leaderboard = () => {
+    const [leaderboard, setLeaderboard] = useState([]);
+
+    useEffect(() => {
+        // Listen for updates to the leaderboard
+        const handleUpdateGame = (game) => {
+            setLeaderboard(game.leaderBoard || []);
+        };
+
+        socket.on('update game', handleUpdateGame);
+
+        // Cleanup the listener when the component unmounts
+        return () => {
+            socket.off('update game', handleUpdateGame);
+        };
+    }, []);
+
+    if (!leaderboard || leaderboard.length === 0) {
+        return <div>No leaderboard data available.</div>;
+    }
+
+    return (
+        <div>
+            <h2>Leaderboard</h2>
+            <ul id="leaderboard-list">
+                {leaderboard.map((player, index) => (
+                    <li key={player.id}>
+                        {index + 1}. {player.name} - Points: {player.totalScore}, Rounds Survived: {player.roundsSurvived}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
+const PlayerList = () => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
@@ -41,7 +76,7 @@ const Leaderboard = () => {
     }, []);
 
     if (!players || players.length === 0) {
-        return <div>No players available</div>;
+        return <div>No players yet.</div>;
     }
 
     return (
@@ -56,7 +91,10 @@ const Leaderboard = () => {
     );
 }
 
+
+
 module.exports = {
     GameDetails,
+    PlayerList,
     Leaderboard
 };

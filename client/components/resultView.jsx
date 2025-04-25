@@ -1,6 +1,7 @@
 const React = require('react');
 const { useState, useEffect } = require('react');
 const socket = require('../socket'); // Use CommonJS syntax for socket import
+const { Leaderboard } = require('./leaderboard');
 
 /*
     what should be on this page: 
@@ -12,7 +13,10 @@ const socket = require('../socket'); // Use CommonJS syntax for socket import
 const ResultView = () => {
 
     return (
-        <h1>you were right or wrong idk and i dont give a fuck</h1>
+        <div>
+            <h1>PlayerList:</h1>
+            <Leaderboard /> 
+        </div>
     )
 }
 

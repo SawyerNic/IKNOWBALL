@@ -1,13 +1,21 @@
 const { createRoot } = require('react-dom/client');
 const React = require('react');
 const { useState, useEffect } = require('react');
-const { GameDetails, Leaderboard } = require('./components');
+const { GameDetails, PlayerList } = require('./components');
 const socket = require('./socket'); // Use CommonJS syntax for socket import
 
 
 const HostPage = () => {
     const [gameStats, updateGame] = useState({});
     const [gameStarted, setGameStarted] = useState(false); // Track if the game has started
+    const [timer, updateTimer] = useState(15);
+
+    socket.on('timer update', (timeLeft) => {
+        updateTimer(timeLeft);
+    });
+
+
+    socket.emit('game request');
 
     useEffect(() => {
 
@@ -51,9 +59,9 @@ const HostPage = () => {
             >
                 Cancel Game
             </button>
-            <Leaderboard/>
+            <PlayerList/>
             <GameDetails game={gameStats} />
-
+            <h3>{timer}</h3>
         </div>
     );
 

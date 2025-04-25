@@ -3,13 +3,6 @@ const { createSlice } = require('@reduxjs/toolkit');
 const playerSlice = createSlice({
     name: 'player',
     initialState: {
-        name: 'nullPlayer',
-        id: null,
-        totalScore: 0,
-        answered: false,
-        exited: false,
-        roundsSurvived: 0,
-        perfect: true,
     },
     reducers: {
         setPlayer: (state, action) => {
@@ -23,10 +16,17 @@ const playerSlice = createSlice({
             state.exited = false;
             state.roundsSurvived = 0;
             state.perfect = true;
+            state.place = 0;
         },
         setName: (state, action) => {
             state.name = action.payload; // Update only the name property
         },
+        setAnswered: (state, action) => {
+            state.answered = action.payload;
+        },
+        setPerfect: (state, action) => {
+            state.perfect = action.payload;
+        }
     },
 });
 

@@ -7,6 +7,7 @@ class Player {
         this.exited = false;
         this.roundsSurvived = 0;
         this.perfect = true;
+        this.place = 0;
     }
 }
 

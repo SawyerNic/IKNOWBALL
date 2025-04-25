@@ -8,76 +8,50 @@ const { useSelector, useDispatch } = require('react-redux');
 const { playerActions } = require('./reducers/playerReducer');
 const socket = require('./socket'); // Use CommonJS syntax for socket import
 
-
-
-
 const GameWindow = () => {
     const dispatch = useDispatch(); // Use dispatch to update Redux state
-    const myPlayer = useSelector((state) => state.player); // Access player state from Redux
-    const [gameWindow, updateGameWindow] = useState(<LoadingScreen />);
-    const [timer, updateTimer] = useState(15);
-
-    const sendAnswer = (answer) => {
-        socket.emit('player send answer', answer);
-        updateGameWindow(AnsweredView);
-    }
-
-    useEffect(() => {
-        socket.on('send game state', (started) => {
-            console.log(started);
-
-            if (started == true) {
-                // do started thing
-                updateGameWindow(<AnsweredView />);
-
-            } else {
-                console.log('asdfa');
-                updateGameWindow(<LobbyWindow myPlayer={myPlayer.name} />);
-            }
-        });
-
-    }, [myPlayer])
+    const myPlayer = useSelector((state) => state.player); // Get the player state directly from Redux
+    const [gameState, setGameState] = useState('loading'); // Track the current game state
+    const [currentQuestion, setCurrentQuestion] = useState(null);
 
     useEffect(() => {
 
-        socket.on('send results', (results) => {
-            console.log(results);
+        // runs once when component mounts:
+        socket.emit('get game state');
+
+        socket.on('server send results', (game) => {
+            store.dispatch(playerActions.setAnswered(false));
+            console.log(game);
+            setGameState('results');
         })
 
-        const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
-        socket.emit('add player', savedPlayer);
+        socket.on('game cancelled', () => {
+            store.dispatch(playerActions.setAnswered(false));
+            setGameState('lobby');
+        });
 
+        socket.on('send game state', (game) => {
+            console.log(game.gameStarted);
+            console.log(myPlayer);
 
-        // Handle 'player created' event
-        socket.on('player created', (player) => {
+            if (myPlayer.answered == true) {
+                console.log('redux player answered');
+                setGameState('answered');
 
-            console.log('Player created' + player);
-            store.dispatch(playerActions.setPlayer(player)); // Update the entire player object in Redux
-            sessionStorage.setItem('player', JSON.stringify(player)); // Save to session storage
-
-            socket.emit('get game state');
-
+            }
+            else if (game.gameStarted == true) {
+                // do started thing
+                setCurrentQuestion(game.questions[game.currentRound]);
+                setGameState('question');
+            } else {
+                setGameState('lobby');
+            }
         });
 
         // Handle 'server send question' event
         socket.on('server send question', (sentQuestion) => {
-            console.log("sentQuestion: " + JSON.stringify(sentQuestion));
-            updateGameWindow(<QuestionComponent question={sentQuestion} answerHandler={sendAnswer} myPlayer={myPlayer} />);
-        });
-
-        socket.on('server send results', (results) => {
-            updateGameWindow(<ResultView/>);
-        })
-
-        socket.on('game cancelled', () => {
-            console.log('game cancelled');
-            updateGameWindow(<LobbyWindow myPlayer={myPlayer.name} />);
-        });
-
-        socket.on('name change confirm', (player) => {
-            sessionStorage.setItem('player', JSON.stringify(player));
-            dispatch(playerActions.setPlayer(player));
-            console.log(myPlayer.name);
+            setCurrentQuestion(sentQuestion);
+            setGameState('question');
         });
 
         // Cleanup listeners on unmount
@@ -89,6 +63,20 @@ const GameWindow = () => {
         };
     }, []);
 
+    // Synchronize sessionStorage whenever myPlayer changes
+    useEffect(() => {
+        sessionStorage.setItem('player', JSON.stringify(myPlayer));
+        console.log(myPlayer);
+    }, [myPlayer]);
+
+    const sendAnswer = (answer) => {
+        console.log('sending answer');
+        store.dispatch(playerActions.setAnswered(true));
+
+        socket.emit('player send answer', answer);
+        setGameState('answered');
+    };
+
     return (
         <div>
             <div className="baseball-banner">
@@ -96,8 +84,18 @@ const GameWindow = () => {
                     <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
             </div>
-            <div id='question-container'>
-                {gameWindow}
+            <div id="question-container">
+                {gameState === 'loading' && <LoadingScreen />}
+                {gameState === 'lobby' && <LobbyWindow myPlayer={myPlayer.name} />}
+                {gameState === 'question' && (
+                    <QuestionComponent
+                        question={currentQuestion}
+                        answerHandler={sendAnswer}
+                        myPlayer={myPlayer}
+                    />
+                )}
+                {gameState === 'answered' && <AnsweredView />}
+                {gameState === 'results' && <ResultView />}
             </div>
         </div>
     )
@@ -107,6 +105,11 @@ const init = () => {
 
     const rootElement = document.getElementById('content');
     const root = createRoot(rootElement);
+
+    const savedPlayer = JSON.parse(sessionStorage.getItem('player'));
+    console.log(savedPlayer);
+    store.dispatch(playerActions.setPlayer(savedPlayer)); // Update the entire player object in Redux
+    socket.emit('add player', savedPlayer);
 
     root.render(
         <Provider store={store}>

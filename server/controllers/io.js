@@ -14,6 +14,7 @@ const sanitizeGame = (game) => {
         playerToJoin: game.playerToJoin,
         gameStarted: game.gameStarted,
         leaderBoard: game.leaderBoard,
+        playersAnswered: game.playersAnswered,
         questions: game.questions.map((q) => ({
             prompt: q.prompt,
             options: q.options,
@@ -49,7 +50,9 @@ const sendQuestion = (game) => {
 
 const sendResults = (game) => {
 
-    io.emit('server send results', game);
+    game.playersAnswered = {};
+
+    io.emit('server send results', sanitizeGame(game));
 
     game.startTimer(
         5,
@@ -112,9 +115,7 @@ const socketSetup = (app) => {
             player.id = socket.id;
             game.addPlayer(player);
 
-            socket.emit('player created', player);
             io.emit('update game', sanitizeGame(game));
-
         });
 
         socket.on('start game', () => {
@@ -134,12 +135,11 @@ const socketSetup = (app) => {
             game.handlePlayerAnswer(socket.id, answer);
             console.log('player id ' + socket.id + ' answer ' + answer);
             io.emit('update game', sanitizeGame(game));
+            io.emit('send answered list', game.playersAnswered);
         });
 
         socket.on('change name', (newName) => {
-
             game.changePlayerName(socket.id, newName);
-            socket.emit('name change confirm', game.getPlayer(socket.id));
             io.emit('update game', sanitizeGame(game));
         });
 
