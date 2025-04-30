@@ -50,7 +50,9 @@ var AnsweredView = function AnsweredView() {
       updateAnsweredList(sentList);
     });
   }, []);
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Answer Locked In"), /*#__PURE__*/React.createElement("ul", {
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "break"
+  }), /*#__PURE__*/React.createElement("h1", null, "Answer Locked In"), /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
   }, Object.values(answeredList).map(function (player) {
     return /*#__PURE__*/React.createElement("li", {

@@ -1,192 +1,220 @@
 * {
-    font-family: "Big Shoulders", sans-serif;
-  }
-  
-  #home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    text-align: center;
-    padding-top: 10px;
+  font-family: "Big Shoulders", sans-serif;
+}
+
+#home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  text-align: center;
+  padding-top: 10px;
+}
+
+img {
+  width: 125px;
+  height: auto;
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
+  top: 0;
+  margin-top: 10px;
+}
+
+h2 {
+  animation: bounce 1s infinite alternate;
+}
+
+h3 {
+  font-size: 1.5em;
+  padding: 1rem;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
   }
 
-  img{
-    width: 125px;
-    height: auto;
+  100% {
+    transform: translateY(-10px);
   }
-  
-  h1 {
-    font-size: 3em;
-    text-align: center;
-    top: 0;
-    margin-top: 10px;
+}
+
+p {
+  font-size: 48px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 4s steps(30) 1s forwards;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.btn {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+#text-box {
+  display: inline-block;
+  border-radius: 20px;
+  padding-left: 20px;
+  width: 175px;
+  height: 75px;
+  bottom: 10px;
+}
+
+#text-box::placeholder {
+  font-size: 24px;
+}
+
+@keyframes typing {
+  to {
+    width: 100%;
   }
-  
-  h2 {
-    animation: bounce 1s infinite alternate;
+}
+
+#player-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 10px;
+  width: 200px;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#player-list li {
+  margin: 5px 0;
+  text-align: center;
+}
+
+.btn {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btn:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.baseball-banner {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.baseball {
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  animation: flyBaseball 5s linear infinite;
+}
+
+@keyframes flyBaseball {
+  0% {
+    left: -50px;
+    transform: rotate(0deg);
   }
 
-  h3{
-    font-size: 1.5em;
-    padding: 1rem;
+  100% {
+    left: 100vw;
+    transform: rotate(720deg);
   }
-  
-  @keyframes bounce {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-10px);
-    }
-  }
+}
+
+/* Adjustments for smaller screens */
+@media only screen and (max-width: 520px) {
   p {
-    font-size: 48px;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 0;
-    animation: typing 4s steps(30) 1s forwards;
+    margin: 25px;
     text-align: center;
-    margin-top: 10px;
+    font-size: 28px;
   }
-  
+
   .btn {
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #000;
-    cursor: pointer;
-    border: 3px solid;
-    padding: 0.25em 0.5em;
-    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-    margin-top: 10px;
-    margin-right: 10px;
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-  }
-  
-  .btn:active {
-    box-shadow: 0px 0px 0px 0px;
-    top: 5px;
-    left: 5px;
-  }
-  
-  #text-box {
+    margin-bottom: 50px;
     display: inline-block;
-    border-radius: 20px;
-    padding-left: 20px;
-    width: 175px;
-    height: 75px;
-    bottom: 10px;
-  }
-  
-  #text-box::placeholder {
     font-size: 24px;
+    margin: 10px;
   }
-  
-  @keyframes typing {
-    to {
-      width: 100%;
-    }
+}
+
+@media only screen and (max-width: 375px) {
+  .btn {
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px;
   }
+
+  #text-box {
+    height: 75%;
+  }
+
+  .break {
+    height: 100px;
+  }
+
   #player-list {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    margin: 10px;
-    width: 200px;
+    align-items: center; /* Center items horizontally */
     list-style-type: none;
-    padding-left: 0;
+    padding: 0;
+    margin: 0 auto; /* Center the list container horizontally */
   }
   
   #player-list li {
-    margin: 5px 0;
-    text-align: center;
+    margin: 10px 0; /* Add spacing between list items */
+    text-align: center; /* Center text inside each list item */
+    font-size: 1.5em; /* Adjust font size as needed */
   }
-  
-  .btn {
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #000;
-    cursor: pointer;
-    border: 3px solid;
-    padding: 0.25em 0.5em;
-    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-    margin-top: 10px;
-    margin-right: 10px;
-    position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-  }
-  
-  .btn:active {
-    box-shadow: 0px 0px 0px 0px;
-    top: 5px;
-    left: 5px;
-  }
-  
-  @media (min-width: 768px) {
-    .button-54 {
-      padding: 0.25em 0.75em;
-    }
-  }
-  .baseball-banner {
-    position: absolute;
-    top: 10px;
-    width: 100%;
-    height: 50px;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  
-  .baseball {
-    position: absolute;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    animation: flyBaseball 5s linear infinite;
-  }
-  
-  @keyframes flyBaseball {
-    0% {
-      left: -50px;
-      transform: rotate(0deg);
-    }
-    100% {
-      left: 100vw;
-      transform: rotate(720deg);
-    }
-  }
-  /* Adjustments for smaller screens */
-  @media only screen and (max-width: 520px) {
-    p {
-      margin: 25px;
-      text-align: center;
-      font-size: 28px;
-    }
-    .btn {
-      margin-bottom: 50px;
-      display: inline-block;
-      font-size: 24px;
-      margin: 10px;
-    }
-  }
-  @media only screen and (max-width: 375px) {
-    .btn {
-      display: inline-block;
-      font-size: 12px;
-      margin: 10px;
-    }
-    #text-box {
-      height: 75%;
-    }
-  }
+}

@@ -189,4 +189,20 @@ p {
   #text-box {
     height: 75%;
   }
+  .break {
+    height: 100px;
+  }
+  #player-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto; /* Center the list container horizontally */
+  }
+  #player-list li {
+    margin: 10px 0; /* Add spacing between list items */
+    text-align: center; /* Center text inside each list item */
+    font-size: 1.5em; /* Adjust font size as needed */
+  }
 }
