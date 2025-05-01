@@ -11,19 +11,6 @@
   padding-top: 20px;
 }
 
-.ikb-logo {
-  animation: bounce 1s infinite alternate;
-}
-
-.break{
-  height: 100px;
-}
-
-img{
-  width: 200px;
-  height: auto;
-}
-
 h1 {
   font-size: 3em;
   text-align: center;
@@ -67,14 +54,11 @@ p {
 }
 
 input {
-  display: inline-block;
-  padding-left: 20px;
-  width: 175px;
-  height: 50px;
-  bottom: 10px;
-  border: black 3px solid;
-  vertical-align: middle;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  margin-right: 10px;
 }
 
 button:hover {
@@ -87,22 +71,17 @@ h3 {
 }
 
 .btn {
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  letter-spacing: 2px;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #000;
-  cursor: pointer;
-  border: 3px solid;
-  padding: 0.25em 0.5em;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-  margin-top: 10px;
-  margin-right: 10px;
-  position: relative;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+  display: inline-block;
+  font-size: 36px;
+  margin: 10px;
+  background: linear-gradient(135deg, #002D72, rgba(255, 255, 255, 0.1), #D50032);
+  color: #fff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  font-size: 36px;
+  border-radius: 50px;
+  border: none;
+  padding: 16px 36px;
+  margin: 10px;
 }
 
 .baseball-banner {
@@ -120,14 +99,6 @@ h3 {
   width: 40px;
   height: 40px;
   animation: flyBaseball 5s linear infinite;
-  opacity: 0;
-  animation: flyBaseball 5s linear infinite, fadeIn 0.1s forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes flyBaseball {
@@ -135,13 +106,11 @@ h3 {
     left: -50px;
     transform: rotate(0deg);
   }
-
   100% {
     left: 100vw;
     transform: rotate(720deg);
   }
 }
-
 @media only screen and (max-width: 520px) {
   h1 {
     margin-bottom: 200px;
@@ -167,53 +136,4 @@ h3 {
   #text-box {
     height: 75%;
   }
-}
-
-
-.player-list-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px auto;
-  width: 150px; /* Reduced width from 200px to 150px */
-}
-
-.player-list-container h3 {
-  margin-bottom: 10px;
-  font-size: 1.5em;
-  text-align: center;
-  text-decoration: underline;
-}
-
-#player-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  width: 90%;
-  max-width: 600px;
-  height: 200px;
-  overflow-y: auto;
-  list-style-type: none;
-  padding: 10px;
-  border: 3px solid black;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-}
-
-#player-list li {
-  width: 80%;
-  height: 70px;
-  margin: 0;
-  padding: 5px 8px;
-  text-align: center;
-  font-size: 1em;
-  border: 3px solid black;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  word-wrap: break-word;
 }

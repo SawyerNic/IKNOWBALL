@@ -41,15 +41,12 @@ h3 {
   border: 3px solid black;
   border-radius: 10px;
   padding: 15px;
-  /* Reduced from 20px */
   margin: 15px;
-  /* Reduced from 20px */
   background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 400px;
   height: 45%;
-  /* Reduced from 50% */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -68,12 +65,10 @@ h3 {
   0% {
     transform: translateY(0);
   }
-
   100% {
     transform: translateY(-10px);
   }
 }
-
 p {
   font-size: 16px;
   width: auto;
@@ -109,7 +104,6 @@ strong {
     width: 100%;
   }
 }
-
 #player-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -159,7 +153,6 @@ strong {
   background: #555;
 }
 
-
 .btn {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
@@ -190,7 +183,6 @@ strong {
     padding: 0.25em 0.75em;
   }
 }
-
 .baseball-banner {
   position: absolute;
   top: 10px;
@@ -215,19 +207,16 @@ strong {
     opacity: 1;
   }
 }
-
 @keyframes flyBaseball {
   0% {
     left: -50px;
     transform: rotate(0deg);
   }
-
   100% {
     left: 100vw;
     transform: rotate(720deg);
   }
 }
-
 /* Adjustments for smaller screens */
 @media only screen and (max-width: 520px) {
   p {
@@ -235,7 +224,6 @@ strong {
     text-align: center;
     font-size: 28px;
   }
-
   .btn {
     margin-bottom: 50px;
     display: inline-block;
@@ -243,14 +231,12 @@ strong {
     margin: 10px;
   }
 }
-
 @media only screen and (max-width: 375px) {
   .btn {
     display: inline-block;
     font-size: 12px;
     margin: 10px;
   }
-
   #text-box {
     height: 75%;
   }
