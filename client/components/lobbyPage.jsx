@@ -12,12 +12,12 @@ const LobbyWindow = () => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        if(!player.name){
+        if (!player.name) {
             player.name = 'Stranger';
         }
 
         socket.emit('game request');
-        
+
         socket.on('update game', (game) => {
             setPlayers(game.players);
         });
@@ -37,19 +37,21 @@ const LobbyWindow = () => {
         <div id="home-content">
 
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
-            <h3>Welcome {player.name || 'Stranger'}!</h3>
-            <div id='player-profile'>
-                <input
-                    id='name-input'
-                    type="text"
-                    placeholder="Enter your name"
-                    value={player.name === 'Mysterious' ? '' : player.name}
-                    onChange={handleNameChange}
-                />
+            <div className='welcome-content'>
+                <h3>Welcome {player.name || 'Stranger'}!</h3>
+                <div id='player-profile'>
+                    <input
+                        id='name-input'
+                        type="text"
+                        placeholder="Enter your name"
+                        value={player.name === 'Mysterious' ? '' : player.name}
+                        onChange={handleNameChange}
+                    />
+                </div>
             </div>
 
             <ul id='player-list'>
-                {Object.values(players || {'empty':'empty'}).map((player) => (
+                {Object.values(players || { 'empty': 'empty' }).map((player) => (
                     <li key={player.id}>{player.name}</li>
                 ))}
             </ul>

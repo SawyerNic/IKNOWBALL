@@ -45,12 +45,10 @@ h3 {
   0% {
     transform: translateY(0);
   }
-
   100% {
     transform: translateY(-10px);
   }
 }
-
 p {
   font-size: 48px;
   white-space: nowrap;
@@ -108,6 +106,26 @@ p {
   line-height: 1.2;
 }
 
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: black 3px solid;
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 90vw;
+  min-width: 200px;
+  /* Ensure visibility */
+  visibility: visible;
+  opacity: 1;
+  z-index: 10;
+}
+
 .options-container button {
   width: 200px;
   height: 50px;
@@ -118,60 +136,51 @@ p {
     gap: 10px;
     max-width: 300px;
   }
-
   .options-container button {
     width: 100%; /* Make buttons full width of container */
     max-width: 250px;
     height: 50px;
     font-size: 14px; /* Reduce font size */
   }
-
   .question-prompt {
     width: 90%;
     margin: 20px auto;
     font-size: 0.9em;
   }
 }
-
 @media (min-width: 481px) and (max-width: 768px) {
   .options-container {
     gap: 12px;
     max-width: 450px;
     padding: 8px;
   }
-
   .options-container button {
     width: 180px;
     height: 60px;
     font-size: 14px;
     padding: 8px;
   }
-
   #question-container {
     width: 90%;
     max-width: 500px;
     padding: 12px;
   }
-  
   h2 {
     font-size: 1.8em;
   }
 }
-
 @media (max-width: 375px) {
   .options-container button {
     height: 45px;
     font-size: 12px;
   }
 }
-
 @media (min-width: 1000px) {
   .options-container button {
     height: 70px;
     font-size: 12px;
   }
 }
-
 .answered-container {
   display: flex;
   flex-direction: column;
@@ -181,7 +190,7 @@ p {
   text-align: center;
 }
 
-#center-text{
+#center-text {
   text-align: center;
 }
 
@@ -254,7 +263,7 @@ p {
 }
 
 #points {
-  font-family: 'DS-Digital', monospace;
+  font-family: "DS-Digital", monospace;
   background-color: #000;
   color: white;
   padding: 3px 8px;
@@ -265,9 +274,7 @@ p {
   letter-spacing: 2px;
   text-align: center;
   min-width: 60px;
-  box-shadow:
-    inset 0 0 10px rgba(255, 0, 0, 0.3),
-    0 0 5px rgba(255, 0, 0, 0.5);
+  box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.3), 0 0 5px rgba(255, 0, 0, 0.5);
   text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
   position: fixed;
   left: 15px;
@@ -283,7 +290,7 @@ p {
 }
 
 #timer {
-  font-family: 'DS-Digital', monospace;
+  font-family: "DS-Digital", monospace;
   background-color: #000;
   color: #FF0000;
   padding: 10px 20px;
@@ -294,9 +301,7 @@ p {
   letter-spacing: 2px;
   text-align: center;
   min-width: 120px;
-  box-shadow:
-    inset 0 0 10px rgba(255, 0, 0, 0.3),
-    0 0 5px rgba(255, 0, 0, 0.5);
+  box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.3), 0 0 5px rgba(255, 0, 0, 0.5);
   text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
   position: relative;
   z-index: 1000;
@@ -316,47 +321,39 @@ p {
 
 /* Add @font-face for the digital font */
 @font-face {
-  font-family: 'DS-Digital';
-  src: url('https://db.onlinewebfonts.com/t/f810a9f8c8a4c0c8686b2c8b5943445c.woff2') format('woff2'),
-    url('https://db.onlinewebfonts.com/t/f810a9f8c8a4c0c8686b2c8b5943445c.woff') format('woff');
+  font-family: "DS-Digital";
+  src: url("https://db.onlinewebfonts.com/t/f810a9f8c8a4c0c8686b2c8b5943445c.woff2") format("woff2"), url("https://db.onlinewebfonts.com/t/f810a9f8c8a4c0c8686b2c8b5943445c.woff") format("woff");
 }
-
 /* When time is low (<=15 seconds), make it blink */
 @keyframes blink {
   50% {
     opacity: 0;
   }
 }
-
 @media (max-width: 768px) {
   #leaderboard-list {
     width: 90%;
     max-width: 350px;
   }
 }
-
 @media (max-width: 475px) {
   #leaderboard-list {
     width: 75%;
     max-width: 300px;
     padding: 10px;
   }
-  
   .leaderboard-container h2 {
     font-size: 1.8em;
   }
 }
-
 @media (min-width: 1024px) {
   #leaderboard-list {
     max-width: 450px;
   }
 }
-
 #timer.low-time {
   animation: blink 1s infinite;
 }
-
 
 .btn {
   font-family: "Open Sans", sans-serif;
@@ -404,7 +401,6 @@ p {
     width: 100%;
   }
 }
-
 .welcome-container {
   display: flex;
   flex-direction: column;
@@ -493,7 +489,6 @@ p {
     padding: 0.25em 0.75em;
   }
 }
-
 .baseball-banner {
   position: absolute;
   top: 10px;
@@ -518,19 +513,16 @@ p {
     opacity: 1;
   }
 }
-
 @keyframes flyBaseball {
   0% {
     left: -50px;
     transform: rotate(0deg);
   }
-
   100% {
     left: 100vw;
     transform: rotate(720deg);
   }
 }
-
 /* Adjustments for smaller screens */
 @media only screen and (max-width: 520px) {
   p {
@@ -538,7 +530,6 @@ p {
     text-align: center;
     font-size: 28px;
   }
-
   .btn {
     margin-bottom: 50px;
     display: inline-block;
@@ -546,24 +537,20 @@ p {
     margin: 10px;
   }
 }
-
 @media only screen and (max-width: 375px) {
   .btn {
     display: inline-block;
     font-size: 12px;
     margin: 10px;
   }
-
   #text-box {
     height: 75%;
   }
 }
-
 @media (max-width: 400px) {
   img {
     width: 200px;
   }
-
   .options-container button {
     width: 100%;
   }

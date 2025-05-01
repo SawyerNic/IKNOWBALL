@@ -293,7 +293,9 @@ var LobbyWindow = function LobbyWindow() {
     alt: "IKNOWBALL",
     width: "640px",
     height: "480px"
-  }), /*#__PURE__*/React.createElement("h3", null, "Welcome ", player.name || 'Stranger', "!"), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "welcome-content"
+  }, /*#__PURE__*/React.createElement("h3", null, "Welcome ", player.name || 'Stranger', "!"), /*#__PURE__*/React.createElement("div", {
     id: "player-profile"
   }, /*#__PURE__*/React.createElement("input", {
     id: "name-input",
@@ -301,7 +303,7 @@ var LobbyWindow = function LobbyWindow() {
     placeholder: "Enter your name",
     value: player.name === 'Mysterious' ? '' : player.name,
     onChange: handleNameChange
-  })), /*#__PURE__*/React.createElement("ul", {
+  }))), /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
   }, Object.values(players || {
     'empty': 'empty'
@@ -41046,7 +41048,7 @@ var HostPage = function HostPage() {
     className: "game-details-container"
   }, /*#__PURE__*/React.createElement(PlayerList, null), /*#__PURE__*/React.createElement(GameDetails, {
     game: gameStats
-  })));
+  }), /*#__PURE__*/React.createElement("h3", null, timer)));
 };
 var init = function init() {
   var root = createRoot(document.getElementById('host-content'));
