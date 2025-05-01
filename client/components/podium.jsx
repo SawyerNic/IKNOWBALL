@@ -34,10 +34,10 @@ const Podium = () => {
     return (
         <div>
             <h1>Game over!</h1>
-            <div className="podium">
+            <div id="podium">
                 {topThree.map((player, index) => (
                     <div key={player.id} className={`podium-place place-${index + 1}`}>
-                        <h3>{index + 1}. {player.name} Points: {player.totalScore}</h3>
+                        <h3>{index + 1}. {player.name} - Points: {player.totalScore}</h3>
                     </div>
                 ))}
             </div>
