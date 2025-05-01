@@ -27467,6 +27467,8 @@ var HomePage = function HomePage() {
     alt: "IKNOWBALL",
     width: "640px",
     height: "320px"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
+    className: "break"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("p", {
     id: "welcome"
   }, "Welcome to IKNOWBALL player!"), isJoining ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("button", {

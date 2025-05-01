@@ -22,7 +22,7 @@ const AnsweredView = () => {
 
 
     return (
-        <div>
+        <div className='answered-container'>
             <div className='break'></div>
             <h1>Answer Locked In</h1>
             <ul id='player-list'>

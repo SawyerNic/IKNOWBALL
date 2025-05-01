@@ -35,6 +35,7 @@ const HomePage = () => {
                 ))}
             </div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" className="ikb-logo" alt="IKNOWBALL" width="640px" height="320px"></img>
+            <div className="break"></div>
             <p id='welcome'>Welcome to IKNOWBALL player!</p>
             {isJoining ? (
                 <div>

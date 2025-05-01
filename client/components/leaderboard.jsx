@@ -16,7 +16,7 @@ const GameDetails = ({ game }) => {
 
     return (
         <div>
-            <h2>Game Details</h2>
+            <h3>Game Details</h3>
             <p>Round: {gameData.currentRound + 1}</p>
             <p>Game Started: {gameData.gameStarted ? 'Yes' : 'No'}</p>
         </div>
@@ -45,15 +45,15 @@ const Leaderboard = () => {
     }
 
     return (
-        <div>
-            <h2>Leaderboard</h2>
-            <ul id="leaderboard-list">
+        <div className='leaderboard-container'>
+            <h2 id='center-text'>Leaderboard</h2>
+            <div id="leaderboard-list">
                 {leaderboard.map((player, index) => (
-                    <li key={player.id}>
+                    <span key={player.id}>
                         {index + 1}. {player.name} - Points: {player.totalScore}
-                    </li>
+                    </span>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
