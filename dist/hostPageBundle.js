@@ -363,12 +363,12 @@ var Podium = function Podium() {
     socket.emit('get lobby'); // Emit an event to reset the game
   };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Game over!"), /*#__PURE__*/React.createElement("div", {
-    className: "podium"
+    id: "podium"
   }, topThree.map(function (player, index) {
     return /*#__PURE__*/React.createElement("div", {
       key: player.id,
       className: "podium-place place-".concat(index + 1)
-    }, /*#__PURE__*/React.createElement("h3", null, index + 1, ". ", player.name, " Points: ", player.totalScore));
+    }, /*#__PURE__*/React.createElement("h3", null, index + 1, ". ", player.name, " - Points: ", player.totalScore));
   })), /*#__PURE__*/React.createElement("button", {
     onClick: handleBackToLobby,
     className: "btn back-to-lobby"
