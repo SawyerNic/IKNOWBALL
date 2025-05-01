@@ -39,18 +39,45 @@ class gameModel {
         console.log(`Player ID ${playerId} name changed to ${newName}`);
     }
 
-    updateDetailedList() {
+    updateLeaderboard() {
         this.leaderBoard = Object.values(this.players).sort((a, b) => {
-            if (b.roundsSurvived !== a.roundsSurvived) {
-                return b.roundsSurvived - a.roundsSurvived;
+            // Players who are perfect should be ranked higher
+            if (b.perfect !== a.perfect) {
+                return b.perfect - a.perfect; // `true` (1) comes before `false` (0)
             }
-            return b.score - a.score;
+            // If both players have the same `perfect` status, sort by totalScore
+            return b.totalScore - a.totalScore;
         });
     }
 
+    clearScores() {
+        Object.values(this.players).forEach(player => {
+            player.totalScore = 0;
+        });
+    }
+
+    resetPerfect() {
+        Object.values(this.players).forEach(player => {
+            player.perfect = true;
+        });
+    }
+
+    clearLastAnswer() {
+        Object.values(this.players).forEach(player => {
+            player.answered = false;
+            player.lastAnswer = {}; // Reset the lastAnswer property
+        });
+        console.log('All last answers have been cleared.');
+    }
+
     getSortedPlayers() {
-        this.updateDetailedList();
+        this.updateLeaderboard();
         return this.leaderBoard;
+    }
+
+    resetPlayers() {
+        this.resetPerfect();
+        this.clearLastAnswer();
     }
 
     handlePlayerAnswer(id, answer) {
@@ -64,16 +91,20 @@ class gameModel {
 
         this.players[id].answered = true;
         this.playersAnswered[id] = this.players[id];
+        this.players[id].lastAnswer.score = 0;
+        this.players[id].lastAnswer.correct = answer;
 
         if (answer) {
             let roundScore = Math.round(((this.timeLeft + 1) / 15) * 1000);
             this.players[id].totalScore += roundScore;
+            this.players[id].lastAnswer.score = roundScore;
+            
         } else {
             this.players[id].perfect = false;
         }
 
         // Update the leaderboard after processing the player's answer
-        this.updateDetailedList();
+        this.updateLeaderboard();
     }
 
     startTimer(duration, onTick, onComplete) {
@@ -104,10 +135,10 @@ class gameModel {
     }
 
     cancelGame() {
+        this.resetPlayers();
         this.stopTimer(); // Stop the timer when restarting the game
         this.gameStarted = false;
         this.currentRound = 0;
-        this.leaderBoard = null;
     }
 }
 
