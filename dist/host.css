@@ -12,6 +12,15 @@
   padding-top: 10px;
 }
 
+.break {
+  height: 300px;
+}
+
+img {
+  width: 200px;
+  height: auto;
+}
+
 h1 {
   font-size: 3em;
   text-align: center;
@@ -23,22 +32,59 @@ h2 {
   animation: bounce 1s infinite alternate;
 }
 
+h3 {
+  font-size: 24px;
+  text-decoration: underline;
+}
+
+.game-details-container {
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 15px;
+  /* Reduced from 20px */
+  margin: 15px;
+  /* Reduced from 20px */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px;
+  height: 45%;
+  /* Reduced from 50% */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-controls-container {
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
 @keyframes bounce {
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-10px);
   }
 }
+
 p {
-  font-size: 48px;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-  animation: typing 4s steps(30) 1s forwards;
+  font-size: 16px;
+  width: auto;
   text-align: center;
-  margin-top: 10px;
+}
+
+strong {
+  font-size: 16px;
+  width: auto;
+  text-align: center;
+  text-wrap: wrap;
 }
 
 .btn:active {
@@ -63,20 +109,56 @@ p {
     width: 100%;
   }
 }
+
 #player-list {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  margin: 10px;
-  width: 200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 10px auto;
+  padding: 10px;
+  width: 100%;
+  height: 80px;
+  overflow-y: auto;
+  overflow-x: hidden;
   list-style-type: none;
-  padding-left: 0;
 }
 
 #player-list li {
-  margin: 5px 0;
+  width: 80%;
+  height: 70px;
+  margin: 0;
+  padding: 5px 8px;
   text-align: center;
+  font-size: 1em;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-wrap: break-word;
 }
+
+/* Customize scrollbar */
+#player-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#player-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+#player-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+#player-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 .btn {
   font-family: "Open Sans", sans-serif;
@@ -108,6 +190,7 @@ p {
     padding: 0.25em 0.75em;
   }
 }
+
 .baseball-banner {
   position: absolute;
   top: 10px;
@@ -123,6 +206,14 @@ p {
   width: 40px;
   height: 40px;
   animation: flyBaseball 5s linear infinite;
+  opacity: 0;
+  animation: flyBaseball 5s linear infinite, fadeIn 0.1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes flyBaseball {
@@ -130,11 +221,13 @@ p {
     left: -50px;
     transform: rotate(0deg);
   }
+
   100% {
     left: 100vw;
     transform: rotate(720deg);
   }
 }
+
 /* Adjustments for smaller screens */
 @media only screen and (max-width: 520px) {
   p {
@@ -142,6 +235,7 @@ p {
     text-align: center;
     font-size: 28px;
   }
+
   .btn {
     margin-bottom: 50px;
     display: inline-block;
@@ -149,12 +243,14 @@ p {
     margin: 10px;
   }
 }
+
 @media only screen and (max-width: 375px) {
   .btn {
     display: inline-block;
     font-size: 12px;
     margin: 10px;
   }
+
   #text-box {
     height: 75%;
   }

@@ -50,7 +50,9 @@ var AnsweredView = function AnsweredView() {
       updateAnsweredList(sentList);
     });
   }, []);
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "answered-container"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "break"
   }), /*#__PURE__*/React.createElement("h1", null, "Answer Locked In"), /*#__PURE__*/React.createElement("ul", {
     id: "player-list"
@@ -122,7 +124,7 @@ var GameDetails = function GameDetails(_ref) {
   if (!game) {
     return /*#__PURE__*/React.createElement("div", null, "No game data available");
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, "Round: ", gameData.currentRound + 1), /*#__PURE__*/React.createElement("p", null, "Game Started: ", gameData.gameStarted ? 'Yes' : 'No'));
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Game Details"), /*#__PURE__*/React.createElement("p", null, "Round: ", gameData.currentRound + 1), /*#__PURE__*/React.createElement("p", null, "Game Started: ", gameData.gameStarted ? 'Yes' : 'No'));
 };
 var Leaderboard = function Leaderboard() {
   var _useState3 = useState([]),
@@ -144,10 +146,14 @@ var Leaderboard = function Leaderboard() {
   if (!leaderboard || leaderboard.length === 0) {
     return /*#__PURE__*/React.createElement("div", null, "No leaderboard data available.");
   }
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Leaderboard"), /*#__PURE__*/React.createElement("ul", {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "leaderboard-container"
+  }, /*#__PURE__*/React.createElement("h2", {
+    id: "center-text"
+  }, "Leaderboard"), /*#__PURE__*/React.createElement("div", {
     id: "leaderboard-list"
   }, leaderboard.map(function (player, index) {
-    return /*#__PURE__*/React.createElement("li", {
+    return /*#__PURE__*/React.createElement("span", {
       key: player.id
     }, index + 1, ". ", player.name, " - Points: ", player.totalScore);
   })));
@@ -420,13 +426,19 @@ var QuestionComponent = function QuestionComponent(_ref) {
     answerHandler(option.isAnswer);
     console.log(sessionStorage.getItem('player'));
   };
+  var formattedTime = timer < 10 ? "00:0".concat(timer) : "00:".concat(timer);
   return /*#__PURE__*/React.createElement("div", {
     className: "question-container",
     style: {
       textAlign: 'center',
       margin: '20px'
     }
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null), /*#__PURE__*/React.createElement("h3", null, "Timer: ", timer), /*#__PURE__*/React.createElement("h3", null, "points: ", myPlayer.totalScore)), /*#__PURE__*/React.createElement("h2", null, question.prompt), question.imageLink && /*#__PURE__*/React.createElement("img", {
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "timer-container"
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "timer",
+    "data-time": timer
+  }, formattedTime)), /*#__PURE__*/React.createElement("h2", null, question.prompt), question.imageLink && /*#__PURE__*/React.createElement("img", {
     src: question.imageLink,
     alt: "Question",
     style: {
@@ -498,7 +510,9 @@ var ResultView = function ResultView() {
       socket.off('return myplayer results');
     };
   }, []);
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Results"), myPlayerResults ? myPlayerResults.message ? /*#__PURE__*/React.createElement("h3", null, myPlayerResults.message) : /*#__PURE__*/React.createElement("h3", null, "Your answer was", ' ', myPlayerResults.correct ? 'correct' : 'incorrect', "!", ' ', myPlayerResults.correct && /*#__PURE__*/React.createElement(React.Fragment, null, "You earned ", myPlayerResults.score, " points.")) : /*#__PURE__*/React.createElement("p", null, "Loading results..."), /*#__PURE__*/React.createElement(Leaderboard, null));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "result-container"
+  }, /*#__PURE__*/React.createElement("h1", null, "Results"), myPlayerResults ? myPlayerResults.message ? /*#__PURE__*/React.createElement("h3", null, myPlayerResults.message) : /*#__PURE__*/React.createElement("h3", null, "Your answer was", ' ', myPlayerResults.correct ? 'correct' : 'incorrect', "!", ' ', myPlayerResults.correct && /*#__PURE__*/React.createElement(React.Fragment, null, "You earned ", myPlayerResults.score, " points.")) : /*#__PURE__*/React.createElement("p", null, "Loading results..."), /*#__PURE__*/React.createElement(Leaderboard, null));
 };
 module.exports = ResultView;
 

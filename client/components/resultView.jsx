@@ -30,7 +30,7 @@ const ResultView = () => {
     }, []);
 
     return (
-        <div>
+        <div className='result-container'>
             <h1>Results</h1>
             {myPlayerResults ? (
                 myPlayerResults.message ? (

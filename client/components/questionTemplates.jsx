@@ -31,12 +31,14 @@ const QuestionComponent = ({ question, answerHandler }) => {
         console.log(sessionStorage.getItem('player'));
     };
 
+    const formattedTime = timer < 10 ? `00:0${timer}` : `00:${timer}`;
+
     return (
         <div className="question-container" style={{ textAlign: 'center', margin: '20px' }}>
-            <div>
-                <h1></h1>
-                <h3>Timer: {timer}</h3>
-                <h3>points: {myPlayer.totalScore}</h3>
+            <div id="timer-container">
+                <div id="timer" data-time={timer}>
+                    {formattedTime}
+                </div>
             </div>
 
             <h2>{question.prompt}</h2>
