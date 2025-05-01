@@ -65,6 +65,7 @@ const HostPage = () => {
             <div className="game-details-container">
                 <PlayerList />
                 <GameDetails game={gameStats} />
+                <h3>{timer}</h3>
             </div>
         </div>
     );
