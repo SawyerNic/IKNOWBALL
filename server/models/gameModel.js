@@ -66,7 +66,7 @@ class gameModel {
         this.playersAnswered[id] = this.players[id];
 
         if (answer) {
-            let roundScore = Math.round(((this.timeLeft + 1) / 15) * 1000);
+            const roundScore = Math.round(((this.timeLeft + 1) / 15) * 1000);
             this.players[id].totalScore += roundScore;
         } else {
             this.players[id].perfect = false;

@@ -108,7 +108,7 @@ const socketSetup = (app) => {
                 console.log('adding existing player');
 
             } else {
-                player.name = 'Player ' + game.playerToJoin;
+                player.name = `Player ${game.playerToJoin}`;
                 game.playerToJoin += 1;
                 console.log('adding new player');
             }
@@ -133,7 +133,7 @@ const socketSetup = (app) => {
 
         socket.on('player send answer', (answer) => {
             game.handlePlayerAnswer(socket.id, answer);
-            console.log('player id ' + socket.id + ' answer ' + answer);
+            console.log(`player id ${socket.id} answer ${answer}`);
             io.emit('update game', sanitizeGame(game));
             io.emit('send answered list', game.playersAnswered);
         });

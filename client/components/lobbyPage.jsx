@@ -36,7 +36,7 @@ const LobbyWindow = () => {
     return (
         <div id="home-content">
 
-            <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
+            <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px" />
             <h3>Welcome {player.name || 'Stranger'}!</h3>
             <div id='player-profile'>
                 <input
