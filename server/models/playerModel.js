@@ -8,6 +8,7 @@ class Player {
         this.roundsSurvived = 0;
         this.perfect = true;
         this.place = 0;
+        this.lastAnswer = {};
     }
 }
 

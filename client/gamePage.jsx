@@ -1,7 +1,7 @@
 const { createRoot } = require('react-dom/client');
 const React = require('react');
 const { useState, useEffect } = require('react');
-const { QuestionComponent, AnsweredView, LoadingScreen, LobbyWindow, ResultView } = require('./components');
+const { QuestionComponent, AnsweredView, LoadingScreen, LobbyWindow, ResultView, Podium } = require('./components');
 const { Provider } = require('react-redux');
 const store = require('./store');
 const { useSelector, useDispatch } = require('react-redux');
@@ -25,10 +25,14 @@ const GameWindow = () => {
             setGameState('results');
         })
 
-        socket.on('game cancelled', () => {
+        socket.on('game over', () => {
             store.dispatch(playerActions.setAnswered(false));
-            setGameState('lobby');
+            setGameState('over');
         });
+
+        socket.on('send lobby', () => {
+            setGameState('lobby');
+        })
 
         socket.on('send game state', (game) => {
             console.log(game.gameStarted);
@@ -96,6 +100,7 @@ const GameWindow = () => {
                 )}
                 {gameState === 'answered' && <AnsweredView />}
                 {gameState === 'results' && <ResultView />}
+                {gameState === 'over' && <Podium />}
             </div>
         </div>
     )

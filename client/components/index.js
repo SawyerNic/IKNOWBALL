@@ -4,6 +4,7 @@ const AnsweredView = require('./answeredView.jsx');
 const LoadingScreen = require('./loading.jsx');
 const LobbyWindow = require('./lobbyPage.jsx');
 const ResultView = require('./resultView.jsx');
+const Podium = require('./podium.jsx');
 
 module.exports = {
     QuestionComponent,
@@ -12,5 +13,6 @@ module.exports = {
     AnsweredView,
     LoadingScreen, 
     LobbyWindow,
-    ResultView
+    ResultView,
+    Podium
 };

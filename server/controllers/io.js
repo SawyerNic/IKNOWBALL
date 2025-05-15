@@ -24,6 +24,9 @@ const sanitizeGame = (game) => {
 };
 
 const sendQuestion = (game) => {
+    game.clearLastAnswer();
+    game.playersAnswered = {};
+
     console.log('Sending question for round:', game.currentRound);
 
     const currentQuestion = game.questions[game.currentRound];
@@ -50,7 +53,6 @@ const sendQuestion = (game) => {
 
 const sendResults = (game) => {
 
-    game.playersAnswered = {};
 
     io.emit('server send results', sanitizeGame(game));
 
@@ -63,11 +65,11 @@ const sendResults = (game) => {
             if (game.currentRound < game.questions.length) {
                 sendQuestion(game);
             } else {
-                game.cancelGame();
                 console.log('Game over');
                 io.emit('game over', game.getSortedPlayers());
-                io.emit('game cancelled');
                 io.emit('update game', sanitizeGame(game));
+                game.cancelGame();
+
             }
         }
     )
@@ -91,6 +93,10 @@ const socketSetup = (app) => {
             io.emit('update game', sanitizeGame(game));
             io.emit('game cancelled');
         });
+
+        socket.on('get myplayer results', () => {
+            socket.emit('return myplayer results', (game.getPlayer(socket.id).lastAnswer));
+        })
 
         socket.on('game request', () => {
             io.emit('update game', sanitizeGame(game));
@@ -118,8 +124,13 @@ const socketSetup = (app) => {
             io.emit('update game', sanitizeGame(game));
         });
 
+        socket.on('get lobby', () => {
+            socket.emit('send lobby');
+        })
+
         socket.on('start game', () => {
 
+            game.clearScores();
             game.gameStarted = true;
             io.emit('game started');
             console.log('game started');

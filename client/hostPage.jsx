@@ -44,26 +44,32 @@ const HostPage = () => {
                     <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
                 ))}
             </div>
+            <div className="break"></div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" alt="IKNOWBALL" width="640px" height="480px"></img>
             <h2>Game Code: 1234</h2>
-            <button
-                onClick={handleStartGame}
-                className="btn btn-primary"
-                disabled={gameStarted}
-            >
-                {gameStarted ? 'Game Started' : 'Start Game'}
-            </button>
-            <button
-                onClick={handleCancelGame}
-                className="btn btn-danger"
-            >
-                Cancel Game
-            </button>
-            <PlayerList/>
-            <GameDetails game={gameStats} />
-            <h3>{timer}</h3>
+            <div className="game-controls-container">
+                <button
+                    onClick={handleStartGame}
+                    className="btn btn-primary"
+                    disabled={gameStarted}
+                >
+                    {gameStarted ? 'Game Started' : 'Start Game'}
+                </button>
+                <button
+                    onClick={handleCancelGame}
+                    className="btn btn-danger"
+                >
+                    Cancel Game
+                </button>
+            </div>
+            <div className="game-details-container">
+                <PlayerList />
+                <GameDetails game={gameStats} />
+                <h3>{timer}</h3>
+            </div>
         </div>
     );
+
 
 };
 

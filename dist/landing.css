@@ -10,6 +10,11 @@
   height: 100vh;
 }
 
+img {
+  width: 200px;
+  height: auto;
+}
+
 h1 {
   font-size: 3em;
   text-align: center;
@@ -36,15 +41,47 @@ p {
   text-align: center;
 }
 
-#home-btn {
-  background: linear-gradient(135deg, #002D72, rgba(255, 255, 255, 0.1), #D50032);
-  color: #fff;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  font-size: 36px;
-  border-radius: 50px;
-  border: none;
-  padding: 16px 36px;
+.btn-submit {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #FFC145;
+  height: 50px;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
   margin: 10px;
+  position: relative;
+  vertical-align: middle;
+  line-height: 44px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#home-btn {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #FFC145;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  margin-top: 10px;
+  margin-right: 10px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  font-size: 36px;
   position: fixed;
   top: 50px;
   left: 10px;
@@ -66,15 +103,17 @@ p {
 
 #text-box {
   display: inline-block;
-  border-radius: 20px;
   padding-left: 20px;
   width: 175px;
   height: 50px;
   bottom: 10px;
+  border: black 3px solid;
+  vertical-align: middle;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
 }
 
 #text-box::placeholder {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 @keyframes typing {
@@ -122,8 +161,15 @@ p {
   width: 40px;
   height: 40px;
   animation: flyBaseball 5s linear infinite;
+  opacity: 0;
+  animation: flyBaseball 5s linear infinite, fadeIn 0.1s forwards;
 }
 
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
 @keyframes flyBaseball {
   0% {
     left: -50px;

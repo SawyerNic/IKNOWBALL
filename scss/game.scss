@@ -12,8 +12,16 @@
   padding-top: 10px;
 }
 
+.ikb-logo {
+  animation: bounce 1s infinite alternate;
+}
+
+.break {
+  height: 100px;
+}
+
 img {
-  width: 125px;
+  width: 200px;
   height: auto;
 }
 
@@ -53,6 +61,389 @@ p {
   margin-top: 10px;
 }
 
+.options-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  justify-items: center;
+}
+
+#question-container {
+  margin: 70px auto 0;
+}
+
+@media (min-width: 760px){
+  #question-container {
+    margin: 55px auto 0;
+  }
+}
+
+@media (min-width: 1000px){
+  #question-container {
+    margin: 70px auto 0;
+  }
+}
+
+.question-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: black 3px solid;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.options-container button {
+  width: 250px;
+  height: 70px;
+  padding: 10px;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+}
+
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: black 3px solid;
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 90vw;
+  min-width: 200px;
+  visibility: visible;
+  opacity: 1;
+  z-index: 10;
+}
+
+.options-container button {
+  width: 200px;
+  height: 50px;
+}
+
+@media (max-width: 480px) {
+  .options-container {
+    gap: 10px;
+    max-width: 300px;
+  }
+
+  .options-container button {
+    width: 100%;
+    max-width: 250px;
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .question-prompt {
+    width: 90%;
+    margin: 20px auto;
+    font-size: 0.9em;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .options-container {
+    gap: 12px;
+    max-width: 450px;
+    padding: 8px;
+  }
+
+  .options-container button {
+    width: 180px;
+    height: 60px;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  #question-container {
+    width: 90%;
+    max-width: 500px;
+    padding: 12px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+}
+
+@media (max-width: 375px) {
+  .options-container button {
+    height: 45px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .options-container button {
+    height: 70px;
+    font-size: 12px;
+  }
+}
+
+.answered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+#center-text {
+  text-align: center;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 120px;
+  width: 100%;
+}
+
+.result-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#leaderboard-list {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  width: 100%;
+  height: 80px;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  overflow-y: auto;
+  overflow-x: hidden;
+  list-style-type: none;
+  align-items: center;
+}
+
+#leaderboard-list li {
+  width: 80%;
+  height: 70px;
+  margin: 0;
+  padding: 5px 8px;
+  text-align: center;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-wrap: break-word;
+}
+
+#leaderboard-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+#leaderboard-list::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+#leaderboard-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+#leaderboard-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#podium {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  /* Slightly reduce height */
+  height: auto;
+  max-height: 160px;
+  padding: 10px 15px;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: hidden;
+}
+
+.podium-place {
+  margin: 2px 0; /* Reduced from 5px to 2px */
+  padding: 4px 0; /* Reduced from 8px to 4px */
+  width: 100%;
+  text-align: center;
+}
+
+/* Style for all podium places */
+.podium-place h3 {
+  font-size: 1.1em; /* Reduced font size */
+  margin: 0; /* Remove default margins */
+  padding: 0; /* Remove default padding */
+  line-height: 1.2; /* Tighter line height */
+}
+
+/* Style for 1st place */
+.place-1 h3 {
+  font-weight: bold;
+  font-size: 1.15em; /* Slightly larger than others */
+  color: #FFD700; /* Gold */
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+/* Style for 2nd place */
+.place-2 h3 {
+  font-weight: bold;
+  color: #C0C0C0; /* Silver */
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+/* Style for 3rd place */
+.place-3 h3 {
+  font-weight: bold;
+  color: #CD7F32; /* Bronze */
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 120px;
+  width: 100%;
+}
+
+.result-container h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+#timer-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+#timer {
+  font-family: 'DS-Digital', monospace;
+  background-color: #000;
+  color: #FF0000;
+  padding: 10px 20px;
+  border: 2px solid #444;
+  border-radius: 4px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+  min-width: 120px;
+  box-shadow:
+    inset 0 0 10px rgba(255, 0, 0, 0.3),
+    0 0 5px rgba(255, 0, 0, 0.5);
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+  position: relative;
+  z-index: 1000;
+  animation: blink 1s infinite;
+  animation-play-state: paused;
+  display: inline-block;
+}
+
+#timer[data-time="5"],
+#timer[data-time="4"],
+#timer[data-time="3"],
+#timer[data-time="2"],
+#timer[data-time="1"],
+#timer[data-time="0"] {
+  animation-play-state: running;
+}
+
+@font-face {
+  font-family: 'DS-Digital';
+  src: url('https://db.onlinewebfonts.com/t/f810a9f8c8a4c0c8686b2c8b5943445c.woff2') format('woff2'),
+    url('https://db.onlinewebfonts.com/t/f810a9f8c8a4c0c8686b2c8b5943445c.woff') format('woff');
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  #leaderboard-list {
+    width: 90%;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 475px) {
+  #leaderboard-list {
+    width: 75%;
+    max-width: 300px;
+    padding: 10px;
+  }
+
+  .leaderboard-container h2 {
+    font-size: 1.8em;
+  }
+}
+
+@media (min-width: 1024px) {
+  #leaderboard-list {
+    max-width: 450px;
+  }
+}
+
+#timer.low-time {
+  animation: blink 1s infinite;
+}
+
+
 .btn {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
@@ -78,17 +469,19 @@ p {
   left: 5px;
 }
 
-#text-box {
+#name-input {
   display: inline-block;
   border-radius: 20px;
   padding-left: 20px;
-  width: 175px;
-  height: 75px;
+  width: 200px;
+  max-width: calc(100% - 40px);
+  height: 50px;
   bottom: 10px;
+  margin: 5px 0;
 }
 
-#text-box::placeholder {
-  font-size: 24px;
+#name-input::placeholder {
+  font-size: 16px;
 }
 
 @keyframes typing {
@@ -97,19 +490,60 @@ p {
   }
 }
 
-#player-list {
+.welcome-container {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  margin: 10px;
-  width: 200px;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: black 3px solid;
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 90vw;
+  min-width: 200px;
+}
+
+.welcome-container h3 {
+  font-size: 1.5em;
+  padding: 0.5rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+#player-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 300px;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px;
   list-style-type: none;
-  padding-left: 0;
+  margin-bottom: 20px;
 }
 
 #player-list li {
-  margin: 5px 0;
+  width: 80%;
+  height: 20px;
+  margin: 5px;
+  padding: 5px 8px;
   text-align: center;
+  font-size: 1em;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  word-wrap: break-word;
 }
 
 .btn {
@@ -158,6 +592,14 @@ p {
   width: 40px;
   height: 40px;
   animation: flyBaseball 5s linear infinite;
+  opacity: 0;
+  animation: flyBaseball 5s linear infinite, fadeIn 0.1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes flyBaseball {
@@ -198,23 +640,14 @@ p {
   #text-box {
     height: 75%;
   }
+}
 
-  .break {
-    height: 100px;
+@media (max-width: 400px) {
+  img {
+    width: 200px;
   }
 
-  #player-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center items horizontally */
-    list-style-type: none;
-    padding: 0;
-    margin: 0 auto; /* Center the list container horizontally */
-  }
-  
-  #player-list li {
-    margin: 10px 0; /* Add spacing between list items */
-    text-align: center; /* Center text inside each list item */
-    font-size: 1.5em; /* Adjust font size as needed */
+  .options-container button {
+    width: 100%;
   }
 }
