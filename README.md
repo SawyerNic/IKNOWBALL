@@ -1,6 +1,6 @@
 # IKNOWBALL 🏀⚽🏈
 
-Welcome to **IKNOWBALL**, a sports trivia app designed to challenge your knowledge of all things sports! Whether you're a casual fan or a die-hard enthusiast, this app has something for everyone.
+Welcome to **IKNOWBALL**, a sports trivia app designed to challenge your knowledge of mlb baseball!
 
 ## Getting Started 🏁
 
