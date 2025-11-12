@@ -29,11 +29,6 @@ const HomePage = () => {
 
     return (
         <div id='home-content'>
-            <div className="baseball-banner">
-                {Array.from({ length: 10 }).map((_, index) => (
-                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
-                ))}
-            </div>
             <img src="assets/img/IKNOWBALL-LOGO-T.png" className="ikb-logo" alt="IKNOWBALL" width="640px" height="320px"></img>
             <div className="break"></div>
             <p id='welcome'>Welcome to IKNOWBALL player!</p>

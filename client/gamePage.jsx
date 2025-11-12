@@ -83,11 +83,6 @@ const GameWindow = () => {
 
     return (
         <div>
-            <div className="baseball-banner">
-                {Array.from({ length: 10 }).map((_, index) => (
-                    <img key={index} src="assets/img/baseball.png" className="baseball" style={{ animationDelay: `${index * 0.5}s` }} alt="Baseball" />
-                ))}
-            </div>
             <div id="question-container">
                 {gameState === 'loading' && <LoadingScreen />}
                 {gameState === 'lobby' && <LobbyWindow myPlayer={myPlayer.name} />}

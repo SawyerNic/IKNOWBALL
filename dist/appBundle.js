@@ -27447,21 +27447,7 @@ var HomePage = function HomePage() {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
     id: "home-content"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", {
-    className: "baseball-banner"
-  }, Array.from({
-    length: 10
-  }).map(function (_, index) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
-      key: index,
-      src: "assets/img/baseball.png",
-      className: "baseball",
-      style: {
-        animationDelay: "".concat(index * 0.5, "s")
-      },
-      alt: "Baseball"
-    });
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("img", {
     src: "assets/img/IKNOWBALL-LOGO-T.png",
     className: "ikb-logo",
     alt: "IKNOWBALL",

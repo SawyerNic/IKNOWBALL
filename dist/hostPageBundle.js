@@ -41015,20 +41015,6 @@ var HostPage = function HostPage() {
   return /*#__PURE__*/React.createElement("div", {
     id: "home-content"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "baseball-banner"
-  }, Array.from({
-    length: 10
-  }).map(function (_, index) {
-    return /*#__PURE__*/React.createElement("img", {
-      key: index,
-      src: "assets/img/baseball.png",
-      className: "baseball",
-      style: {
-        animationDelay: "".concat(index * 0.5, "s")
-      },
-      alt: "Baseball"
-    });
-  })), /*#__PURE__*/React.createElement("div", {
     className: "break"
   }), /*#__PURE__*/React.createElement("img", {
     src: "assets/img/IKNOWBALL-LOGO-T.png",
