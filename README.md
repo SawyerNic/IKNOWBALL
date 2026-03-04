@@ -1,8 +1,8 @@
-# IKNOWBALL 🏀⚽🏈
+# IKNOWBALL 
 
 Welcome to **IKNOWBALL**, a sports trivia app designed to challenge your knowledge of mlb baseball!
 
-## Getting Started 🏁
+## Getting Started 
 
 Follow these steps to set up the project locally:
 
@@ -28,7 +28,7 @@ Follow these steps to set up the project locally:
    npm start
    ```
 
-## How to Contribute 🤝
+## How to Contribute 
 
 Contributions are welcome! To get started:
 - Reach out to the repository owner via email: [sjn1618@g.rit.edu](mailto:sjn1618@g.rit.edu)
@@ -39,19 +39,19 @@ Contributions are welcome! To get started:
   ```
 - Submit a pull request once your changes are ready.
 
-## License 📜
+## License 
 
 This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute this app as per the license terms.
 
-## Contact 📧
+## Contact 
 
 For questions, suggestions, or feedback, reach out to the repository owner:
 - **Email**: [sjn1618@g.rit.edu](mailto:sjn1618@g.rit.edu)
 - **GitHub**: [SawyerNic](https://github.com/SawyerNic)
 
-## Acknowledgments 🙌
+## Acknowledgments 
 - Thanks to all contributors and testers for making this project possible!
 - Inspired by the love of sports and trivia.
 
 ---
-*Enjoy the game, and may the best sports fan win!* 🎉
+*Enjoy the game, and may the best sports fan win!* 
